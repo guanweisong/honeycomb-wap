@@ -20,7 +20,7 @@ class Category extends Component {
     const { categoryStore } = this.props.store;
     return (
       <div>
-        {/*<Header/>*/}
+        <Header/>
         <Choose>
           <When condition={categoryStore.total > 0}>
             <div className="post-list">

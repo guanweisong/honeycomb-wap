@@ -1,16 +1,18 @@
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
-import Link from 'next/link'
+import Link from 'next/link';
 import listToTree from 'list-to-tree-lite';
 import  './index.less';
+import {inject, observer} from "mobx-react/index";
 
+@inject('store')
+@observer
 class Menu extends PureComponent {
   constructor(props){
     super(props)
   };
   formatCategorise = () => {
-    console.log('formatCategorise', this.props.menu);
-    const menu = listToTree(this.props.menu, {idKey: '_id', parentKey: 'category_parent'});
+    const menu = listToTree(JSON.parse(JSON.stringify(this.props.store.menuStore.list)), {idKey: '_id', parentKey: 'category_parent'});
     const result = [
       {
         category_title: '首页',
@@ -24,7 +26,10 @@ class Menu extends PureComponent {
   render () {
     const data = this.formatCategorise();
     return (
-      <div className="menu">
+      <div className={classNames({
+        'menu': true,
+        'hc-show': !!this.props.show,
+      })}>
         <ul className="menu-first">
           <For each="firstLevel" of={data}>
             <li

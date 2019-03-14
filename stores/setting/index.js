@@ -14,7 +14,7 @@ export default class SettingStore {
 
   @action getSettingData = async() => {
     const result = await indexSetting();
-    this.setting = result.data;
+    this.setting = result;
     return {};
   }
 }

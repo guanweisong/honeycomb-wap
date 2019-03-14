@@ -1,5 +1,5 @@
 .menu {
-  display: none;
+  transform: translateX(-100%);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -7,6 +7,10 @@
   width: 300px;
   background: #f9f9f9;
   box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
+  transition: all .2s;
+  &.hc-show {
+    transform: translateX(0);
+  }
   &-first {
     padding: 0;
     margin: 0;

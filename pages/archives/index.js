@@ -1,10 +1,11 @@
 import { Component } from 'react'
 import Link from 'next/link';
 import { inject, observer } from 'mobx-react';
+import Header from '../../components/Header';
 
 @inject('store')
 @observer
-export default class Archives extends Component {
+class Archives extends Component {
   constructor(props) {
     super(props);
   }
@@ -18,6 +19,7 @@ export default class Archives extends Component {
     console.log('render=>archivesStore', archivesStore);
     return (
       <div>
+        <Header/>
         <If condition={archivesStore.detail !== null}>
           {archivesStore.detail.post_title}
         </If>
@@ -30,3 +32,5 @@ export default class Archives extends Component {
     )
   }
 }
+
+export default Archives;

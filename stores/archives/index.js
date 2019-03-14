@@ -13,11 +13,11 @@ export default class ArchivesStore {
   @action getDetailData = async(params) => {
     console.log('ArchivesStore__getDetailData');
     const result = await indexPostList(params);
-    this.setDetailData(result.data.list[0]);
+    this.setDetailData(result.list[0]);
     return {};
   };
   @action setDetailData = (obj) => {
-    console.log('ArchivesStore__setDetailData', obj);
+    console.log('ArchivesStore__setDetailData');
     this.detail = obj;
   }
 }

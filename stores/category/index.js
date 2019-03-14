@@ -18,14 +18,14 @@ export default class CategoryStore {
     this.loading = true;
     const result = await indexPostList(params);
     const data = {
-      list: result.data.list,
-      total: result.data.total,
+      list: result.list,
+      total: result.total,
     };
     this.setListData(data);
     return {};
   };
   @action setListData = ({list, total}) => {
-    console.log('CategoryStore__setListData', list, total);
+    console.log('CategoryStore__setListData', total);
     this.loading = false;
     this.list = list;
     this.total = total;

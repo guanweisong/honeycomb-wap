@@ -2,10 +2,8 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { initializeStore } from '../store';
 import { Provider } from 'mobx-react';
-import Menu from '../components/Menu';
 import '../node_modules/antd-mobile/dist/antd-mobile.less';
 import './app.less';
-import MenuStore from "../stores/menu";
 
 // @withMobxStore
 class MyMobxApp extends App {
@@ -20,6 +18,7 @@ class MyMobxApp extends App {
     let appProps = await App.getInitialProps(appContext);
 
     await appContext.ctx.store.settingStore.getSettingData();
+    await appContext.ctx.store.menuStore.getMenuData();
 
     return {
       ...appProps,
@@ -39,10 +38,6 @@ class MyMobxApp extends App {
     console.log('_appjs=>render', this.store.settingStore);
     return (
       <Container>
-        1
-        {this.store.settingStore.setting.site_name}
-        {/*<Menu menu={this.store.menuStore.list}/>*/}
-        {/*{this.store.categoryStore.list.length}*/}
         <Provider store={this.store}>
           <Component {...pageProps} />
         </Provider>
