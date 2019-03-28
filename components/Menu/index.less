@@ -6,10 +6,10 @@
   left: 0;
   width: 300px;
   background: #f9f9f9;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
   transition: all .2s;
   &.hc-show {
     transform: translateX(0);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
   }
   &-first {
     padding: 0;
@@ -36,10 +36,11 @@
   }
   &-second {
     line-height: 60px;
-    text-align: center;
+    padding-left: 0;
     &__item {
       border-top: 1px dotted #ccc;
       list-style: none;
+      padding-left: 40px;
     }
   }
 }

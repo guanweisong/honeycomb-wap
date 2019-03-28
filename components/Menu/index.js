@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import listToTree from 'list-to-tree-lite';
@@ -7,7 +7,7 @@ import {inject, observer} from "mobx-react/index";
 
 @inject('store')
 @observer
-class Menu extends PureComponent {
+class Menu extends Component {
   constructor(props){
     super(props)
   };
@@ -16,7 +16,7 @@ class Menu extends PureComponent {
     const result = [
       {
         category_title: '首页',
-        category_title_en: 'category',
+        category_title_en: '/',
         isHome: true,
         children: [],
       }
@@ -40,7 +40,12 @@ class Menu extends PureComponent {
               key={firstLevel.category_title_en}
             >
               <div className="menu-first__item-name">
-                <Link href={`${firstLevel.isHome === true ? '': '/category'}/${firstLevel.category_title_en}`}><a>{firstLevel.category_title}</a></Link>
+                <Link
+                  as={`${firstLevel.isHome === true ? firstLevel.category_title_en : '/category'}/${firstLevel.category_title_en}`}
+                  href={`${firstLevel.isHome === true ? firstLevel.category_title_en : '/category'}?firstCategory=${firstLevel.category_title_en}`}
+                >
+                  <a>{firstLevel.category_title}</a>
+                </Link>
               </div>
               <If condition={firstLevel.children.length > 0}>
                 <ul className="menu-second">
@@ -53,7 +58,12 @@ class Menu extends PureComponent {
                       key={secondLevel.category_title_en}
                     >
                       <div className="menu-second__item-name">
-                        <Link href={`/category/${firstLevel.category_title_en}/${secondLevel.category_title_en}`}><a>{secondLevel.category_title}</a></Link>
+                        <Link
+                          as={`/category/${firstLevel.category_title_en}/${secondLevel.category_title_en}`}
+                          href={`/category?firstCategory=${firstLevel.category_title_en}&secondCategory=${secondLevel.category_title_en}`}
+                        >
+                          <a>{secondLevel.category_title}</a>
+                        </Link>
                       </div>
                     </li>
                   </For>

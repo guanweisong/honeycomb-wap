@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {inject, observer} from "mobx-react";
 import classNames from 'classnames';
 import { NavBar, Icon } from 'antd-mobile';
+import { withRouter } from 'next/router';
 import Menu from '../../components/Menu';
 import  './index.less';
 
+@withRouter
 @inject('store')
 @observer
 class Header extends Component {
@@ -12,8 +14,22 @@ class Header extends Component {
     super(props);
     this.state = {
       showMenu: false,
+      currentPath: "",
     }
   };
+  componentWillReceiveProps(props) {
+    if (this.state.currentPath !== props.router.currentPath) {
+      this.setState({
+        showMenu: false,
+        currentPath: props.router.asPath,
+      })
+    }
+  };
+  componentDidMount() {
+    this.setState({
+      currentPath: this.props.router.asPath,
+    })
+  }
   toggleMenu = () => {
     this.setState({
       showMenu: !this.state.showMenu,

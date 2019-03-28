@@ -1,10 +1,13 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import Link from 'next/link';
-import { Button } from 'antd-mobile';
+import Router, { withRouter } from 'next/router';
+import { Pagination } from 'antd-mobile';
+import param from "can-param";
 import Header from '../../components/Header';
 import './index.less';
 
+@withRouter
 @inject('store')
 @observer
 class Category extends Component {
@@ -12,12 +15,34 @@ class Category extends Component {
     super(props);
   }
   static async getInitialProps(appContext) {
-    await appContext.store.categoryStore.getListData();
+    if (appContext.store.menuStore.list.length === 0) {
+      await appContext.store.menuStore.getMenuData();
+    }
+    await appContext.store.categoryStore.getListData(appContext.query, appContext.store.menuStore.list);
     return {};
   }
+  paginationChange = (current) => {
+    const query = {...this.props.router.query, page: current, limit: 10 };
+    const asPath = [];
+    const asQuery = JSON.parse(JSON.stringify(query));
+    if (query.firstCategory) {
+      asPath.push(query.firstCategory);
+      delete asQuery.firstCategory;
+    }
+    if (query.secondCategory) {
+      asPath.push(query.secondCategory);
+      delete asQuery.secondCategory;
+    }
+    Router.push({
+      pathname: this.props.router.pathname,
+      query,
+    }, {
+      as: `${this.props.router.pathname}/${asPath.join('/')}?${param(asQuery)}`
+    })
+  };
   render() {
-    console.log('Category=>render', this.props);
     const { categoryStore } = this.props.store;
+    const pageSize = Math.ceil(categoryStore.total/10);
     return (
       <div>
         <Header/>
@@ -37,17 +62,18 @@ class Category extends Component {
                 </Link>
               </For>
             </div>
+            <If condition={pageSize > 1}>
+              <Pagination
+                total={pageSize}
+                current={this.props.router.query.page * 1 || 1}
+                onChange={this.paginationChange}
+              />
+            </If>
           </When>
           <Otherwise>
-            <If condition={!categoryStore.loading}>
-              没有内容
-            </If>
+            <div>没有内容</div>
           </Otherwise>
         </Choose>
-        <div>
-          {categoryStore.total}
-        </div>
-        <Button type="primary">按钮</Button>
       </div>
     )
   }

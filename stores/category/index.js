@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import { indexPostList } from '../../services/post';
+import { indexPostList, indexPostByCategoryId } from '../../services/post';
 
 export default class CategoryStore {
   @observable loading = true;
@@ -13,10 +13,21 @@ export default class CategoryStore {
     }
   }
 
-  @action getListData = async(params) => {
-    console.log('CategoryStore__getListData');
+  @action getListData = async(params, menuList) => {
+    console.log('CategoryStore__getListData', params, menuList);
     this.loading = true;
-    const result = await indexPostList(params);
+    const condition = {};
+    const idEn = params.secondCategory || params.firstCategory;
+    if (idEn) {
+      condition._id = menuList.find((item) => item.category_title_en === idEn)._id;
+    }
+    if (params.page) {
+      condition.page = params.page;
+    }
+    if (params.limit) {
+      condition.limit = params.limit;
+    }
+    const result = await indexPostByCategoryId(condition);
     const data = {
       list: result.list,
       total: result.total,
