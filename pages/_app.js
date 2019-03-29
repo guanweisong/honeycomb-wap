@@ -58,4 +58,5 @@ class MyMobxApp extends App {
     )
   }
 }
+
 export default MyMobxApp;

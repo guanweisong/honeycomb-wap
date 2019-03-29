@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import Link from 'next/link';
+import { Link } from '../../routes';
 import listToTree from 'list-to-tree-lite';
+import { withRouter } from 'next/router';
 import  './index.less';
 import {inject, observer} from "mobx-react/index";
 
+@withRouter
 @inject('store')
 @observer
 class Menu extends Component {
@@ -16,7 +18,7 @@ class Menu extends Component {
     const result = [
       {
         category_title: '首页',
-        category_title_en: '/',
+        category_title_en: '',
         isHome: true,
         children: [],
       }
@@ -25,6 +27,7 @@ class Menu extends Component {
   };
   render () {
     const data = this.formatCategorise();
+    console.log(111, this.props.store.menuStore.currentCategoryPath[0]);
     return (
       <div className={classNames({
         'menu': true,
@@ -35,15 +38,12 @@ class Menu extends Component {
             <li
               className={classNames({
                 "menu-first__item": true,
-                // "menu-first__item--active": this.props.app.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.location.pathname === '/'),
+                "menu-first__item--active": this.props.store.menuStore.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.pathname === '/'),
               })}
               key={firstLevel.category_title_en}
             >
               <div className="menu-first__item-name">
-                <Link
-                  as={`${firstLevel.isHome === true ? firstLevel.category_title_en : '/category'}/${firstLevel.category_title_en}`}
-                  href={`${firstLevel.isHome === true ? firstLevel.category_title_en : '/category'}?firstCategory=${firstLevel.category_title_en}`}
-                >
+                <Link route={firstLevel.isHome ? '/' : `/category/${firstLevel.category_title_en}`}>
                   <a>{firstLevel.category_title}</a>
                 </Link>
               </div>
@@ -53,15 +53,12 @@ class Menu extends Component {
                     <li
                       className={classNames({
                         "menu-second__item": true,
-                        // "menu-second__item--active": this.props.app.currentCategoryPath[1] === secondLevel.category_title_en,
+                        "menu-second__item--active": this.props.store.menuStore.currentCategoryPath[1] === secondLevel.category_title_en,
                       })}
                       key={secondLevel.category_title_en}
                     >
                       <div className="menu-second__item-name">
-                        <Link
-                          as={`/category/${firstLevel.category_title_en}/${secondLevel.category_title_en}`}
-                          href={`/category?firstCategory=${firstLevel.category_title_en}&secondCategory=${secondLevel.category_title_en}`}
-                        >
+                        <Link route={`/category/${firstLevel.category_title_en}/${secondLevel.category_title_en}`}>
                           <a>{secondLevel.category_title}</a>
                         </Link>
                       </div>

@@ -2,7 +2,6 @@ import { action, observable } from 'mobx';
 import { indexPostList, indexPostByCategoryId } from '../../services/post';
 
 export default class CategoryStore {
-  @observable loading = true;
   @observable list = [];
   @observable total = 0;
 
@@ -15,7 +14,6 @@ export default class CategoryStore {
 
   @action getListData = async(params, menuList) => {
     console.log('CategoryStore__getListData', params, menuList);
-    this.loading = true;
     const condition = {};
     const idEn = params.secondCategory || params.firstCategory;
     if (idEn) {
@@ -33,11 +31,16 @@ export default class CategoryStore {
       total: result.total,
     };
     this.setListData(data);
+    // 设置菜单高亮
+    const path = [];
+    params.firstCategory && path.push(params.firstCategory);
+    params.secondCategory && path.push(params.secondCategory);
+    // console.log(333);
+    // this.props.store.menuStore.setCurrentCategoryPath(path);
     return {};
   };
   @action setListData = ({list, total}) => {
     console.log('CategoryStore__setListData', total);
-    this.loading = false;
     this.list = list;
     this.total = total;
   }

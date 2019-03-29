@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import Link from 'next/link';
-import Router, { withRouter } from 'next/router';
+import { Link, Router} from '../../routes';
+import { withRouter } from 'next/router';
 import { Pagination } from 'antd-mobile';
 import param from "can-param";
 import Header from '../../components/Header';
@@ -24,21 +24,15 @@ class Category extends Component {
   paginationChange = (current) => {
     const query = {...this.props.router.query, page: current, limit: 10 };
     const asPath = [];
-    const asQuery = JSON.parse(JSON.stringify(query));
     if (query.firstCategory) {
       asPath.push(query.firstCategory);
-      delete asQuery.firstCategory;
+      delete query.firstCategory;
     }
     if (query.secondCategory) {
       asPath.push(query.secondCategory);
-      delete asQuery.secondCategory;
+      delete query.secondCategory;
     }
-    Router.push({
-      pathname: this.props.router.pathname,
-      query,
-    }, {
-      as: `${this.props.router.pathname}/${asPath.join('/')}?${param(asQuery)}`
-    })
+    Router.pushRoute(`${this.props.router.pathname}${asPath.join('/')}?${param(query)}`);
   };
   render() {
     const { categoryStore } = this.props.store;
@@ -50,7 +44,7 @@ class Category extends Component {
           <When condition={categoryStore.total > 0}>
             <div className="post-list">
               <For each="item" index="index" of={categoryStore.list}>
-                <Link href={`/archives?id=${item._id}`} key={index}>
+                <Link route={`/archives/${item._id}`} key={index}>
                   <div className="post-list__item">
                     <div className="post-list__photo">
                       <img src={`//${item.post_cover.media_url}`}/>
