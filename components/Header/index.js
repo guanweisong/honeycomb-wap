@@ -1,39 +1,41 @@
 import React, { Component } from 'react';
-import {inject, observer} from "mobx-react";
 import classNames from 'classnames';
 import { NavBar, Icon } from 'antd-mobile';
 import { withRouter } from 'next/router';
 import Menu from '../../components/Menu';
 import  './index.less';
+import WithDva from "../../utils/store";
 
 @withRouter
-@inject('store')
-@observer
+@WithDva(store => store)
 class Header extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      showMenu: false,
-      currentPath: "",
-    }
   };
   componentWillReceiveProps(props) {
-    if (this.state.currentPath !== props.router.currentPath) {
-      this.setState({
-        showMenu: false,
-        currentPath: props.router.asPath,
-      })
-    }
+    // console.log(8888, this.props.menu.currentCategoryPath, props.router.currentPath);
+    // if (this.props.menu.currentCategoryPath !== props.router.currentPath) {
+    //   this.props.dispatch({
+    //     type: 'menu/setCurrentCategoryPath',
+    //     payload: props.router.asPath,
+    //   });
+    //   this.props.dispatch({
+    //     type: 'menu/setMenuShow',
+    //     payload: false,
+    //   })
+    // }
   };
   componentDidMount() {
-    this.setState({
-      currentPath: this.props.router.asPath,
-    })
+    // this.props.dispatch({
+    //   type: 'menu/setCurrentCategoryPath',
+    //   payload: this.props.router.asPath,
+    // })
   }
   toggleMenu = () => {
-    this.setState({
-      showMenu: !this.state.showMenu,
-    });
+    this.props.dispatch({
+      type: 'menu/setMenuShow',
+      payload: !this.props.menu.show,
+    })
   };
   render () {
     return (
@@ -46,9 +48,9 @@ class Header extends Component {
             <Icon key="1" type="ellipsis" onClick={() => this.toggleMenu()}/>,
           ]}
         >
-          {this.props.store.settingStore.setting.site_name}
+          {this.props.setting.site_name}
         </NavBar>
-        <Menu menu={this.props.store.menuStore.list} show={this.state.showMenu}/>
+        <Menu menu={this.props.menu.list} show={this.props.menu.show}/>
       </div>
     )
   }

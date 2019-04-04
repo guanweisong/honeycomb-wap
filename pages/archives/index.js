@@ -1,27 +1,30 @@
 import { Component } from 'react'
 import Link from 'next/link';
-import { inject, observer } from 'mobx-react';
 import Header from '../../components/Header';
+import WithDva from "../../utils/store";
 
-@inject('store')
-@observer
+@WithDva(store => store)
 class Archives extends Component {
   constructor(props) {
     super(props);
   }
-  static async getInitialProps(appContext) {
-    await appContext.store.archivesStore.getDetailData({_id: appContext.query.id});
+  static async getInitialProps(props) {
+    await props.store.dispatch({
+      type: 'archives/getDetailData',
+      payload: {
+        _id: props.query.id
+      }
+    });
     return {};
   }
   render() {
-    console.log('Archives', this.props);
-    const { archivesStore } = this.props.store;
-    console.log('render=>archivesStore', archivesStore);
+    const { archives } = this.props;
+    console.log('render=>archivesStore', archives);
     return (
       <div>
         <Header/>
-        <If condition={archivesStore.detail !== null}>
-          {archivesStore.detail.post_title}
+        <If condition={archives.detail !== null}>
+          {archives.detail.post_title}
         </If>
         <div>
           <Link href="/category">

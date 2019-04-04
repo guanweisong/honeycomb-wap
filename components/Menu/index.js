@@ -4,17 +4,16 @@ import { Link } from '../../routes';
 import listToTree from 'list-to-tree-lite';
 import { withRouter } from 'next/router';
 import  './index.less';
-import {inject, observer} from "mobx-react/index";
+import WithDva from "../../utils/store";
 
 @withRouter
-@inject('store')
-@observer
+@WithDva(store => store)
 class Menu extends Component {
   constructor(props){
     super(props)
   };
   formatCategorise = () => {
-    const menu = listToTree(JSON.parse(JSON.stringify(this.props.store.menuStore.list)), {idKey: '_id', parentKey: 'category_parent'});
+    const menu = listToTree(JSON.parse(JSON.stringify(this.props.menu.list)), {idKey: '_id', parentKey: 'category_parent'});
     const result = [
       {
         category_title: '首页',
@@ -27,7 +26,6 @@ class Menu extends Component {
   };
   render () {
     const data = this.formatCategorise();
-    console.log(111, this.props.store.menuStore.currentCategoryPath[0]);
     return (
       <div className={classNames({
         'menu': true,
@@ -38,7 +36,7 @@ class Menu extends Component {
             <li
               className={classNames({
                 "menu-first__item": true,
-                "menu-first__item--active": this.props.store.menuStore.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.pathname === '/'),
+                "menu-first__item--active": this.props.menu.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.pathname === '/'),
               })}
               key={firstLevel.category_title_en}
             >
@@ -53,7 +51,7 @@ class Menu extends Component {
                     <li
                       className={classNames({
                         "menu-second__item": true,
-                        "menu-second__item--active": this.props.store.menuStore.currentCategoryPath[1] === secondLevel.category_title_en,
+                        "menu-second__item--active": this.props.menu.currentCategoryPath[1] === secondLevel.category_title_en,
                       })}
                       key={secondLevel.category_title_en}
                     >
