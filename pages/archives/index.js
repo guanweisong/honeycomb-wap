@@ -1,15 +1,16 @@
 import { Component } from 'react'
 import Link from 'next/link';
+import { connect } from 'react-redux';
 import Header from '../../components/Header';
-import WithDva from "../../utils/store";
 
-@WithDva(store => store)
+// @withDva
+@connect(state => state)
 class Archives extends Component {
   constructor(props) {
     super(props);
   }
   static async getInitialProps(props) {
-    await props.store.dispatch({
+    await props.dvaStore.dispatch({
       type: 'archives/getDetailData',
       payload: {
         _id: props.query.id

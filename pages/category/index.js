@@ -2,27 +2,23 @@ import { Component } from 'react';
 import { Link, Router } from '../../routes';
 import { withRouter } from 'next/router';
 import { Pagination } from 'antd-mobile';
-import WithDva from '../../utils/store';
+import { connect } from 'react-redux';
 import param from "can-param";
 import Header from '../../components/Header';
 import './index.less';
 
 @withRouter
-@WithDva(store => store)
+@connect(state => state)
 class Category extends Component {
   constructor(props) {
     super(props);
   }
   static async getInitialProps(props) {
-    // console.log(1111, props.store);
-    // if (props.store.getState().menu.list.length === 0) {
-    //   await props.store.dispatch({ type: 'menu/getMenuData' });
-    // }
-    await props.store.dispatch({
+    await props.dvaStore.dispatch({
       type: 'category/getListData',
       payload: {
         params: props.query,
-        menuList: props.store.getState().menu.list,
+        menuList: props.dvaStore.getState().menu.list,
       }
     });
     return {};

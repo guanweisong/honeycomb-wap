@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { NavBar, Icon } from 'antd-mobile';
 import { withRouter } from 'next/router';
+import { connect } from 'react-redux';
 import Menu from '../../components/Menu';
 import  './index.less';
-import WithDva from "../../utils/store";
 
 @withRouter
-@WithDva(store => store)
+@connect(state => state)
 class Header extends Component {
   constructor(props){
     super(props);

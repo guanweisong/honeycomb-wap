@@ -4,10 +4,10 @@ import { Link } from '../../routes';
 import listToTree from 'list-to-tree-lite';
 import { withRouter } from 'next/router';
 import  './index.less';
-import WithDva from "../../utils/store";
+import { connect } from 'react-redux';
 
 @withRouter
-@WithDva(store => store)
+@connect(state => state)
 class Menu extends Component {
   constructor(props){
     super(props)
