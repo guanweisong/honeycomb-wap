@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  width: 1050px;
+  min-height: 100%;
+  transition: all .2s;
+  transform: translateX(-300px);
+  &.show-menu {
+    transform: translateX(0);
+    .mask {
+      z-index: 800;
+      opacity: 1;
+    }
+  }
+}
+.side {
+  width: 300px;
+  position: relative;
+  z-index: 900;
+  min-height: 100%;
+}
+.main {
+  width: 750px;
+  position: relative;
+  z-index: 700;
+}
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .2);
+  z-index: 600;
+  opacity: 0;
+  transition: all .2s;
+}

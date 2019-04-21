@@ -14,11 +14,14 @@ class Category extends Component {
     super(props);
   }
   static async getInitialProps(props) {
+    if (props.dvaStore.getState().menu.list.length === 0) {
+      await props.dvaStore.dispatch({ type: 'menu/getMenuData' });
+    }
     await props.dvaStore.dispatch({
       type: 'category/getListData',
       payload: {
         params: props.query,
-        menuList: props.dvaStore.getState().menu.list,
+        menu: props.dvaStore.getState().menu,
       }
     });
     return {};

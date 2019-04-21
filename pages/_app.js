@@ -4,6 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import { Provider } from 'react-redux';
 import withDva from '../utils/withDva';
+import Layout from '../components/Layout';
 import '../node_modules/antd-mobile/dist/antd-mobile.less';
 import './app.less';
 
@@ -37,7 +38,9 @@ class MyApp extends App {
     return (
       <Container>
         <Provider store={dvaStore}>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </Provider>
       </Container>
     )

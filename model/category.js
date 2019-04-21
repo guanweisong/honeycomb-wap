@@ -7,12 +7,12 @@ export default {
     total: 0,
   },
   effects: {
-    *getListData({ payload: {params, menuList} }, { put }) {
+    *getListData({ payload: {params, menu} }, { call, put, select }) {
       console.log('CategoryStore__getListData', params);
       const condition = {};
       const idEn = params.secondCategory || params.firstCategory;
       if (idEn) {
-        condition._id = menuList.find((item) => item.category_title_en === idEn)._id;
+        condition._id = menu.list.find((item) => item.category_title_en === idEn)._id;
       }
       if (params.page) {
         condition.page = params.page;

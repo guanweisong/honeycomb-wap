@@ -27,10 +27,7 @@ class Menu extends Component {
   render () {
     const data = this.formatCategorise();
     return (
-      <div className={classNames({
-        'menu': true,
-        'hc-show': !!this.props.show,
-      })}>
+      <div className="menu">
         <ul className="menu-first">
           <For each="firstLevel" of={data}>
             <li

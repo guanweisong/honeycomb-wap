@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { NavBar, Icon } from 'antd-mobile';
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
-import Menu from '../../components/Menu';
 import  './index.less';
 
 @withRouter
@@ -12,25 +11,9 @@ class Header extends Component {
   constructor(props){
     super(props);
   };
-  componentWillReceiveProps(props) {
-    // console.log(8888, this.props.menu.currentCategoryPath, props.router.currentPath);
-    // if (this.props.menu.currentCategoryPath !== props.router.currentPath) {
-    //   this.props.dispatch({
-    //     type: 'menu/setCurrentCategoryPath',
-    //     payload: props.router.asPath,
-    //   });
-    //   this.props.dispatch({
-    //     type: 'menu/setMenuShow',
-    //     payload: false,
-    //   })
-    // }
+  handleClickLeft = () => {
+    this.props.router.back();
   };
-  componentDidMount() {
-    // this.props.dispatch({
-    //   type: 'menu/setCurrentCategoryPath',
-    //   payload: this.props.router.asPath,
-    // })
-  }
   toggleMenu = () => {
     this.props.dispatch({
       type: 'menu/setMenuShow',
@@ -42,15 +25,14 @@ class Header extends Component {
       <div>
         <NavBar
           mode="light"
-          icon={<Icon type="left" />}
-          onLeftClick={() => console.log('onLeftClick')}
+          icon={<Icon type="left" color="#666"/>}
+          onLeftClick={this.handleClickLeft}
           rightContent={[
-            <Icon key="1" type="ellipsis" onClick={() => this.toggleMenu()}/>,
+            <Icon key="1" color="#666" type="ellipsis" onClick={() => this.toggleMenu()}/>,
           ]}
         >
           {this.props.setting.site_name}
         </NavBar>
-        <Menu menu={this.props.menu.list} show={this.props.menu.show}/>
       </div>
     )
   }
