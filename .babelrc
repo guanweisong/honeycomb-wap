@@ -9,8 +9,7 @@
     [
       "import",
       {
-        "libraryName": "ant-mobile",
-        "style": true
+        "libraryName": "ant-mobile"
       }
     ]
   ]
