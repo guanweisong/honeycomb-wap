@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Link } from '../../routes';
 import listToTree from 'list-to-tree-lite';
 import { withRouter } from 'next/router';
-import  './index.less';
+import styles from './index.less';
 import { connect } from 'react-redux';
 
 @withRouter
@@ -27,32 +27,32 @@ class Menu extends Component {
   render () {
     const data = this.formatCategorise();
     return (
-      <div className="menu">
-        <ul className="menu-first">
+      <div className={styles.menu}>
+        <ul className={styles["menu-first"]}>
           <For each="firstLevel" of={data}>
             <li
               className={classNames({
-                "menu-first__item": true,
-                "menu-first__item--active": this.props.menu.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.pathname === '/'),
+                [styles["menu-first__item"]]: true,
+                [styles["menu-first__item--active"]]: this.props.menu.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.pathname === '/'),
               })}
               key={firstLevel.category_title_en}
             >
-              <div className="menu-first__item-name">
+              <div className={styles["menu-first__item-name"]}>
                 <Link route={firstLevel.isHome ? '/' : `/category/${firstLevel.category_title_en}`}>
                   <a>{firstLevel.category_title}</a>
                 </Link>
               </div>
               <If condition={firstLevel.children.length > 0}>
-                <ul className="menu-second">
+                <ul className={styles["menu-second"]}>
                   <For each="secondLevel" of={firstLevel.children}>
                     <li
                       className={classNames({
-                        "menu-second__item": true,
-                        "menu-second__item--active": this.props.menu.currentCategoryPath[1] === secondLevel.category_title_en,
+                        [styles["menu-second__item"]]: true,
+                        [styles["menu-second__item--active"]]: this.props.menu.currentCategoryPath[1] === secondLevel.category_title_en,
                       })}
                       key={secondLevel.category_title_en}
                     >
-                      <div className="menu-second__item-name">
+                      <div className={styles["menu-second__item-name"]}>
                         <Link route={`/category/${firstLevel.category_title_en}/${secondLevel.category_title_en}`}>
                           <a>{secondLevel.category_title}</a>
                         </Link>

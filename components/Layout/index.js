@@ -4,7 +4,7 @@ import { NavBar, Icon } from 'antd-mobile';
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
 import Menu from '../Menu';
-import  './index.less';
+import styles from './index.less';
 
 @withRouter
 @connect(state => state)
@@ -27,17 +27,17 @@ class Layout extends Component {
   render () {
     return (
       <div className={classNames({
-        "container": true,
-        "show-menu": this.props.menu.show
+        [styles.container]: true,
+        [styles["show-menu"]]: this.props.menu.show
       })}>
-        <div className="side">
+        <div className={styles.side}>
           <Menu menu={this.props.menu.list}/>
         </div>
 
-        <div className="main">
+        <div className={styles.main}>
           {this.props.children}
         </div>
-        <div className="mask" onClick={this.toggleMenu}/>
+        <div className={styles.mask} onClick={this.toggleMenu}/>
       </div>
     )
   }

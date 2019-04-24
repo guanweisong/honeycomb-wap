@@ -9,7 +9,8 @@
     [
       "import",
       {
-        "libraryName": "antd-mobile"
+        "libraryName": "ant-mobile",
+        "style": true
       }
     ]
   ]

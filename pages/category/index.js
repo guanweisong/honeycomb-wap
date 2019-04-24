@@ -5,7 +5,7 @@ import { Pagination } from 'antd-mobile';
 import { connect } from 'react-redux';
 import param from "can-param";
 import Header from '../../components/Header';
-import './index.less';
+import styles from './index.less';
 
 @withRouter
 @connect(state => state)
@@ -47,14 +47,14 @@ class Category extends Component {
         <Header/>
         <Choose>
           <When condition={category.total > 0}>
-            <div className="post-list">
+            <div className={styles["post-list"]}>
               <For each="item" index="index" of={category.list}>
                 <Link route={`/archives/${item._id}`} key={index}>
-                  <div className="post-list__item">
-                    <div className="post-list__photo">
+                  <div className={styles["post-list__item"]}>
+                    <div className={styles["post-list__photo"]}>
                       <img src={`//${item.post_cover.media_url}`}/>
                     </div>
-                    <div className="post-list__content">
+                    <div className={styles["post-list__content"]}>
                       {item.post_title}
                     </div>
                   </div>
