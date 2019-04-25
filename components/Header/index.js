@@ -31,7 +31,7 @@ class Header extends Component {
             <Icon key="1" color="#666" type="ellipsis" onClick={() => this.toggleMenu()}/>,
           ]}
         >
-          {this.props.setting.site_name}
+          {this.props.title || this.props.setting.site_name}
         </NavBar>
       </div>
     )

@@ -52,7 +52,7 @@ class Category extends Component {
                 <Link route={`/archives/${item._id}`} key={index}>
                   <div className={styles["post-list__item"]}>
                     <div className={styles["post-list__photo"]}>
-                      <img src={`//${item.post_cover.media_url}`}/>
+                      <img src={`//${item.post_cover.media_url_360p}`}/>
                     </div>
                     <div className={styles["post-list__content"]}>
                       {item.post_title}
