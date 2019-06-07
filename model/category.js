@@ -33,8 +33,10 @@ export default {
       const path = [];
       params.firstCategory && path.push(params.firstCategory);
       params.secondCategory && path.push(params.secondCategory);
-      // console.log(333);
-      // this.props.store.menuStore.setCurrentCategoryPath(path);
+      yield put({
+        type: 'menu/setCurrentCategoryPath',
+        payload: path,
+      });
       return {};
     }
   },

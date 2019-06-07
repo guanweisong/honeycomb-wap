@@ -50,14 +50,14 @@ class Category extends Component {
             <div className={styles["post-list"]}>
               <For each="item" index="index" of={category.list}>
                 <Link route={`/archives/${item._id}`} key={index}>
-                  <div className={styles["post-list__item"]}>
+                  <a className={styles["post-list__item"]}>
                     <div className={styles["post-list__photo"]}>
-                      <img src={`//${item.post_cover.media_url_360p}`}/>
+                      <img src={`//${item.post_cover.media_url_360p || item.post_cover.media_url}`}/>
                     </div>
                     <div className={styles["post-list__content"]}>
                       {item.post_title}
                     </div>
-                  </div>
+                  </a>
                 </Link>
               </For>
             </div>

@@ -6,12 +6,13 @@ export default {
     detail: null,
   },
   effects: {
-    *getDetailData({ payload: values }, { put }) {
+    *getDetailData({ payload: values }, { put, select }) {
       console.log('ArchivesStore__getDetailData');
       const result = yield indexPostList(values);
+      const post = result.list[0];
       yield put({
         type: 'setDetailData',
-        payload: result.list[0],
+        payload: post,
       });
     }
   },

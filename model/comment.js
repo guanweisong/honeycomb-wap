@@ -33,7 +33,7 @@ export default {
       console.log('comment=>model=>create', values);
       const result = yield call(commentsService.create, values);
       Toast.info('发布成功', 2);
-      const id = yield select(state => state.posts.detail._id);
+      const id = yield select(state => state.archives.detail._id);
       yield put({
         type: 'index',
         payload: id,

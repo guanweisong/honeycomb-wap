@@ -22,7 +22,6 @@ export default {
       return { ...state, list: payload };
     },
     setCurrentCategoryPath(state, { payload }) {
-      console.log(999, payload);
       return { ...state, currentCategoryPath: payload };
     },
     setMenuShow(state, { payload }) {

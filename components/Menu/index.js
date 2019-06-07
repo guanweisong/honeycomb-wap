@@ -33,7 +33,7 @@ class Menu extends Component {
             <li
               className={classNames({
                 [styles["menu-first__item"]]: true,
-                [styles["menu-first__item--active"]]: this.props.menu.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.pathname === '/'),
+                [styles["menu-first__item--active"]]: this.props.menu.currentCategoryPath[0] === firstLevel.category_title_en || (firstLevel.category_title_en === '' && this.props.router.asPath === '/'),
               })}
               key={firstLevel.category_title_en}
             >

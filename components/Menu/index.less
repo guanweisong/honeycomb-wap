@@ -9,6 +9,14 @@
       white-space: nowrap;
       list-style: none;
       border-top: 1px solid #e5e5e5;
+      &--active {
+        .menu-first__item-name {
+          a {
+            border-left: 5px solid #eb005d;
+            padding-left: 25px;
+          }
+        }
+      }
       &:first-child {
         border-top: none;
       }
@@ -31,6 +39,13 @@
       border-top: 1px dotted #ccc;
       list-style: none;
       padding-left: 40px;
+      &--active {
+        .menu-second__item-name {
+          a {
+            color: #eb005d;
+          }
+        }
+      }
     }
   }
 }

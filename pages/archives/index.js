@@ -29,10 +29,18 @@ class Archives extends Component {
     return {};
   }
   componentDidMount() {
+    const thisCategory = this.props.menu.list.find(item => item._id === this.props.archives.detail.post_category._id);
+    const parentCategory = this.props.menu.list.filter(item => item._id === thisCategory.category_parent);
+    const categoryPath = parentCategory.length > 0 ? [parentCategory[0].category_title_en, thisCategory.category_title_en] : [thisCategory.category_title_en];
+    this.props.dispatch({
+      type: 'menu/setCurrentCategoryPath',
+      payload: categoryPath,
+    });
     this.captcha = new TencentCaptcha('2090829333', (res) => {
       if (res.ret === 0) {
         let data = this.props.form.getFieldsValue();
-        data = { ...data, comment_post: this.props.posts.detail._id};
+        console.log(111, this.props);
+        data = { ...data, comment_post: this.props.archives.detail._id};
         if (this.props.comments.replyTo !== null) {
           data = { ...data, comment_parent: this.props.comments.replyTo._id };
         }
@@ -215,13 +223,16 @@ class Archives extends Component {
                   clear
                   placeholder="评论"
                 />
-                <Button
-                  type="primary"
-                  onClick={this.handleSubmit}
-                >
-                  提交
-                </Button>
               </List>
+              <Button
+                type="primary"
+                size="small"
+                inline={true}
+                style={{marginTop: '0.5rem'}}
+                onClick={this.handleSubmit}
+              >
+                提交
+              </Button>
             </div>
           </div>
         </div>
