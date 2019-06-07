@@ -39,12 +39,36 @@ class Category extends Component {
     }
     Router.pushRoute(`${this.props.router.pathname}${asPath.join('/')}?${param(query)}`);
   };
+  getTitle = () => {
+    console.log('getTitle', this.props);
+    const authorName = this.props.router.query.authorName;
+    const tagName = this.props.router.query.tagName;
+    if (authorName) {
+      return `作者“${authorName}”下的所有文章`;
+    } else if (tagName) {
+      return `标签“${tagName}”下的所有文章`;
+    } else {
+      return '';
+    }
+  };
+  generateTitle = () => {
+    const currentMenu = this.props.menu.list.find(item => item.category_title_en === this.props.menu.currentCategoryPath[this.props.menu.currentCategoryPath.length - 1]);
+    if (currentMenu) {
+      return `${currentMenu.category_title}_${this.props.setting.site_name}`;
+    }
+    if (this.getTitle() !== '') {
+      return `${this.getTitle()}_${this.props.setting.site_name}`
+    }
+    if (this.props.router.asPath === '/') {
+      return `首页_${this.props.setting.site_name}`
+    }
+  };
   render() {
     const { category } = this.props;
     const pageSize = Math.ceil(category.total/10);
     return (
       <div>
-        <Header/>
+        <Header title={this.generateTitle()}/>
         <Choose>
           <When condition={category.total > 0}>
             <div className={styles["post-list"]}>

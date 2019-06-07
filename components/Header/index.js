@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import { NavBar, Icon } from 'antd-mobile';
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
+import Head from 'next/head';
 import  './index.less';
 
 @withRouter
@@ -33,6 +33,9 @@ class Header extends Component {
         >
           {this.props.title || this.props.setting.site_name}
         </NavBar>
+        <Head>
+          <title>{this.props.title || this.props.setting.site_name}</title>
+        </Head>
       </div>
     )
   }

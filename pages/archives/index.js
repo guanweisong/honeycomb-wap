@@ -39,7 +39,6 @@ class Archives extends Component {
     this.captcha = new TencentCaptcha('2090829333', (res) => {
       if (res.ret === 0) {
         let data = this.props.form.getFieldsValue();
-        console.log(111, this.props);
         data = { ...data, comment_post: this.props.archives.detail._id};
         if (this.props.comments.replyTo !== null) {
           data = { ...data, comment_parent: this.props.comments.replyTo._id };
