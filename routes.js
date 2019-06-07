@@ -15,4 +15,14 @@ module.exports = routes()
     name: 'archives',
     pattern: '/archives/:id',
     page: 'archives'
+  })
+  .add({
+    name: 'tags',
+    pattern: '/tags/:tagName',
+    page: 'category'
+  })
+  .add({
+    name: 'authors',
+    pattern: '/authors/:authorName',
+    page: 'category'
   });

@@ -10,17 +10,26 @@ export default {
     *getListData({ payload: {params, menu} }, { call, put, select }) {
       console.log('CategoryStore__getListData', params);
       const condition = {};
-      const idEn = params.secondCategory || params.firstCategory;
-      if (idEn) {
-        condition._id = menu.list.find((item) => item.category_title_en === idEn)._id;
+      let result = {};
+      if (params.tagName){
+        condition.tag_name = params.tagName;
+        result = yield indexPostList(condition);
+      } else if(params.authorName) {
+        condition.user_name = params.authorName;
+        result = yield indexPostList(condition);
+      } else {
+        const idEn = params.secondCategory || params.firstCategory;
+        if (idEn) {
+          condition._id = menu.list.find((item) => item.category_title_en === idEn)._id;
+        }
+        if (params.page) {
+          condition.page = params.page;
+        }
+        if (params.limit) {
+          condition.limit = params.limit;
+        }
+        result = yield indexPostByCategoryId(condition);
       }
-      if (params.page) {
-        condition.page = params.page;
-      }
-      if (params.limit) {
-        condition.limit = params.limit;
-      }
-      const result = yield indexPostByCategoryId(condition);
       const data = {
         list: result.list,
         total: result.total,
