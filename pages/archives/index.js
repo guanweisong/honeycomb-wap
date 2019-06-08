@@ -23,6 +23,13 @@ class Archives extends Component {
       }
     });
     await props.dvaStore.dispatch({
+      type: 'archives/indexRandomPostByCategoryId',
+      payload: {
+        post_category: props.dvaStore.getState().archives.detail.post_category._id,
+        number: 10,
+      },
+    });
+    await props.dvaStore.dispatch({
       type: 'comments/index',
       payload: props.query.id,
     });
@@ -123,7 +130,7 @@ class Archives extends Component {
     })
   };
   render() {
-    const { detail } = this.props.archives;
+    const { detail, randomPostsList } = this.props.archives;
     const { getFieldProps } = this.props.form;
     return (
       <div>
@@ -160,6 +167,18 @@ class Archives extends Component {
             <div className={styles["detail__tags"]}>
               <i className="iconfont icon-tag"/>&nbsp;
               <Tags data={detail}/>
+            </div>
+          </If>
+          <If condition={randomPostsList.length > 0}>
+            <div className={styles["block"]}>
+              <div className={styles["block__title"]}>猜你喜欢</div>
+              <div className={styles["block__content"]}>
+                <ul className={styles["detail__post-list"]}>
+                  <For each="item" index="index" of={randomPostsList}>
+                    <li key={index}><Link to={`/archives/${item._id}`}><a className="link-light">{item.post_title}</a></Link></li>
+                  </For>
+                </ul>
+              </div>
             </div>
           </If>
           <div className={classNames({
