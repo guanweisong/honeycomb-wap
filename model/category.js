@@ -4,12 +4,21 @@ export default {
   namespace: 'category',
   state: {
     list: [],
-    total: 0,
+    page: 1,
+    isEnd: false,
+    currentPagePath: '/',
   },
   effects: {
-    *getListData({ payload: {params, menu} }, { call, put, select }) {
+    *getListData({ payload: {params, menu, currentPagePath} }, { call, put, select }) {
       console.log('CategoryStore__getListData', params);
       const condition = {};
+      condition.limit = 10;
+      const prevCurrentPagePath = yield select(store => store.category.currentPagePath);
+      if (prevCurrentPagePath !== currentPagePath) {
+        condition.page = 1;
+      } else {
+        condition.page = yield select(store => store.category.page);
+      }
       let result = {};
       if (params.tagName){
         condition.tag_name = params.tagName;
@@ -22,17 +31,12 @@ export default {
         if (idEn) {
           condition._id = menu.list.find((item) => item.category_title_en === idEn)._id;
         }
-        if (params.page) {
-          condition.page = params.page;
-        }
-        if (params.limit) {
-          condition.limit = params.limit;
-        }
         result = yield indexPostByCategoryId(condition);
       }
       const data = {
         list: result.list,
-        total: result.total,
+        isEnd: result.list.length === 0,
+        currentPagePath,
       };
       yield put({
         type: 'setListData',
@@ -50,9 +54,13 @@ export default {
     }
   },
   reducers: {
-    setListData(state, { payload: { list, total }}) {
-      console.log('CategoryStore__setListData', total);
-      return { ...state, list, total };
+    setListData(state, { payload: { list, isEnd, currentPagePath }}) {
+      console.log('CategoryStore__setListData');
+      if (currentPagePath !== state.currentPagePath) {
+        return { ...state, list, page: 2, isEnd: false, currentPagePath };
+      } else {
+        return { ...state, list: [...state.list, ...list], page: state.page + 1, isEnd, currentPagePath };
+      }
     }
   }
 }

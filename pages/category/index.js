@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import { Link, Router } from '../../routes';
 import { withRouter } from 'next/router';
-import { Pagination } from 'antd-mobile';
 import { connect } from 'react-redux';
-import param from "can-param";
+import debounce from 'debounce';
+import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import Header from '../../components/Header';
+import Signature from '../../components/Signature';
 import styles from './index.less';
 
 @withRouter
@@ -22,22 +23,44 @@ class Category extends Component {
       payload: {
         params: props.query,
         menu: props.dvaStore.getState().menu,
+        currentPagePath: props.asPath,
       }
     });
     return {};
   }
-  paginationChange = (current) => {
-    const query = {...this.props.router.query, page: current, limit: 10 };
-    const asPath = [];
-    if (query.firstCategory) {
-      asPath.push(query.firstCategory);
-      delete query.firstCategory;
+  componentDidMount() {
+    // 绑定滚动监听加载事件
+    this.scrollEvent = addEventListener(window, 'scroll', debounce(this.handleScrollLoad, 200));
+  }
+  componentWillUnmount() {
+    if (this.scrollEvent) {
+      this.scrollEvent.remove();
     }
-    if (query.secondCategory) {
-      asPath.push(query.secondCategory);
-      delete query.secondCategory;
+  }
+  /**
+   * 滚动加载事件
+   */
+  handleScrollLoad = () => {
+    const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    if (documentHeight - windowHeight - scrollTop < 100 && !this.props.category.isEnd) {
+      this.getList();
     }
-    Router.pushRoute(`${this.props.router.pathname}${asPath.join('/')}?${param(query)}`);
+  };
+  /**
+   * 异步获取数据
+   * @returns {*}
+   */
+  getList = () => {
+    this.props.dispatch({
+      type: 'category/getListData',
+      payload: {
+        params: this.props.router.query,
+        menu: this.props.menu,
+        currentPagePath: this.props.router.asPath,
+      }
+    });
   };
   getTitle = () => {
     console.log('getTitle', this.props);
@@ -65,12 +88,11 @@ class Category extends Component {
   };
   render() {
     const { category } = this.props;
-    const pageSize = Math.ceil(category.total/10);
     return (
       <div>
         <Header title={this.generateTitle()}/>
         <Choose>
-          <When condition={category.total > 0}>
+          <When condition={category.list.length > 0}>
             <div className={styles["post-list"]}>
               <For each="item" index="index" of={category.list}>
                 <Link route={`/archives/${item._id}`} key={index}>
@@ -85,12 +107,8 @@ class Category extends Component {
                 </Link>
               </For>
             </div>
-            <If condition={pageSize > 1}>
-              <Pagination
-                total={pageSize}
-                current={this.props.router.query.page * 1 || 1}
-                onChange={this.paginationChange}
-              />
+            <If condition={category.isEnd}>
+              <Signature text="到底了"/>
             </If>
           </When>
           <Otherwise>

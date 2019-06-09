@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import withDva from '../utils/withDva';
 import Layout from '../components/Layout';
 import '../node_modules/antd-mobile/dist/antd-mobile.less';
-// import "../node_modules/primer-markdown/index.scss";
 import './app.less';
 
 NProgress.configure({ showSpinner: false });
