@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Link, Router } from '../../routes';
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
+import { Result, Icon } from 'antd-mobile';
 import debounce from 'debounce';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import Header from '../../components/Header';
@@ -112,7 +113,9 @@ class Category extends Component {
             </If>
           </When>
           <Otherwise>
-            <div>没有内容</div>
+            <Result
+              message="该分类暂时没有文章哦！"
+            />
           </Otherwise>
         </Choose>
       </div>

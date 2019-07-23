@@ -8,7 +8,7 @@
     "analyze": "cross-env ANALYZE=1 next build"
   },
   "dependencies": {
-    "antd-mobile": "^2.2.8",
+    "antd-mobile": "^2.2.12",
     "axios": "^0.18.0",
     "can-param": "^1.1.1",
     "classnames": "^2.2.6",

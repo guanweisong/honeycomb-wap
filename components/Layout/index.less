@@ -2,10 +2,10 @@
   display: flex;
   width: 1050px;
   min-height: 100%;
-  transition: all .2s;
-  transform: translateX(-300px);
+  transition: transform .2s;
+  margin-left: -300px;
   &.show-menu {
-    transform: translateX(0);
+    transform: translateX(300px);
     .mask {
       z-index: 800;
       opacity: 1;
