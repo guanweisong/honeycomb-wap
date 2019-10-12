@@ -149,9 +149,6 @@ class Archives extends Component {
             <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
               <Link to={`/authors/${detail.post_author.user_name}`}><a className="link-light">{detail.post_author.user_name}</a></Link>
             </li>
-            <If condition={detail.post_type === 2}>
-              <li className={styles["detail__info-item"]}><i className="iconfont icon-environment"/>&nbsp;{detail.gallery_location}</li>
-            </If>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{moment(detail.created_at).format('YYYY-MM-DD')}</li>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{this.props.comments.total} Comments</li>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{detail.post_views}&nbsp;Views</li>
@@ -163,12 +160,17 @@ class Archives extends Component {
             })}
             dangerouslySetInnerHTML={{__html: detail.post_content}}
           />
-          <If condition={detail.post_type === 1 || detail.post_type === 2}>
-            <div className={styles["detail__tags"]}>
-              <i className="iconfont icon-tag"/>&nbsp;
-              <Tags data={detail}/>
-            </div>
-          </If>
+          <ul className={styles["detail__extra"]}>
+            <If condition={detail.post_type === 2}>
+              <li className={styles["detail__extra-item"]}><i className="iconfont icon-camera"/>&nbsp;{moment(detail.gallery_time).format('YYYY-MM-DD')}&nbsp;拍摄于&nbsp;{detail.gallery_location}</li>
+            </If>
+            <If condition={detail.post_type === 1}>
+              <li className={styles["detail__extra-item"]}><i className="iconfont icon-calendar"/>&nbsp;上映时间：{moment(detail.movie_time).format('YYYY-MM-DD')}</li>
+            </If>
+            <If condition={detail.post_type === 1 || detail.post_type === 2}>
+              <li className={styles["detail__extra-item"]}><i className="iconfont icon-tag"/>&nbsp;<Tags data={detail}/></li>
+            </If>
+          </ul>
           <If condition={randomPostsList.length > 0}>
             <div className={styles["block"]}>
               <div className={styles["block__title"]}>猜你喜欢</div>
