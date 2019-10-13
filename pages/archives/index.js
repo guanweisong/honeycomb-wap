@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { connect } from 'react-redux';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { List, InputItem, TextareaItem, Button, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
@@ -108,7 +108,7 @@ class Archives extends Component {
               </div>
             </div>
             <ul className={styles["detail__comment-info"]}>
-              <li className={styles["detail__comment-info-item"]}>{moment(item.created_at).format('YYYY-MM-DD')}</li>
+              <li className={styles["detail__comment-info-item"]}>{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
               <li
                 className={classNames({
                   [styles["detail__comment-info-item"]]: true,
@@ -137,7 +137,7 @@ class Archives extends Component {
         <Header title={
           <Choose>
             <When condition={detail.post_type === 1}>
-              {detail.post_title} {detail.movie_name_en} ({moment(detail.movie_time).format('YYYY')})
+              {detail.post_title} {detail.movie_name_en} ({dayjs(detail.movie_time).format('YYYY')})
             </When>
             <Otherwise>
               {detail.post_title}
@@ -149,7 +149,7 @@ class Archives extends Component {
             <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
               <Link to={`/authors/${detail.post_author.user_name}`}><a className="link-light">{detail.post_author.user_name}</a></Link>
             </li>
-            <li className={styles["detail__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{moment(detail.created_at).format('YYYY-MM-DD')}</li>
+            <li className={styles["detail__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{dayjs(detail.created_at).format('YYYY-MM-DD')}</li>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{this.props.comments.total} Comments</li>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{detail.post_views}&nbsp;Views</li>
           </ul>
@@ -162,10 +162,10 @@ class Archives extends Component {
           />
           <ul className={styles["detail__extra"]}>
             <If condition={detail.post_type === 2}>
-              <li className={styles["detail__extra-item"]}><i className="iconfont icon-camera"/>&nbsp;{moment(detail.gallery_time).format('YYYY-MM-DD')}&nbsp;拍摄于&nbsp;{detail.gallery_location}</li>
+              <li className={styles["detail__extra-item"]}><i className="iconfont icon-camera"/>&nbsp;{dayjs(detail.gallery_time).format('YYYY-MM-DD')}&nbsp;拍摄于&nbsp;{detail.gallery_location}</li>
             </If>
             <If condition={detail.post_type === 1}>
-              <li className={styles["detail__extra-item"]}><i className="iconfont icon-calendar"/>&nbsp;上映时间：{moment(detail.movie_time).format('YYYY-MM-DD')}</li>
+              <li className={styles["detail__extra-item"]}><i className="iconfont icon-calendar"/>&nbsp;上映时间：{dayjs(detail.movie_time).format('YYYY-MM-DD')}</li>
             </If>
             <If condition={detail.post_type === 1 || detail.post_type === 2}>
               <li className={styles["detail__extra-item"]}><i className="iconfont icon-tag"/>&nbsp;<Tags data={detail}/></li>
