@@ -145,6 +145,15 @@ class Archives extends Component {
           </Choose>
         }/>
         <div className={styles["detail__content"]}>
+          <If condition={detail.post_type === 3}>
+            <div
+              className={classNames({
+                [styles["detail__quote"]]: true,
+              })}
+            >
+              {`"${detail.quote_content}"——${detail.quote_author}`}
+            </div>
+          </If>
           <ul className={styles["detail__info"]}>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
               <Link to={`/authors/${detail.post_author.user_name}`}><a className="link-light">{detail.post_author.user_name}</a></Link>
@@ -153,31 +162,33 @@ class Archives extends Component {
             <li className={styles["detail__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{this.props.comments.total} Comments</li>
             <li className={styles["detail__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{detail.post_views}&nbsp;Views</li>
           </ul>
-          <div
-            className={classNames({
-              [styles["detail__detail"]]: true,
-              'markdown-body': true,
-            })}
-            dangerouslySetInnerHTML={{__html: detail.post_content}}
-          />
-          <ul className={styles["detail__extra"]}>
-            <If condition={detail.post_type === 2}>
-              <li className={styles["detail__extra-item"]}><i className="iconfont icon-camera"/>&nbsp;{dayjs(detail.gallery_time).format('YYYY-MM-DD')}&nbsp;拍摄于&nbsp;{detail.gallery_location}</li>
-            </If>
-            <If condition={detail.post_type === 1}>
-              <li className={styles["detail__extra-item"]}><i className="iconfont icon-calendar"/>&nbsp;上映时间：{dayjs(detail.movie_time).format('YYYY-MM-DD')}</li>
-            </If>
-            <If condition={detail.post_type === 1 || detail.post_type === 2}>
-              <li className={styles["detail__extra-item"]}><i className="iconfont icon-tag"/>&nbsp;<Tags data={detail}/></li>
-            </If>
-          </ul>
+          <If condition={[0, 1, 2].includes(detail.post_type)}>
+            <div
+              className={classNames({
+                [styles["detail__detail"]]: true,
+                'markdown-body': true,
+              })}
+              dangerouslySetInnerHTML={{__html: detail.post_content}}
+            />
+            <ul className={styles["detail__extra"]}>
+              <If condition={detail.post_type === 2}>
+                <li className={styles["detail__extra-item"]}><i className="iconfont icon-camera"/>&nbsp;{dayjs(detail.gallery_time).format('YYYY-MM-DD')}&nbsp;拍摄于&nbsp;{detail.gallery_location}</li>
+              </If>
+              <If condition={detail.post_type === 1}>
+                <li className={styles["detail__extra-item"]}><i className="iconfont icon-calendar"/>&nbsp;上映时间：{dayjs(detail.movie_time).format('YYYY-MM-DD')}</li>
+              </If>
+              <If condition={detail.post_type === 1 || detail.post_type === 2}>
+                <li className={styles["detail__extra-item"]}><i className="iconfont icon-tag"/>&nbsp;<Tags data={detail}/></li>
+              </If>
+            </ul>
+          </If>
           <If condition={randomPostsList.length > 0}>
             <div className={styles["block"]}>
               <div className={styles["block__title"]}>猜你喜欢</div>
               <div className={styles["block__content"]}>
                 <ul className={styles["detail__post-list"]}>
                   <For each="item" index="index" of={randomPostsList}>
-                    <li key={index}><Link to={`/archives/${item._id}`}><a className="link-light">{item.post_title}</a></Link></li>
+                    <li key={index}><Link to={`/archives/${item._id}`}><a className="link-light">{item.post_title || item.quote_content}</a></Link></li>
                   </For>
                 </ul>
               </div>

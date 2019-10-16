@@ -98,11 +98,13 @@ class Category extends Component {
               <For each="item" index="index" of={category.list}>
                 <Link route={`/archives/${item._id}`} key={index}>
                   <a className={styles["post-list__item"]}>
+                    <If condition={[0, 1, 2].includes(item.post_type)}>
                     <div className={styles["post-list__photo"]}>
                       <img src={`//${item.post_cover.media_url_360p || item.post_cover.media_url}`}/>
                     </div>
+                    </If>
                     <div className={styles["post-list__content"]}>
-                      {item.post_title}
+                      {item.post_title || `"${item.quote_content}"——${item.quote_author}`}
                     </div>
                   </a>
                 </Link>
