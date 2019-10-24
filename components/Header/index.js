@@ -22,7 +22,7 @@ class Header extends Component {
   };
   render () {
     return (
-      <div>
+      <>
         <NavBar
           mode="light"
           icon={<Icon type="left" color="#666"/>}
@@ -36,7 +36,7 @@ class Header extends Component {
         <Head>
           <title>{this.props.title || this.props.setting.site_name}</title>
         </Head>
-      </div>
+      </>
     )
   }
 }

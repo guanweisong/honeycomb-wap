@@ -133,7 +133,7 @@ class Archives extends Component {
     const { detail, randomPostsList } = this.props.archives;
     const { getFieldProps } = this.props.form;
     return (
-      <div>
+      <>
         <Header title={
           <Choose>
             <When condition={detail.post_type === 1}>
@@ -145,6 +145,14 @@ class Archives extends Component {
           </Choose>
         }/>
         <div className={styles["detail__content"]}>
+          <ul className={styles["detail__info"]}>
+            <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
+              <Link to={`/authors/${detail.post_author.user_name}`}><a className="link-light">{detail.post_author.user_name}</a></Link>
+            </li>
+            <li className={styles["detail__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{dayjs(detail.created_at).format('YYYY-MM-DD')}</li>
+            <li className={styles["detail__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{this.props.comments.total} Comments</li>
+            <li className={styles["detail__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{detail.post_views}&nbsp;Views</li>
+          </ul>
           <If condition={detail.post_type === 3}>
             <div
               className={classNames({
@@ -154,14 +162,6 @@ class Archives extends Component {
               {`"${detail.quote_content}"——${detail.quote_author}`}
             </div>
           </If>
-          <ul className={styles["detail__info"]}>
-            <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
-              <Link to={`/authors/${detail.post_author.user_name}`}><a className="link-light">{detail.post_author.user_name}</a></Link>
-            </li>
-            <li className={styles["detail__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{dayjs(detail.created_at).format('YYYY-MM-DD')}</li>
-            <li className={styles["detail__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{this.props.comments.total} Comments</li>
-            <li className={styles["detail__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{detail.post_views}&nbsp;Views</li>
-          </ul>
           <If condition={[0, 1, 2].includes(detail.post_type)}>
             <div
               className={classNames({
@@ -267,7 +267,7 @@ class Archives extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }

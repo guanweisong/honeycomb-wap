@@ -1,23 +1,45 @@
 .post-list {
+  padding-top: 1PX;
   &__item {
-    display: flex;
-    border-top: 1PX dashed #eee;
-    padding: 20px;
+    display: block;
     color: #333;
-    &:first-child {
-      margin-top: 0;
-      border-top: none;
+    margin: 20px;
+    background: #fff;
+    &.post {
+
+    }
+    &.gallery {
+
+    }
+    &.movie {
+
+    }
+    &.quote {
+      .post-list__content {
+        font-style: italic;
+      }
     }
   }
   &__photo {
-    width: 320px;
     img {
       display: block;
       width: 100%;
     }
   }
   &__content {
-    flex: 1;
-    margin-left: 20px;
+    padding: 20px;
+  }
+  &__info {
+    border-top: 1PX dashed #d9d9d9;
+    padding: 20px;
+    list-style: none;
+    a {
+      color: #999!important;
+    }
+    &-item {
+      color: #999;
+      display: inline-block;
+      margin: 10px 20px 0 0;
+    }
   }
 }

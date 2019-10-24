@@ -4,10 +4,14 @@ import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { Result, Icon } from 'antd-mobile';
 import debounce from 'debounce';
+import classNames from 'classnames';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import Header from '../../components/Header';
+import Tags from '../../components/Tags';
 import Signature from '../../components/Signature';
+import { postClass, postIcon} from '../../utils/mapping';
 import styles from './index.less';
+import dayjs from "dayjs";
 
 @withRouter
 @connect(state => state)
@@ -90,22 +94,46 @@ class Category extends Component {
   render() {
     const { category } = this.props;
     return (
-      <div>
+      <>
         <Header title={this.generateTitle()}/>
         <Choose>
           <When condition={category.list.length > 0}>
             <div className={styles["post-list"]}>
               <For each="item" index="index" of={category.list}>
                 <Link route={`/archives/${item._id}`} key={index}>
-                  <a className={styles["post-list__item"]}>
+                  <a
+                    className={classNames({
+                      [styles["post-list__item"]]: true,
+                      [styles[postClass[item.post_type]]]: true,
+                    })}
+                  >
                     <If condition={[0, 1, 2].includes(item.post_type)}>
-                    <div className={styles["post-list__photo"]}>
-                      <img src={`//${item.post_cover.media_url_360p || item.post_cover.media_url}`}/>
-                    </div>
+                      <div className={styles["post-list__photo"]}>
+                        <img src={`//${item.post_cover.media_url_360p || item.post_cover.media_url}`}/>
+                      </div>
                     </If>
                     <div className={styles["post-list__content"]}>
-                      {item.post_title || `"${item.quote_content}"——${item.quote_author}`}
+                      <If condition={item.post_type === 1}>
+                        {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
+                      </If>
+                      <If condition={[0, 2].includes(item.post_type)}>
+                        {item.post_title}
+                      </If>
+                      <If condition={item.post_type === 3}>
+                        “{item.quote_content}” —— {item.quote_author}
+                      </If>
                     </div>
+                    <ul className={styles["post-list__info"]}>
+                      <If condition={item.post_type === 1 || item.post_type === 2}>
+                        <li className={styles["post-list_info-item"]}>
+                          <i className="iconfont icon-tag"/>&nbsp;
+                          <Tags data={item}/>
+                        </li>
+                      </If>
+                      <li className={styles["post-list__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
+                      <li className={styles["post-list__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{item.comment_count} Comments</li>
+                      <li className={styles["post-list__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{item.post_views}&nbsp;Views</li>
+                    </ul>
                   </a>
                 </Link>
               </For>
@@ -120,7 +148,7 @@ class Category extends Component {
             />
           </Otherwise>
         </Choose>
-      </div>
+      </>
     )
   }
 }
