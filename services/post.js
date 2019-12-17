@@ -3,25 +3,24 @@ import request from '../utils/request';
 export const indexPostList = (params) => {
   console.log('category=>service=>indexPostList');
   return request({
-    url: '/posts',
+    url: '/posts/list',
     method: 'get',
     params: params,
   })
 };
 
-export const indexPostByCategoryId = (params) => {
-  console.log('category=>service=>indexPostByCategoryId');
+export const indexPostDetail = (params) => {
+  console.log('post=>service=>indexPostDetail');
   return request({
-    url: '/posts/indexPostByCategoryId',
+    url: `/posts/detail/${params._id}`,
     method: 'get',
-    params: params,
   })
-};
+}
 
 export const indexRandomPostByCategoryId = (params) => {
   console.log('category=>service=>indexRandomPostByCategoryId');
   return request({
-    url: '/posts/indexRandomPostByCategoryId',
+    url: '/posts/list/random',
     method: 'get',
     params: params,
   })

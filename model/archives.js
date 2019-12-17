@@ -1,4 +1,4 @@
-import { indexPostList, indexRandomPostByCategoryId } from "../services/post";
+import { indexPostDetail, indexRandomPostByCategoryId } from "../services/post";
 
 export default {
   namespace: 'archives',
@@ -9,8 +9,8 @@ export default {
   effects: {
     *getDetailData({ payload: values }, { put, select }) {
       console.log('ArchivesStore__getDetailData');
-      const result = yield indexPostList(values);
-      const post = result.list[0];
+      const result = yield indexPostDetail(values);
+      const post = result;
       yield put({
         type: 'setDetailData',
         payload: post,

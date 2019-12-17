@@ -1,4 +1,4 @@
-import { indexPostList, indexPostByCategoryId } from '../services/post';
+import { indexPostList } from '../services/post';
 
 export default {
   namespace: 'category',
@@ -29,9 +29,9 @@ export default {
       } else {
         const idEn = params.secondCategory || params.firstCategory;
         if (idEn) {
-          condition._id = menu.list.find((item) => item.category_title_en === idEn)._id;
+          condition.category_id = menu.list.find((item) => item.category_title_en === idEn)._id;
         }
-        result = yield indexPostByCategoryId(condition);
+        result = yield indexPostList(condition);
       }
       const data = {
         list: result.list,
