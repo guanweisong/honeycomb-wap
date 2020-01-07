@@ -18,11 +18,11 @@ module.exports = routes()
   })
   .add({
     name: 'tags',
-    pattern: '/tags/:tagName',
+    pattern: '/tags/:tag_name',
     page: 'category'
   })
   .add({
     name: 'authors',
-    pattern: '/authors/:authorName',
+    pattern: '/authors/:user_name',
     page: 'category'
   });

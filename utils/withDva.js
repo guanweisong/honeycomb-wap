@@ -1,6 +1,6 @@
 import React from 'react';
 import dva from 'dva-no-router';
-import models from '../model/index';
+import models from '@/models/index';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_DVA_STORE__ = '__NEXT_DVA_STORE__';

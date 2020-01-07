@@ -8,6 +8,7 @@ const withSourceMaps = require('@zeit/next-source-maps')();
 
 const nextConfig = {
   webpack: (config, options) => {
+    config.resolve.alias["@"] = path.join(__dirname, "./");
     return config;
   }
 };

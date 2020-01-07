@@ -7,6 +7,15 @@
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
     "jsx-control-statements",
     [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "@": "./"
+        }
+      }
+    ],
+    [
       "import",
       {
         "libraryName": "antd-mobile"

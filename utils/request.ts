@@ -13,10 +13,9 @@ instance.interceptors.request.use(config=>{
 });
 
 instance.interceptors.response.use(res=>{
-  console.log('request=>success', res.data);
-  return res.data;
+  return res;
 }, err => {
-  console.log('request=>err', err);
+  console.error('request=>err', err.response.data.error);
 });
 
 export default instance;
