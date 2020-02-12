@@ -9,7 +9,6 @@ export default class MyDocument extends Document {
           <link rel="shortcut icon" href="/static/images/favicon.ico" />
           <link rel='stylesheet' type='text/css' href='https://unpkg.com/nprogress@0.2.0/nprogress.css' />
           <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1162161_wn0uyy5zu5k.css" />
-          <script src="/static/javacripts/flexible.js"/>
           <script src="https://ssl.captcha.qq.com/TCaptcha.js" />
         </Head>
         <body>
