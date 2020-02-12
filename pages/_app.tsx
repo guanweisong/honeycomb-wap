@@ -5,6 +5,8 @@ import NProgress from 'nprogress';
 import { Provider } from 'react-redux';
 import withDva from '@/utils/withDva';
 import Layout from '@/components/Layout';
+// @ts-ignore
+import withGA from 'next-ga';
 import '@/node_modules/antd-mobile/dist/antd-mobile.less';
 import './app.less';
 
@@ -50,4 +52,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default withGA("UA-158268354-2", Router)(MyApp);

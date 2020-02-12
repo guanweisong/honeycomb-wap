@@ -2461,7 +2461,7 @@ debug@=3.1.0:
   dependencies:
     ms "2.0.0"
 
-debug@^4.1.0:
+debug@^4.0.0, debug@^4.1.0:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/debug/download/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha1-O3ImAlUQnGtYnO4FDx1RYTlmR5E=
@@ -4289,6 +4289,14 @@ next-compose-plugins@^2.1.1:
   resolved "https://registry.npm.taobao.org/next-compose-plugins/download/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
   integrity sha1-lc2OtAqwZSBw12Vy+2SDVBkWKLA=
 
+next-ga@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.npm.taobao.org/next-ga/download/next-ga-2.3.4.tgz#0bec23e7c2eea35485af0b342e7794bbbdb61d04"
+  integrity sha1-C+wj58Luo1SFrws0LneUu722HQQ=
+  dependencies:
+    debug "^4.0.0"
+    react-ga "^2.5.3"
+
 next-routes@^1.4.2:
   version "1.4.2"
   resolved "https://registry.npm.taobao.org/next-routes/download/next-routes-1.4.2.tgz#736a382579a792ea69f35ae70b449acdfefa7944"
@@ -5603,6 +5611,11 @@ react-error-overlay@5.1.6:
   version "5.1.6"
   resolved "https://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha1-DNc0B8XRQfljiuHgxj57K/fpkp0=
+
+react-ga@^2.5.3:
+  version "2.7.0"
+  resolved "https://registry.npm.taobao.org/react-ga/download/react-ga-2.7.0.tgz#24328f157f31e8cffbf4de74a3396536679d8d7c"
+  integrity sha1-JDKPFX8x6M/79N50ozllNmedjXw=
 
 react-is@16.8.6:
   version "16.8.6"
