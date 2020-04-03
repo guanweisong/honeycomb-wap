@@ -5,8 +5,10 @@ const fs = require('fs');
 const path = require('path');
 const withBundleAnalyzer = require("@next/bundle-analyzer")({ enabled: process.env.ANALYZE === '1' });
 const withSourceMaps = require('@zeit/next-source-maps')();
+const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  assetPrefix: isProd ? 'https://cdn.m.guanweisong.com' : '',
   webpack: (config, options) => {
     config.resolve.alias["@"] = path.join(__dirname, "./");
     return config;
