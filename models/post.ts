@@ -75,6 +75,8 @@ const Model: PostModelType = {
       });
       const result = yield call(postsService.indexPostDetail, payload);
       const post = result.data;
+      // 替换图片为720P尺寸
+      post.post_content = post.post_content.replace(/.jpg/g,'_720p.jpg');
       yield put({
         type: 'saveDetailData',
         payload: post,
