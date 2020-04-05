@@ -33,6 +33,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-decorators": "^7.1.0",
+    "@babel/runtime": "^7.9.2",
     "@next/bundle-analyzer": "^9.0.5",
     "@types/classnames": "^2.2.9",
     "@types/debounce": "^1.2.0",
