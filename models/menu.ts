@@ -36,7 +36,7 @@ const Model: MenuModelType = {
       if (result.status === 200) {
         yield put({
           type: 'setMenu',
-          payload: result.data.son,
+          payload: result.data.list,
         });
       }
     },
