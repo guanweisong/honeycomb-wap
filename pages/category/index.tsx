@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 // @ts-ignore
 import { Link } from '@/routes';
 // @ts-ignore
@@ -23,7 +23,7 @@ import Helper from '@/utils/helper';
 import styles from './index.less';
 import dayjs from "dayjs";
 
-interface CategoryProps {  
+interface CategoryProps {
   dispatch: Dispatch<AnyAction>;
   router: NextRouter;
 }
@@ -35,18 +35,19 @@ const Category: NextPage<CategoryProps> = (props) => {
   const post = useSelector<GlobalStoreType, PostStateType>(state => state.post);
   const dispatch = useDispatch();
 
+  const handleScrollLoad = () => {
+    const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    if (documentHeight - windowHeight - scrollTop < 500) {
+      getList();
+    }
+  };
+
   /**
    * 绑定滚动监听加载事件
    */
   useEffect(()=> {
-    const handleScrollLoad = () => {
-      const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      if (documentHeight - windowHeight - scrollTop < 500) {
-        getList();
-      }
-    };
     const scrollEvent = addEventListener(window, 'scroll', throttle(500, () => handleScrollLoad()));
     return () => {
       scrollEvent.remove();
@@ -192,7 +193,7 @@ const Category: NextPage<CategoryProps> = (props) => {
           message="该分类暂时没有文章哦！"
         />
       }
-    </>  
+    </>
   )
 }
 // @ts-ignore
