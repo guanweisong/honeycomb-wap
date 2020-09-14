@@ -26,7 +26,7 @@ module.exports = withPlugins([
     lessLoaderOptions: {
       javascriptEnabled: true,
       modifyVars: lessToJS(
-        fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8')
+        fs.readFileSync(path.resolve(__dirname, './src/assets/antd-custom.less'), 'utf8')
       )
     }
   }),
