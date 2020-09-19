@@ -192,38 +192,46 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   return {
     props,
-    revalidate: 60,
+    revalidate: 60 * 60, // 列表页静态页面生命1小时
   };
 }
 
+/**
+ * 构建时无必要预生产静态页面，运行时生成即可
+ */
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const allPath = [] as any
+//   // 根据菜单分类构建路径
+//   let categoryPaths: any = []
+//   const queryMenuResult = await MenuServer.indexMenu()
+//   if (queryMenuResult.status === 200) {
+//     const menu = queryMenuResult.data.list
+//     categoryPaths = Helper.getAllPathByMenu(menu)
+//   }
+//   categoryPaths.forEach((item: any) => {
+//     let path = ['/list/category']
+//     item.firstCategory && path.push(`/${item.firstCategory}`)
+//     item.secondCategory && path.push(`/${item.secondCategory}`)
+//     allPath.push(path.join(''))
+//   })
+//
+//   // 根据tags标签构建路径
+//   const queryTagResult = await TagServer.indexList({limit: 1, page: 1})
+//   if (queryTagResult.status === 200) {
+//     queryTagResult.data.list.forEach((item: any) => {
+//       allPath.push(`/list/tags/${item.tag_name}`)
+//     })
+//   }
+//
+//   return {
+//     paths: allPath,
+//     fallback: true,
+//   }
+// }
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPath = [] as any
-  // 根据菜单分类构建路径
-  let categoryPaths: any = []
-  const queryMenuResult = await MenuServer.indexMenu()
-  if (queryMenuResult.status === 200) {
-    const menu = queryMenuResult.data.list
-    categoryPaths = Helper.getAllPathByMenu(menu)
-  }
-  categoryPaths.forEach((item: any) => {
-    let path = ['/list/category']
-    item.firstCategory && path.push(`/${item.firstCategory}`)
-    item.secondCategory && path.push(`/${item.secondCategory}`)
-    allPath.push(path.join(''))
-  })
-
-  // 根据tags标签构建路径
-  const queryTagResult = await TagServer.indexList({limit: 999999, page: 1})
-  if (queryTagResult.status === 200) {
-    queryTagResult.data.list.forEach((item: any) => {
-      allPath.push(`/list/tags/${item.tag_name}`)
-    })
-  }
-
-  // console.log('allPath', allPath)
-
   return {
-    paths: allPath,
+    paths: [],
     fallback: true,
   }
 }

@@ -152,6 +152,10 @@ const Archives: NextPage<ArchivesProps> = (props) => {
     })
   };
 
+  if (!postDetail) {
+    return null
+  }
+
   return (
     <>
       <Header
@@ -374,14 +378,25 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props,
-    revalidate: 60,
+    revalidate: 60 * 60 * 24,  // 详情页静态页面生命1天
   }
 }
 
+/**
+ * 构建时无必要预生产静态页面，运行时生成即可
+ */
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const allPosts = await PostServer.indexPostList({limit: 1})
+//   const allPath = allPosts.data.list.map((post:PostType) => `/archives/${post._id}`) || []
+//   return {
+//     paths: allPath,
+//     fallback: true,
+//   }
+// }
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts = await PostServer.indexPostList({limit: 9999999})
   return {
-    paths: allPosts.data.list.map((post:PostType) => `/archives/${post._id}`) || [],
+    paths: [],
     fallback: true,
   }
 }
