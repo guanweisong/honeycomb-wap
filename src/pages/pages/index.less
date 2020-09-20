@@ -1,0 +1,144 @@
+.detail {
+  &__content {
+    background: #fff;
+    padding: 20px 30px;
+    &.post {
+    }
+    &.movie {
+    }
+    &.gallery {
+    }
+    &.quote {
+      .detail__title {
+        text-align: left;
+        font-style: italic;
+      }
+    }
+  }
+  &__title {
+    font-size: 24px;
+    text-align: center;
+  }
+  &__info {
+    text-align: center;
+    padding: 15px 0;
+    border: dashed #ddd;
+    border-width: 1px 0;
+    &-item {
+      display: inline-block;
+      color: #999;
+      &:before {
+        display: inline-block;
+        margin: 0 5px;
+        content: '/';
+      }
+      &:first-child {
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+  &__detail {
+    padding: 30px 0;
+  }
+  &__extra {
+    border-top: 1px dashed #ddd;
+    padding-top: 15px;
+    color: #666;
+    list-style: none;
+    &-item {
+      margin-right: 10px;
+      display: inline-block;
+    }
+  }
+  &__comment {
+    &-list {
+      ul {
+        padding-left: 30px;
+      }
+    }
+    &-wrap {
+      border-bottom: 1px dashed #ddd;
+      padding: 20px 0;
+      overflow: hidden;
+    }
+    &-item {
+      position: relative;
+      list-style: none;
+    }
+    &-photo {
+      float: left;
+      width: 48px;
+      height: 48px;
+      margin-right: 20px;
+    }
+    &-content {
+      overflow: hidden;
+    }
+    &-info {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      &-item {
+        display: inline-block;
+        &--reply {
+          color: #eb005d;
+          cursor: pointer;
+        }
+        &:before {
+          display: inline-block;
+          margin: 0 5px;
+          content: '/';
+          color: #999;
+        }
+        &:first-child {
+          &:before {
+            display: none;
+          }
+        }
+      }
+    }
+    &-name {
+      color: #eb005d;
+      font-size: 16px;
+    }
+    &-text {
+      margin-top: 5px;
+      color: #999;
+    }
+    &-reply {
+      margin-bottom: 10px;
+      &-label {
+        color: #eb005d;
+      }
+      &-name {
+        margin: 0 10px;
+      }
+      &-cancel {
+        cursor: pointer;
+        color: #999;
+      }
+    }
+  }
+  &__post-list {
+    list-style-position: inside;
+    list-style-type: circle;
+    line-height: 2;
+  }
+}
+
+.block {
+  margin: 50px 0;
+  &__title {
+    padding: 10px 30px;
+    margin-top: 50px;
+    background: #fff;
+    border-bottom: 4px solid #eee;
+    font-size: 18px;
+  }
+  &__content {
+    padding: 20px 30px;
+    background: #fff;
+  }
+}
