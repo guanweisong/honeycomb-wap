@@ -185,9 +185,9 @@ const Archives: NextPage<ArchivesProps> = (props) => {
           <li className={styles["detail__info-item"]}>
             <i className="iconfont icon-chat"/>&nbsp;{comment.total} 条留言
           </li>
-          <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-eye"/>&nbsp;{postDetail.post_views}&nbsp;次浏览
-          </li>
+          {/*<li className={styles["detail__info-item"]}>*/}
+          {/*  <i className="iconfont icon-eye"/>&nbsp;{postDetail.post_views}&nbsp;次浏览*/}
+          {/*</li>*/}
         </ul>
         <If condition={postDetail.post_type === 3}>
           <div

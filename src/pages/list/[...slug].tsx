@@ -103,8 +103,8 @@ const Category: NextPage<CategoryProps> = (props) => {
                           </li>
                         </If>
                         <li className={styles["post-list__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
-                        <li className={styles["post-list__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{item.comment_count} Comments</li>
-                        <li className={styles["post-list__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{item.post_views}&nbsp;Views</li>
+                        <li className={styles["post-list__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{item.comment_count} 条留言</li>
+                        {/*<li className={styles["post-list__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{item.post_views}&nbsp;Views</li>*/}
                       </ul>
                     </div>
                   </Link>
