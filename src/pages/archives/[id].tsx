@@ -35,6 +35,7 @@ export interface commentProps {
 }
 
 const Archives: NextPage<ArchivesProps> = (props) => {
+
   const { postDetail, randomPostsList, id, setting, menu } = props
   const [form] = useForm()
 
@@ -42,8 +43,10 @@ const Archives: NextPage<ArchivesProps> = (props) => {
   const [replyTo, setReplyTo] = useState<CommentType | null>(null)
 
   useEffect(() => {
-    getComment()
-  }, [])
+    if (id) {
+      getComment()
+    }
+  }, [id])
 
   /**
    * 获取评论数据
@@ -373,7 +376,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const promiseAllResult = await Promise.all(promise)
 
   props.menu = promiseAllResult[0].data.list
-  props.randomPostsList = promiseAllResult[1].data
+  props.randomPostsList = promiseAllResult[1].data?.filter((item: CommentType) => item._id !== id)
   props.setting = promiseAllResult[2].data
 
   return {

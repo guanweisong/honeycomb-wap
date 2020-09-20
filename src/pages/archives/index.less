@@ -120,7 +120,13 @@
   &__post-list {
     list-style: inside circle;
     margin-top: 10px;
-    line-height: 2;
+    line-height: 1.5;
+    li {
+      margin-top:10px;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
   }
 }
 
