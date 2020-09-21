@@ -82,19 +82,21 @@ const Category: NextPage<CategoryProps> = (props) => {
                           <img src={`//${item.post_cover?.media_url_360p || item.post_cover?.media_url}`}/>
                         </div>
                       </If>
-                      <div className={styles["post-list__content"]}>
-                        <If condition={item.post_type === 1}>
-                          <>
-                            {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
-                          </>
-                        </If>
-                        <If condition={[0, 2].includes(item.post_type)}>
-                          {item.post_title}
-                        </If>
-                        <If condition={item.post_type === 3}>
-                          <>“{item.quote_content}” —— {item.quote_author}</>
-                        </If>
-                      </div>
+                      <Link href={`/archives/${item._id}`}>
+                        <a className={styles["post-list__content"]}>
+                          <If condition={item.post_type === 1}>
+                            <>
+                              {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
+                            </>
+                          </If>
+                          <If condition={[0, 2].includes(item.post_type)}>
+                            {item.post_title}
+                          </If>
+                          <If condition={item.post_type === 3}>
+                            <>“{item.quote_content}” —— {item.quote_author}</>
+                          </If>
+                        </a>
+                      </Link>
                       <ul className={styles["post-list__info"]}>
                         <If condition={item.post_type === 1 || item.post_type === 2}>
                           <li className={styles["post-list_info-item"]}>

@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:14 AS Builder
+FROM mhart/alpine-node:12 AS Builder
 
 WORKDIR /usr/src/h5
 COPY package.json yarn.lock /usr/src/h5/
