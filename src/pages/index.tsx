@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useRouter } from 'next/router'
 
 const Index = () => {
   const router = useRouter()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     router.replace('/list/category')
   }, [])
 
