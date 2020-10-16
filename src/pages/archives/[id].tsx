@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import classNames from 'classnames'
 import Link from 'next/link'
@@ -14,6 +14,7 @@ import MenuServer from "@/src/services/menu"
 import { SettingType } from "@/src/types/setting"
 import SettingServer from "@/src/services/setting"
 import Card from "@/src/components/Card"
+import ViewServer from "@/src/services/view"
 
 // @ts-ignore
 import { If, When, Otherwise, Choose } from 'babel-plugin-jsx-control-statements'
@@ -32,6 +33,18 @@ const Archives: NextPage<ArchivesProps> = (props) => {
 
   const { postDetail, randomPostsList, id, setting, menu } = props
   const [commentCount, setCommentCount] = useState<number>(0)
+  const [views, setViews] = useState<null | number>(null)
+
+  useEffect(() => {
+    if (id) {
+      ViewServer.updateViews({ type: 'post', id})
+      ViewServer.indexViews({ type: 'post', id}).then(result => {
+        if (result.status === 200) {
+          setViews(result.data.count)
+        }
+      }).catch(e => console.error(e))
+    }
+  }, [id])
 
   const getCommentCount = (total: number) => {
     setCommentCount(total)
@@ -67,9 +80,9 @@ const Archives: NextPage<ArchivesProps> = (props) => {
           <li className={styles["detail__info-item"]}>
             <i className="iconfont icon-chat"/>&nbsp;{commentCount} 条留言
           </li>
-          {/*<li className={styles["detail__info-item"]}>*/}
-          {/*  <i className="iconfont icon-eye"/>&nbsp;{postDetail.post_views}&nbsp;次浏览*/}
-          {/*</li>*/}
+          <li className={styles["detail__info-item"]}>
+            <i className="iconfont icon-eye"/>&nbsp;{views || postDetail.post_views}&nbsp;次浏览
+          </li>
         </ul>
         <If condition={postDetail.post_type === 3}>
           <div

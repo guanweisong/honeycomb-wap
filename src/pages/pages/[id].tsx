@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import styles from './index.less'
@@ -13,6 +13,7 @@ import Header from "@/src/components/Header"
 import Link from "next/link"
 import Footer from "@/src/components/Footer"
 import Comment from "@/src/components/Commont"
+import ViewServer from "@/src/services/view"
 
 interface PagesProps {
   id: string
@@ -25,6 +26,18 @@ const Pages: NextPage<PagesProps> = (props) => {
 
   const { pageDetail, id, setting, menu } = props
   const [commentCount, setCommentCount] = useState<number>(0)
+  const [views, setViews] = useState<null | number>(null)
+
+  useEffect(() => {
+    if (id) {
+      ViewServer.updateViews({ type: 'page', id})
+      ViewServer.indexViews({ type: 'page', id}).then(result => {
+        if (result.status === 200) {
+          setViews(result.data.count)
+        }
+      }).catch(e => console.error(e))
+    }
+  }, [id])
 
   const getCommentCount = (total: number) => {
     setCommentCount(total)
@@ -55,9 +68,9 @@ const Pages: NextPage<PagesProps> = (props) => {
           <li className={styles["detail__info-item"]}>
             <i className="iconfont icon-chat"/>&nbsp;{commentCount} 条留言
           </li>
-          {/*<li className={styles["detail__info-item"]}>*/}
-          {/*  <i className="iconfont icon-eye"/>&nbsp;{pageDetail.page_views}&nbsp;次浏览*/}
-          {/*</li>*/}
+          <li className={styles["detail__info-item"]}>
+            <i className="iconfont icon-eye"/>&nbsp;{views || pageDetail.page_views}&nbsp;次浏览
+          </li>
         </ul>
         <div
           className={classNames({
