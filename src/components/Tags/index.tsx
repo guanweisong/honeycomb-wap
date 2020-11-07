@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import { TagType } from '@/src/types/tag';
-import { PostType} from '@/src/types/post';
+import React from 'react'
+import Link from 'next/link'
+import { TagType } from '@/src/types/tag'
+import { PostType} from '@/src/types/post'
 
 const Tag = (props: PostType) => {
 

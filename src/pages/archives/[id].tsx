@@ -15,6 +15,7 @@ import { SettingType } from "@/src/types/setting"
 import SettingServer from "@/src/services/setting"
 import Card from "@/src/components/Card"
 import ViewServer from "@/src/services/view"
+import Icon from "@/src/components/Icon"
 
 // @ts-ignore
 import { If, When, Otherwise, Choose } from 'babel-plugin-jsx-control-statements'
@@ -69,19 +70,19 @@ const Archives: NextPage<ArchivesProps> = (props) => {
       />
       <div className={styles["detail__content"]}>
         <ul className={styles["detail__info"]}>
-          <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
+          <li className={styles["detail__info-item"]}><Icon name="user"/>&nbsp;
             <Link href={`/list/authors/${postDetail.post_author.user_name}`}>
               <a className="link-light">{postDetail.post_author.user_name}</a>
             </Link>
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-clock"/>&nbsp;{dayjs(postDetail.created_at).format('YYYY-MM-DD')}
+            <Icon name="clock"/>&nbsp;{dayjs(postDetail.created_at).format('YYYY-MM-DD')}
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-chat"/>&nbsp;{commentCount} 条留言
+            <Icon name="message"/>&nbsp;{commentCount} 条留言
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-eye"/>&nbsp;{views || postDetail.post_views}&nbsp;次浏览
+            <Icon name="eye"/>&nbsp;{views || postDetail.post_views}&nbsp;次浏览
           </li>
         </ul>
         <If condition={postDetail.post_type === 3}>
@@ -106,7 +107,8 @@ const Archives: NextPage<ArchivesProps> = (props) => {
             <ul className={styles["detail__extra"]}>
               <If condition={postDetail.post_type === 2}>
                 <li className={styles["detail__extra-item"]}>
-                  <i className="iconfont icon-camera"/>&nbsp;
+                  <Icon name="camera"/>
+                  &nbsp;
                   {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp;
                   拍摄于&nbsp;
                   {postDetail.gallery_location}
@@ -114,13 +116,13 @@ const Archives: NextPage<ArchivesProps> = (props) => {
               </If>
               <If condition={postDetail.post_type === 1}>
                 <li className={styles["detail__extra-item"]}>
-                  <i className="iconfont icon-calendar"/>&nbsp;
+                  <Icon name="calendar"/>&nbsp;
                   上映时间：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
                 </li>
               </If>
               <If condition={postDetail.post_type === 1 || postDetail.post_type === 2}>
                 <li className={styles["detail__extra-item"]}>
-                  <i className="iconfont icon-tag"/>&nbsp;
+                  <Icon name="tag"/>&nbsp;
                   <Tags {...postDetail} />
                 </li>
               </If>

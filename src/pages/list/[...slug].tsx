@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Result } from 'antd-mobile';
-import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
-import classNames from 'classnames';
-import Header from '@/src/components/Header';
-import Tags from '@/src/components/Tags';
-import Signature from '@/src/components/Signature';
-import { postClass } from '@/src/utils/mapping';
+import React, { useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Result } from 'antd-mobile'
+import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
+import classNames from 'classnames'
+import Header from '@/src/components/Header'
+import Tags from '@/src/components/Tags'
+import Signature from '@/src/components/Signature'
+import { postClass } from '@/src/utils/mapping'
 import Helper from '@/src/utils/helper';
-import styles from './index.less';
-import dayjs from "dayjs";
+import styles from './index.less'
+import dayjs from "dayjs"
 import PostServer, { IIndexPostListParamsType } from "@/src/services/post"
 import MenuServer from "@/src/services/menu"
 import { PostType } from "@/src/types/post"
 import {MenuType} from "@/src/types/menu"
 import {SettingType} from "@/src/types/setting"
 import SettingServer from "@/src/services/setting"
-import TagServer from "@/src/services/tag"
+import Icon from "@/src/components/Icon"
 
 interface CategoryProps {
   post: {
@@ -100,13 +100,13 @@ const Category: NextPage<CategoryProps> = (props) => {
                       <ul className={styles["post-list__info"]}>
                         <If condition={item.post_type === 1 || item.post_type === 2}>
                           <li className={styles["post-list_info-item"]}>
-                            <i className="iconfont icon-tag"/>&nbsp;
+                            <Icon name={"tag"}/>&nbsp;
                             <Tags {...item}/>
                           </li>
                         </If>
-                        <li className={styles["post-list__info-item"]}><i className="iconfont icon-clock"/>&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
-                        <li className={styles["post-list__info-item"]}><i className="iconfont icon-chat"/>&nbsp;{item.comment_count}&nbsp;条留言</li>
-                        <li className={styles["post-list__info-item"]}><i className="iconfont icon-eye"/>&nbsp;{item.post_views}&nbsp;次浏览</li>
+                        <li className={styles["post-list__info-item"]}><Icon name={"clock"} />&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
+                        <li className={styles["post-list__info-item"]}><Icon name={"message"}/>&nbsp;{item.comment_count}&nbsp;条留言</li>
+                        <li className={styles["post-list__info-item"]}><Icon name={"eye"}/>&nbsp;{item.post_views}&nbsp;次浏览</li>
                       </ul>
                     </div>
                   </Link>
