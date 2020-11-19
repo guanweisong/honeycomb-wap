@@ -1,4 +1,33 @@
 .nav {
   position: relative;
   z-index: 100;
+  &__wrap {
+    background: #fff;
+    margin-bottom: 10px;
+  }
+  &__home {
+    a {
+      color: #eb005d;
+      font-weight: normal;
+      margin-left: 10px;
+    }
+  }
+}
+
+:global {
+  .pc {
+    .am-navbar {
+      height: 80px;
+    }
+    :local(.nav__wrap) {
+      margin-bottom: 20px;
+    }
+    :local(.nav) {
+      margin: 0 auto;
+      max-width: 1100px;
+    }
+    .am-navbar-title {
+      max-width: 1100px;
+    }
+  }
 }

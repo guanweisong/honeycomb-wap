@@ -21,6 +21,7 @@ import Icon from "@/src/components/Icon"
 import { If, When, Otherwise, Choose } from 'babel-plugin-jsx-control-statements'
 import Footer from "@/src/components/Footer"
 import Comment from "@/src/components/Commont"
+import { PlatformType } from "@/src/types/platform"
 
 export interface ArchivesProps {
   postDetail: PostType
@@ -28,11 +29,12 @@ export interface ArchivesProps {
   menu: MenuType []
   setting: SettingType
   id: string
+  platform: PlatformType
 }
 
 const Archives: NextPage<ArchivesProps> = (props) => {
 
-  const { postDetail, randomPostsList, id, setting, menu } = props
+  const { postDetail, randomPostsList, id, setting, menu, platform } = props
   const [commentCount, setCommentCount] = useState<number>(0)
   const [views, setViews] = useState<null | number>(null)
 
@@ -51,6 +53,13 @@ const Archives: NextPage<ArchivesProps> = (props) => {
     setCommentCount(total)
   }
 
+  const getTitle = () => {
+    return postDetail.post_type === 1 ?
+      `${postDetail.post_title} ${postDetail.movie_name_en} (${dayjs(postDetail.movie_time).format('YYYY')})`
+      :
+      postDetail.post_title
+  }
+
   if (!postDetail) {
     return null
   }
@@ -58,17 +67,16 @@ const Archives: NextPage<ArchivesProps> = (props) => {
   return (
     <>
       <Header
-        title={
-          postDetail.post_type === 1 ?
-            `${postDetail.post_title} ${postDetail.movie_name_en} (${dayjs(postDetail.movie_time).format('YYYY')})`
-            :
-            postDetail.post_title
-        }
+        title={getTitle()}
         setting={setting}
         menu={menu}
         currentMenu={postDetail.post_category._id}
+        platform={platform}
       />
-      <div className={styles["detail__content"]}>
+      <div className={classNames('container', styles["detail__content"])}>
+        {
+          platform.isPC && <h2 className={styles["detail__title"]}>{getTitle()}</h2>
+        }
         <ul className={styles["detail__info"]}>
           <li className={styles["detail__info-item"]}><Icon name="user"/>&nbsp;
             <Link href={`/list/authors/${postDetail.post_author.user_name}`}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
-import styles from './index.less'
+import styles from '../archives/index.less'
 import {GetStaticPaths, GetStaticProps, NextPage} from "next"
 import SettingServer from "@/src/services/setting"
 import MenuServer from "@/src/services/menu"
@@ -14,17 +14,19 @@ import Link from "next/link"
 import Footer from "@/src/components/Footer"
 import Comment from "@/src/components/Commont"
 import ViewServer from "@/src/services/view"
+import { PlatformType } from "@/src/types/platform"
 
 interface PagesProps {
   id: string
   pageDetail: PageType
   menu: MenuType []
   setting: SettingType
+  platform: PlatformType
 }
 
 const Pages: NextPage<PagesProps> = (props) => {
 
-  const { pageDetail, id, setting, menu } = props
+  const { pageDetail, id, setting, menu, platform } = props
   const [commentCount, setCommentCount] = useState<number>(0)
   const [views, setViews] = useState<null | number>(null)
 
@@ -54,8 +56,12 @@ const Pages: NextPage<PagesProps> = (props) => {
         setting={setting}
         menu={menu}
         currentMenu={pageDetail._id}
+        platform={platform}
       />
-      <div className={styles["detail__content"]}>
+      <div className={classNames('container', styles["detail__content"])}>
+        {
+          platform.isPC && <h2 className={styles["detail__title"]}>{pageDetail.page_title}</h2>
+        }
         <ul className={styles["detail__info"]}>
           <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
             <Link href={`/list/authors/${pageDetail.page_author.user_name}`}>
