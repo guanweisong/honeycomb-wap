@@ -1,43 +1,46 @@
 .menu {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
   background: rgba(255, 255, 255);
   z-index: 90;
-  transform: translateY(-100%);
-  opacity: 0;
-  transition: all .2s;
-  ul {
-    padding-left: 20px;
-    li {
-      list-style: none;
-      line-height: 40px;
-      border-top: 1PX solid #eee;
-      a {
-        display: block;
-        color: #666;
-        &.current {
-          color: #eb005d;
+}
+
+:global {
+  .mobile {
+    :local(.menu){
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: all .2s;
+      ul {
+        padding-left: 20px;
+        li {
+          line-height: 40px;
+          border-top: 1PX solid #eee;
+          a {
+            display: block;
+            color: #666;
+            &:local(.current) {
+              color: #eb005d;
+            }
+          }
         }
       }
+      &:local(.menu.show) {
+        transform: translateY(45px);
+        box-shadow: 0 10px 10px rgba(0, 0, 0, .05);
+        opacity: 1;
+      }
     }
-  }
-  &.show {
-    transform: translateY(45px);
-    box-shadow: 0 10px 10px rgba(0, 0, 0, .05);
-    opacity: 1;
   }
 }
 
 :global {
   .pc {
-    :local(.menu.show){
+    :local(.menu){
       position: static;
       width: 100%;
-      transform: none;
-      box-shadow: none;
-      background: none;
       text-align: right;
       font-size: 14px;
       > ul > li {
@@ -46,10 +49,12 @@
         border-top: none;
         line-height: 80px;
         > a {
+          display: block;
           position: relative;
           z-index: 2;
           background: #fff;
           padding: 0 20px;
+          color: #666;
           &:local(.current) {
             color: #fff!important;
             background: #eb005d!important;
@@ -80,6 +85,8 @@
               border-top: 2px solid #bc004a;
             }
             a {
+              color: #666;
+              display: block;
               &:hover {
                 color: #f72874;
               }

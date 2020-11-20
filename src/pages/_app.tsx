@@ -28,8 +28,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   useLayoutEffect(() => {
     if (responsive.mobile) {
       document.querySelector('html')?.classList.add('pc')
+      document.querySelector('html')?.classList.remove('mobile')
     } else {
       document.querySelector('html')?.classList.remove('pc')
+      document.querySelector('html')?.classList.add('mobile')
     }
   }, [responsive?.mobile])
 
