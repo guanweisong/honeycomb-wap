@@ -9,7 +9,7 @@ const withImages = require('next-images')
 const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig = {
-  assetPrefix: isProd ? 'https://cdn.m.guanweisong.com' : '',
+  assetPrefix: isProd ? 'https://cdn.guanweisong.com' : '',
   webpack: (config, options) => {
     config.resolve.alias["@"] = path.join(__dirname, "./")
     return config;
