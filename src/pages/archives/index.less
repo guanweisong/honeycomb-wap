@@ -6,6 +6,9 @@
     font-size: 24px;
     margin: 20px 0 0;
     text-align: center;
+    &:empty {
+      margin: 0;
+    }
   }
   &__info {
     text-align: center;
@@ -61,6 +64,9 @@
     :local(.detail__detail) {
       padding: 20px 0;
       font-size: 16px;
+    }
+    :local(.detail__quote) {
+      font-size: 18px;
     }
     :local(.detail__info-item) {
       font-size: 14px;
