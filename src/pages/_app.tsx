@@ -5,6 +5,7 @@ import { AppProps } from 'next/app'
 import { configResponsive, useResponsive } from 'ahooks'
 // @ts-ignore
 import withGA from 'next-ga'
+import BackToTop from '@/src/components/BackToTop'
 import { PlatformType } from '@/src/types/platform'
 import '@/node_modules/antd-mobile/dist/antd-mobile.less'
 import '@/src/assets/markdown.less'
@@ -38,7 +39,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   pageProps.platform = {} as PlatformType
   pageProps.platform.isPC = !!responsive?.mobile
 
-  return <Component {...pageProps}/>
+  return (
+    <>
+      <Component {...pageProps}/>
+      <If condition={pageProps.platform.isPC}>
+        <BackToTop />
+      </If>
+    </>
+  )
 }
 
 export default withGA("UA-158268354-2", Router)(MyApp);
