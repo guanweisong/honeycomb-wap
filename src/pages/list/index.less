@@ -46,11 +46,13 @@
     font-size: 12px;
     list-style: none;
     color: #999;
+    display: flex;
     a {
       color: #999!important;
     }
     &-item {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       margin: 10px 10px 0 0;
     }
   }
@@ -73,6 +75,7 @@
     }
     :local(.post-list__info) {
       font-size: 14px;
+      justify-content: center;
     }
   }
 }
