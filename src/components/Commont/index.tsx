@@ -47,7 +47,7 @@ const Comment = (props: CommentProps) => {
    */
   useEffect(() => {
     form.resetFields();
-    handleReply();
+    handleReply(null);
   }, [comment.total]);
 
   /**
