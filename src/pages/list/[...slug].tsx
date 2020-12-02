@@ -4,7 +4,6 @@ import { Result } from 'antd-mobile'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import classNames from 'classnames'
 import Header from '@/src/components/Header'
-import Tags from '@/src/components/Tags'
 import Signature from '@/src/components/Signature'
 import { postClass } from '@/src/utils/mapping'
 import styles from './index.less'
@@ -106,12 +105,6 @@ const Category: NextPage<CategoryProps> = (props) => {
                           </a>
                         </Link>
                         <ul className={styles["post-list__info"]}>
-                          <If condition={item.post_type === 1 || item.post_type === 2}>
-                            <li className={styles["post-list__info-item"]}>
-                              <Icon name={"tag"}/>&nbsp;
-                              <Tags {...item}/>
-                            </li>
-                          </If>
                           <li className={styles["post-list__info-item"]}><Icon name={"clock"} />&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
                           <li className={styles["post-list__info-item"]}><Icon name={"message"}/>&nbsp;{item.comment_count}&nbsp;条留言</li>
                           <li className={styles["post-list__info-item"]}><Icon name={"eye"}/>&nbsp;{item.post_views}&nbsp;次浏览</li>

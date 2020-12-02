@@ -68,7 +68,7 @@ const Menu = (props: MenuProps) => {
     const getUrl = (item: MenuType) => {
       let url = ''
       if (item.isHome) {
-        url = '/'
+        url = '/list/category'
       } else {
         switch (item.type) {
           case "category":

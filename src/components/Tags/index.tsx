@@ -2,43 +2,43 @@ import React from 'react'
 import Link from 'next/link'
 import { TagType } from '@/src/types/tag'
 import { PostType} from '@/src/types/post'
+import styles from './index.less'
 
 const Tag = (props: PostType) => {
 
-  const getTags = (item: PostType) => {
-    const arr = [];
-    const result: TagType[] = [];
-    if (item.post_type === 1) {
-      arr.push(item.movie_director);
-      arr.push(item.movie_actor);
-      arr.push(item.movie_style);
+  const getTags = (item: TagType[] | undefined, label: string) => {
+    if (item && item.length > 0) {
+      return(<li>
+        <span>{label}：</span>
+        {
+          item.map((n, index) => {
+            return (
+              <>
+                {index !== 0 && '、'}
+                <Link href={`/list/tags/${encodeURI(n.tag_name)}`} key={index}><a className="link-light">{n.tag_name}</a></Link>
+              </>
+            )
+          })
+        }
+      </li>)
     }
-    if (item.post_type === 2) {
-      arr.push(item.gallery_style);
-    }
-    arr.forEach((m) => {
-      m && m.forEach((n) => {
-        result.push(n);
-      });
-    });
-    return result;
   }
 
-  const tags = getTags(props);
-
   return (
-    <span>
+    <div className={styles.tags}>
       {
-        tags.map((item, index) => {
-          return (
-            <span key={item._id}>
-              {index !== 0 && '、'}
-              <Link href={`/list/tags/${encodeURI(item.tag_name)}`} key={index}><a className="link-light">{item.tag_name}</a></Link>
-            </span>
-          )
-        })
+        getTags(props.movie_director, '导演')
       }
-    </span>
+      {
+        getTags(props.movie_actor, '主演')
+      }
+      {
+        getTags(props.movie_style, '风格')
+      }
+      {
+        getTags(props.gallery_style, '风格')
+      }
+    </div>
   )
 }
 

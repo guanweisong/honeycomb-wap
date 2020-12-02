@@ -128,13 +128,8 @@ const Archives: NextPage<ArchivesProps> = (props) => {
                   上映时间：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
                 </li>
               </If>
-              <If condition={postDetail.post_type === 1 || postDetail.post_type === 2}>
-                <li className={styles["detail__extra-item"]}>
-                  <Icon name="tag"/>&nbsp;
-                  <Tags {...postDetail} />
-                </li>
-              </If>
             </ul>
+            <Tags {...postDetail} />
           </>
         </If>
         <If condition={randomPostsList.length > 0}>

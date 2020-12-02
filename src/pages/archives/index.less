@@ -1,10 +1,11 @@
 .detail{
   &__content {
+    padding: 1px 10px!important;
     background: #fff;
   }
   &__title {
     font-size: 24px;
-    margin: 20px 0 0;
+    padding: 20px 0 0;
     text-align: center;
     &:empty {
       margin: 0;
@@ -42,7 +43,7 @@
   }
   &__extra {
     border-top: 1px dashed #ddd;
-    padding-top: 15px;
+    padding: 10px 0;
     color: #666;
     list-style: none;
     &-item {
@@ -64,6 +65,9 @@
 
 :global {
   .pc {
+    :local(.detail__content) {
+      padding: 1px 20px!important;
+    }
     :local(.detail__detail) {
       padding: 20px 0;
       font-size: 16px;
