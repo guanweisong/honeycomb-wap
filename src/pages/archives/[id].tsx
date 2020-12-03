@@ -116,7 +116,6 @@ const Archives: NextPage<ArchivesProps> = (props) => {
               <If condition={postDetail.post_type === 2}>
                 <li className={styles["detail__extra-item"]}>
                   <Icon name="camera"/>
-                  &nbsp;
                   {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp;
                   拍摄于&nbsp;
                   {postDetail.gallery_location}
@@ -124,7 +123,7 @@ const Archives: NextPage<ArchivesProps> = (props) => {
               </If>
               <If condition={postDetail.post_type === 1}>
                 <li className={styles["detail__extra-item"]}>
-                  <Icon name="calendar"/>&nbsp;
+                  <Icon name="calendar"/>
                   上映时间：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
                 </li>
               </If>

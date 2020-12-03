@@ -1,6 +1,7 @@
 .menu {
   background: rgba(255, 255, 255);
   z-index: 90;
+  display: none;
   li {
     list-style: none;
   }
@@ -9,6 +10,7 @@
 :global {
   .mobile {
     :local(.menu){
+      display: block;
       position: absolute;
       left: 0;
       right: 0;
@@ -42,6 +44,7 @@
 :global {
   .pc {
     :local(.menu){
+      display: block;
       position: static;
       width: 100%;
       text-align: right;
