@@ -11,7 +11,7 @@
     "ahooks": "^2.6.0",
     "antd-mobile": "^2.2.12",
     "async-validator": "^3.4.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "can-param": "^1.1.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.16",
