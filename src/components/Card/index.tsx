@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./index.less"
+import styles from "./index.module.scss"
 
 export interface BlockProps {
   title: string

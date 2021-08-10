@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './index.less'
+import styles from './index.module.scss'
 
 export interface IconProps {
   name: string
@@ -21,7 +21,7 @@ const mapping = {
 
 const Icon = (props: IconProps) => {
   return (
-    <img src={mapping[props.name]} className={styles.icon}/>
+    <img src={mapping[props.name].default.src} className={styles.icon}/>
   )
 }
 

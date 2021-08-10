@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
-import { Result } from 'antd-mobile'
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import classNames from 'classnames'
 import Header from '@/src/components/Header'
 import Signature from '@/src/components/Signature'
 import { postClass } from '@/src/utils/mapping'
-import styles from './index.less'
+import styles from './index.module.scss'
 import dayjs from "dayjs"
 import PostServer, { IIndexPostListParamsType } from "@/src/services/post"
 import MenuServer from "@/src/services/menu"
@@ -16,7 +15,8 @@ import {SettingType} from "@/src/types/setting"
 import SettingServer from "@/src/services/setting"
 import Icon from "@/src/components/Icon"
 import { PlatformType } from "@/src/types/platform"
-import Footer from "@/src/components/Footer";
+import Footer from "@/src/components/Footer"
+import NoData from "@/src/components/NoData"
 
 interface CategoryProps {
   post: {
@@ -64,7 +64,7 @@ const Category: NextPage<CategoryProps> = (props) => {
         platform={platform}
       />
       <div className={'container'}>
-        <If condition={['tags', 'authors'].includes(type) && platform.isPC}>
+        <If condition={['tags', 'authors'].includes(type)}>
           <div className={styles["post-list__title"]}>{getTitle()}</div>
         </If>
         <Choose>
@@ -114,15 +114,11 @@ const Category: NextPage<CategoryProps> = (props) => {
                   ))
                 }
               </div>
-              {/*{*/}
-              {/*  currentPost.current > Math.ceil(currentPost.total / 10) ? <Signature text="到底了"/> : null*/}
-              {/*}*/}
+              <Signature text="到底了"/>
             </>
           </When>
           <Otherwise>
-            <Result
-              message="该分类暂时没有文章哦！"
-            />
+            <NoData title={"该分类暂时没有文章哦！"} />
           </Otherwise>
         </Choose>
       </div>

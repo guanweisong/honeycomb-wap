@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Link from 'next/link'
 // @ts-ignore
 import listToTree from 'list-to-tree-lite'
-import styles from './index.less'
+import styles from './index.module.scss'
 import { MenuType } from "@/src/types/menu"
 
 interface MenuProps {

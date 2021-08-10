@@ -1,10 +1,8 @@
 import classNames from "classnames"
-import styles from "./index.less"
-import {Button, InputItem, List, TextareaItem, Toast} from "antd-mobile"
-import React, {useEffect, useState}  from "react"
+import styles from "./index.module.scss"
+import React, {useEffect, useState, useRef, FormEvent} from "react"
 import {CommentType} from "@/src/types/comment"
 import CommentServer from "@/src/services/comment"
-import Form, { Field, useForm } from 'rc-field-form'
 import dayjs from "dayjs"
 import Card from "../Card"
 
@@ -20,10 +18,10 @@ export interface CommentProps {
 
 const Comment = (props: CommentProps) => {
   const { id, getCount } = props
-  const [form] = useForm()
 
   const [comment, setComment] = useState<commentProps>({total: 0, list: []})
   const [replyTo, setReplyTo] = useState<CommentType | null>(null)
+  const formRef = useRef(null)
 
   useEffect(() => {
     if (id) {
@@ -46,7 +44,10 @@ const Comment = (props: CommentProps) => {
    * 清空评论状态
    */
   useEffect(() => {
-    form.resetFields();
+    if (formRef.current) {
+      // @ts-ignore
+      formRef.current.reset()
+    }
     handleReply(null);
   }, [comment.total]);
 
@@ -64,35 +65,39 @@ const Comment = (props: CommentProps) => {
   /**
    * 评论提交事件
    */
-  const handleSubmit = () => {
-    form.validateFields().then(data => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    let data: any = {
       // @ts-ignore
-      let captcha = new TencentCaptcha('2090829333', async (res: any) => {
-        if (res.ret === 0) {
-          data = {
-            ...data,
-            comment_post: id,
-            captcha: {
-              ticket: res.ticket,
-              randstr: res.randstr,
-            },
-          };
-          if (replyTo !== null) {
-            data = {...data, comment_parent: replyTo._id};
-          }
-          console.log('handleSubmit', data);
-          // @ts-ignore
-          const result = await CommentServer.create(data)
-          if (result.status === 201) {
-            Toast.success('发表成功')
-            getComment()
-          }
+      comment_author: e.currentTarget.comment_author.value,
+      // @ts-ignore
+      comment_email: e.currentTarget.comment_email.value,
+      // @ts-ignore
+      comment_content: e.currentTarget.comment_content.value,
+    }
+    // @ts-ignore
+    let captcha = new TencentCaptcha('2090829333', async (res: any) => {
+      if (res.ret === 0) {
+        data = {
+          ...data,
+          comment_post: id,
+          captcha: {
+            ticket: res.ticket,
+            randstr: res.randstr,
+          },
+        };
+        if (replyTo !== null) {
+          data = {...data, comment_parent: replyTo._id};
         }
-      });
-      captcha && captcha.show();
-    }).catch(error => {
-      Toast.info(error.errorFields[0].errors[0], 2);
-    })
+        console.log('handleSubmit', data);
+        // @ts-ignore
+        const result = await CommentServer.create(data)
+        if (result.status === 201) {
+          getComment()
+        }
+      }
+    });
+    captcha && captcha.show();
   };
 
   /**
@@ -167,57 +172,38 @@ const Comment = (props: CommentProps) => {
               </span>
             </div>
           </If>
-          <Form form={form}>
-            <List>
-              <Field
-                name="comment_author"
-                rules={[
-                  { required: true, message: '请输入称呼' },
-                  { max: 20, message: '字数不能大于20' },
-                ]}
-              >
-                <InputItem
-                  clear
-                  placeholder="称呼"
-                />
-              </Field>
-              <Field
-                name="comment_email"
-                rules={[
-                  { required: true, message: '请输入邮箱' },
-                  { max: 30, message: '字数不能大于30' },
-                  { type: 'email', message: '邮箱格式不正确'},
-                ]}
-              >
-                <InputItem
-                  clear
-                  placeholder="邮箱"
-                />
-              </Field>
-              <Field
-                name="comment_content"
-                rules={[
-                  { required: true, message: '请输入内容' },
-                  { max: 200, message: '字数不能大于200' },
-                ]}
-              >
-                <TextareaItem
-                  rows={3}
-                  clear
-                  placeholder="评论"
-                />
-              </Field>
-            </List>
-            <Button
-              type="primary"
-              size="small"
-              inline={true}
-              style={{marginTop: '0.5rem'}}
-              onClick={handleSubmit}
+          <form
+            className={styles.form}
+            onSubmit={handleSubmit}
+            ref={formRef}
+          >
+            <input
+              type={'text'}
+              placeholder={'请输入称呼'}
+              name={'comment_author'}
+              maxLength={20}
+              required
+            />
+            <input
+              type={'text'}
+              placeholder={'请输入邮箱'}
+              name={'comment_email'}
+              required
+              maxLength={30}
+            />
+            <textarea
+              placeholder={'请输入留言'}
+              name={'comment_content'}
+              required
+              maxLength={200}
+              rows={4}
+            />
+            <button
+              type={'submit'}
             >
               提交
-            </Button>
-          </Form>
+            </button>
+          </form>
         </>
       </Card>
     </div>

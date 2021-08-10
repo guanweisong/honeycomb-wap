@@ -1,8 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { NavBar, Icon } from 'antd-mobile'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import styles from "./index.less"
+import styles from "./index.module.scss"
 import { MenuType } from "@/src/types/menu"
 import Menu from "@/src/components/Menu"
 import Link from 'next/link'
@@ -19,27 +18,23 @@ export interface HeaderProps {
 }
 
 const Header = (props: HeaderProps) => {
-  const { setting, menu, title, currentMenu, platform } = props
+  const { setting, menu, title, currentMenu } = props
   const router = useRouter()
   const ref = useRef<any>()
   const [showMenu, setShowMenu] = useState(false)
-
-  useEffect(() => {
-    setShowMenu(platform.isPC)
-  }, [platform.isPC])
 
   /**
    * 点击空白处关闭菜单
    */
   useClickAway(() => {
-    !platform.isPC && setShowMenu(false)
+    setShowMenu(false)
   }, ref)
 
   /**
    * 路由变化关闭菜单
    */
   useEffect(() => {
-    !platform.isPC && setShowMenu(false)
+    setShowMenu(false)
   }, [router.asPath])
 
   /**
@@ -57,45 +52,24 @@ const Header = (props: HeaderProps) => {
   };
 
   return (
-    <div ref={ref} className={styles.nav__wrap}>
-      <Choose>
-        <When condition={ platform.isPC }>
-          <NavBar
-            mode="light"
-            className={styles.nav}
-            icon={<h2 className={styles.nav__home}><Link href={'/'}>{setting.site_name}</Link></h2>}
-            rightContent={[
-              <Menu
-                menu={menu}
-                currentMenu={currentMenu}
-                visible={showMenu}
-              />
-            ]}
-          >
-          </NavBar>
-        </When>
-        <Otherwise>
-          <NavBar
-            mode="light"
-            icon={<Icon type="left" color="#666"/>}
-            onLeftClick={handleClickLeft}
-            className={styles.nav}
-            rightContent={[
-              <Icon key="1" color="#666" type="ellipsis" onClick={toggleMenu}/>,
-            ]}
-          >
-            {title || setting.site_name}
-          </NavBar>
+    <div className={styles.nav}>
+      <Head>
+        <title>{title || setting.site_name}</title>
+      </Head>
+      <div className={styles.nav__container}>
+        <div className={styles.nav__home}>
+          <Link href={'/'}>
+            <a>{setting.site_name}</a>
+          </Link>
+        </div>
+        <div className={styles.nav__menu}>
           <Menu
             menu={menu}
             currentMenu={currentMenu}
             visible={showMenu}
           />
-        </Otherwise>
-      </Choose>
-      <Head>
-        <title>{title || setting.site_name}</title>
-      </Head>
+        </div>
+      </div>
     </div>
   )
 }

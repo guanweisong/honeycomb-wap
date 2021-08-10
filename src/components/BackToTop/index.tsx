@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useScroll } from 'ahooks'
 import Icon from '@/src/components/Icon'
-import styles from './index.less'
+import styles from './index.module.scss'
 
 const BackToTop = () => {
   const scroll = useScroll()

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { TagType } from '@/src/types/tag'
 import { PostType} from '@/src/types/post'
-import styles from './index.less'
+import styles from './index.module.scss'
 
 const Tag = (props: PostType) => {
 
@@ -15,7 +15,7 @@ const Tag = (props: PostType) => {
             return (
               <>
                 {index !== 0 && '、'}
-                <Link href={`/list/tags/${encodeURI(n.tag_name)}`} key={index}><a className="link-light">{n.tag_name}</a></Link>
+                <Link href={`/list/tags/${encodeURI(n.tag_name)}`} key={n._id}><a className="link-light">{n.tag_name}</a></Link>
               </>
             )
           })

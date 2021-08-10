@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import Link from 'next/link'
 import Header from '@/src/components/Header'
 import Tags from '@/src/components/Tags'
-import styles from './index.less'
+import styles from './index.module.scss'
 import { NextPage, GetStaticPaths, GetStaticProps } from "next"
 import { PostType } from "@/src/types/post"
 import {CommentType} from "@/src/types/comment"
@@ -74,9 +74,7 @@ const Archives: NextPage<ArchivesProps> = (props) => {
         platform={platform}
       />
       <div className={classNames('container', styles["detail__content"])}>
-        {
-          platform.isPC && <h2 className={styles["detail__title"]}>{getTitle()}</h2>
-        }
+        <h2 className={styles["detail__title"]}>{getTitle()}</h2>
         <ul className={styles["detail__info"]}>
           <li className={styles["detail__info-item"]}><Icon name="user"/>&nbsp;
             <Link href={`/list/authors/${postDetail.post_author.user_name}`}>

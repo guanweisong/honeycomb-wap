@@ -4,11 +4,3 @@
   color: #666;
   font-size: 12px;
 }
-
-:global {
-  .pc {
-    :local(.footer) {
-      font-size: 14px;
-    }
-  }
-}

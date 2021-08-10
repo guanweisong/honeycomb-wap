@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
-import styles from '../archives/index.less'
+import styles from '../archives/index.module.scss'
 import {GetStaticPaths, GetStaticProps, NextPage} from "next"
 import SettingServer from "@/src/services/setting"
 import MenuServer from "@/src/services/menu"
@@ -59,9 +59,7 @@ const Pages: NextPage<PagesProps> = (props) => {
         platform={platform}
       />
       <div className={classNames('container', styles["detail__content"])}>
-        {
-          platform.isPC && <h2 className={styles["detail__title"]}>{pageDetail.page_title}</h2>
-        }
+        <h2 className={styles["detail__title"]}>{pageDetail.page_title}</h2>
         <ul className={styles["detail__info"]}>
           <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
             <Link href={`/list/authors/${pageDetail.page_author.user_name}`}>

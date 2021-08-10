@@ -71,3 +71,33 @@
     }
   }
 }
+
+.form {
+  input[type=text] {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1PX solid #eee;
+    line-height: 40px;
+    outline: none;
+  }
+  textarea {
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    margin:15px 0;
+    border-bottom: 1PX solid #eee;
+  }
+  button {
+    padding: 0 20px;
+    height: 36px;
+    border: none;
+    background: #eb005d;
+    color: #fff;
+    cursor: pointer;
+    &:active {
+      opacity: .7;
+    }
+  }
+}

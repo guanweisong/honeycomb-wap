@@ -1,15 +1,14 @@
 .signature {
   display: flex;
-  padding: 40px 20px;
+  margin: 20px 0;
   &__line {
     height: 1PX;
     flex: 1;
     background: #d9d9d9;
-    margin-top: 14px;
+    margin-top: 10px;
   }
   &__text {
     padding: 0 25px;
-    font-size: 24px;
     color: #bbb;
   }
 }
