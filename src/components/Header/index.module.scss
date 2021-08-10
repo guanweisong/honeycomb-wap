@@ -3,6 +3,7 @@
   z-index: 100;
   background: #fff;
   margin-bottom: 10px;
+  height: 80px;
   &__container {
     max-width: 1100px;
     box-sizing: border-box;
@@ -10,13 +11,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
   }
   &__home {
     a {
       color: #eb005d;
       font-weight: normal;
-      font-size: 18px;
+      font-size: 24px;
       margin-left: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .nav {
+    height: 40px;
+    &__home {
+      a {
+        font-size: 18px;
+      }
     }
   }
 }

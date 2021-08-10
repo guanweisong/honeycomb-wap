@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 // @ts-ignore
@@ -9,10 +9,10 @@ import { MenuType } from "@/src/types/menu"
 interface MenuProps {
   menu: MenuType[]
   currentMenu?: string
-  visible: boolean
 }
 
 const Menu = (props: MenuProps) => {
+  const [visible, setVisible] = useState(false)
 
   const formatCategorise = () => {
     const menuData = listToTree(props.menu, {idKey: '_id', parentKey: 'parent'})
@@ -122,10 +122,24 @@ const Menu = (props: MenuProps) => {
   }
 
   return (
-    <div className={classNames(styles.menu, {
-      [styles.show]: props.visible
-    })}>
-      <ul>
+    <div
+      className={styles.menu}
+    >
+      <div
+        className={classNames(styles.menu__more, {
+          [styles.show]: visible
+        })}
+        onClick={() => setVisible(!visible)}
+      >
+        <div className={styles.bar}/>
+        <div className={styles.bar}/>
+        <div className={styles.bar}/>
+      </div>
+      <ul
+        className={classNames({
+          [styles.show]: visible
+        })}
+      >
         {
           renderMenu()
         }

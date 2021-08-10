@@ -114,7 +114,7 @@ const Category: NextPage<CategoryProps> = (props) => {
                   ))
                 }
               </div>
-              <Signature text="到底了"/>
+              {/*<Signature text="到底了"/>*/}
             </>
           </When>
           <Otherwise>

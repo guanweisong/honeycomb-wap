@@ -40,6 +40,8 @@
     padding: 10px;
     display: block;
     color: #333;
+    text-align: center;
+    font-size: 18px;
   }
   &__info {
     border-top: 1PX dashed #d9d9d9;
@@ -48,6 +50,7 @@
     list-style: none;
     color: #999;
     display: flex;
+    justify-content: center;
     a {
       color: #999!important;
     }
@@ -61,5 +64,13 @@
   &__tag {
     font-size: 12px;
     padding: 0 10px 10px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .post-list {
+    &__content {
+      font-size: 14px;
+    }
   }
 }
