@@ -92,6 +92,7 @@ const Menu = (props: MenuProps) => {
             className={classNames({
               [styles.current]: currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome)
             })}
+            onClick={() => setVisible(false)}
           >
             {item.category_title || item.page_title}
           </a>

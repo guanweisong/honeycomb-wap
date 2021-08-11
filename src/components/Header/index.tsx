@@ -6,7 +6,6 @@ import { MenuType } from "@/src/types/menu"
 import Menu from "@/src/components/Menu"
 import Link from 'next/link'
 import { SettingType } from "@/src/types/setting"
-import { useClickAway } from 'ahooks'
 import { PlatformType } from "@/src/types/platform"
 
 export interface HeaderProps {
@@ -19,37 +18,6 @@ export interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
   const { setting, menu, title, currentMenu } = props
-  const router = useRouter()
-  const ref = useRef<any>()
-  const [showMenu, setShowMenu] = useState(false)
-
-  /**
-   * 点击空白处关闭菜单
-   */
-  useClickAway(() => {
-    setShowMenu(false)
-  }, ref)
-
-  /**
-   * 路由变化关闭菜单
-   */
-  useEffect(() => {
-    setShowMenu(false)
-  }, [router.asPath])
-
-  /**
-   * 返回按钮事件
-   */
-  const handleClickLeft = () => {
-    router.back();
-  };
-
-  /**
-   * 菜单展开事件
-   */
-  const toggleMenu = () => {
-    setShowMenu(!showMenu)
-  };
 
   return (
     <div className={styles.nav}>
@@ -66,7 +34,6 @@ const Header = (props: HeaderProps) => {
           <Menu
             menu={menu}
             currentMenu={currentMenu}
-            visible={showMenu}
           />
         </div>
       </div>
