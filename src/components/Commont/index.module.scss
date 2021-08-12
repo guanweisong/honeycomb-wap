@@ -80,13 +80,15 @@
     border-bottom: 1PX solid #eee;
     line-height: 40px;
     outline: none;
+    font-size: 14px;
   }
   textarea {
     display: block;
     width: 100%;
     border: none;
     outline: none;
-    margin:15px 0;
+    margin: 15px 0;
+    font-size: 14px;
     border-bottom: 1PX solid #eee;
   }
   button {
@@ -96,6 +98,7 @@
     background: #eb005d;
     color: #fff;
     cursor: pointer;
+    font-size: 14px;
     &:active {
       opacity: .7;
     }
