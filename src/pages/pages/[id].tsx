@@ -15,6 +15,7 @@ import Footer from "@/src/components/Footer"
 import Comment from "@/src/components/Commont"
 import ViewServer from "@/src/services/view"
 import { PlatformType } from "@/src/types/platform"
+import Icon from "@/src/components/Icon";
 
 interface PagesProps {
   id: string
@@ -31,15 +32,19 @@ const Pages: NextPage<PagesProps> = (props) => {
   const [views, setViews] = useState<null | number>(null)
 
   useEffect(() => {
+    handleViews(id)
+  }, [id])
+
+  const handleViews = async (id: string) => {
     if (id) {
-      ViewServer.updateViews({ type: 'page', id})
-      ViewServer.indexViews({ type: 'page', id}).then(result => {
+      await ViewServer.updateViews({ type: 'page', id})
+      await ViewServer.indexViews({ type: 'page', id}).then(result => {
         if (result.status === 200) {
           setViews(result.data.count)
         }
       }).catch(e => console.error(e))
     }
-  }, [id])
+  }
 
   const getCommentCount = (total: number) => {
     setCommentCount(total)
@@ -73,7 +78,7 @@ const Pages: NextPage<PagesProps> = (props) => {
             <i className="iconfont icon-chat"/>&nbsp;{commentCount} 条留言
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-eye"/>&nbsp;{views || pageDetail.page_views}&nbsp;次浏览
+            <i className="iconfont icon-eye"/>&nbsp;{views === null ? <Icon name="loading" /> : views}&nbsp;次浏览
           </li>
         </ul>
         <div

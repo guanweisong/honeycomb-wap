@@ -3,4 +3,12 @@
   width: 14px;
   height: 14px;
   vertical-align: middle;
+  &--loading {
+    animation:rotating 1.2s linear infinite;
+  }
+}
+
+@keyframes rotating{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
 }

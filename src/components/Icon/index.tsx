@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from "classnames"
 import styles from './index.module.scss'
 
 export interface IconProps {
@@ -17,11 +18,17 @@ const mapping = {
   'user': require('@/src/assets/svg/user.svg'),
   'calendar': require('@/src/assets/svg/calendar.svg'),
   'camera': require('@/src/assets/svg/camera.svg'),
+  'loading': require('@/src/assets/svg/loading.svg'),
 }
 
 const Icon = (props: IconProps) => {
   return (
-    <img src={mapping[props.name].default.src} className={styles.icon}/>
+    <img
+      src={mapping[props.name].default.src}
+      className={classNames(styles.icon, {
+        [styles["icon--loading"]]: props.name === 'loading',
+      })}
+    />
   )
 }
 

@@ -39,15 +39,19 @@ const Archives: NextPage<ArchivesProps> = (props) => {
   const [views, setViews] = useState<null | number>(null)
 
   useEffect(() => {
+    handleViews(id)
+  }, [id])
+
+  const handleViews = async (id: string) => {
     if (id) {
-      ViewServer.updateViews({ type: 'post', id})
-      ViewServer.indexViews({ type: 'post', id}).then(result => {
+      await ViewServer.updateViews({ type: 'post', id})
+      await ViewServer.indexViews({ type: 'post', id}).then(result => {
         if (result.status === 200) {
           setViews(result.data.count)
         }
       }).catch(e => console.error(e))
     }
-  }, [id])
+  }
 
   const getCommentCount = (total: number) => {
     setCommentCount(total)
@@ -88,7 +92,7 @@ const Archives: NextPage<ArchivesProps> = (props) => {
             <Icon name="message"/>&nbsp;{commentCount} 条留言
           </li>
           <li className={styles["detail__info-item"]}>
-            <Icon name="eye"/>&nbsp;{views || postDetail.post_views}&nbsp;次浏览
+            <Icon name="eye"/>&nbsp;{views === null ? <Icon name="loading" /> : views}&nbsp;次浏览
           </li>
         </ul>
         <If condition={postDetail.post_type === 3}>
