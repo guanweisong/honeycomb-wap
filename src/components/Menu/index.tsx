@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 // @ts-ignore
 import listToTree from 'list-to-tree-lite'
 import styles from './index.module.scss'
 import { MenuType } from "@/src/types/menu"
+import { useRouter } from "next/router"
 
 interface MenuProps {
   menu: MenuType[]
@@ -13,6 +14,14 @@ interface MenuProps {
 
 const Menu = (props: MenuProps) => {
   const [visible, setVisible] = useState(false)
+  const router = useRouter()
+
+  /**
+   * 路由变化则关闭菜单
+   */
+  useEffect(() => {
+    setVisible(false)
+  }, [router.asPath])
 
   const formatCategorise = () => {
     const menuData = listToTree(props.menu, {idKey: '_id', parentKey: 'parent'})
@@ -92,7 +101,6 @@ const Menu = (props: MenuProps) => {
             className={classNames({
               [styles.current]: currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome)
             })}
-            onClick={() => setVisible(false)}
           >
             {item.category_title || item.page_title}
           </a>
