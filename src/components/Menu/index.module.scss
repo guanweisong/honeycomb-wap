@@ -76,7 +76,7 @@
       &:hover {
         & > ul {
           transform: translateY(0);
-          box-shadow: 0 10px 10px $color-black-lighter;
+          box-shadow: 0 10px 10px $color-gray-darker;
         }
       }
     }
@@ -132,7 +132,7 @@
       position: absolute;
       width: 100vw;
       background: $color-white;
-      box-shadow: 0 5px 1px $color-black-darker;
+      box-shadow: 0 5px 1px $color-gray-darker;
       transition: transform .2s, opacity .2s;
       &.show {
         top: 41px;
@@ -205,6 +205,7 @@
   @media screen and (max-width: $width-layout-min) {
     .menu {
       & > ul {
+        box-shadow: 0 5px 1px $color-black-darker;
         & > li {
           & > a {
             &.current {

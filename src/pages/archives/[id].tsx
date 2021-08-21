@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import Link from 'next/link'
 import Header from '@/src/components/Header'
 import Tags from '@/src/components/Tags'
+import { ClockCircleOutlined, MessageOutlined, EyeOutlined, UserOutlined, LoadingOutlined, CameraOutlined, CalendarOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { NextPage, GetStaticPaths, GetStaticProps } from "next"
 import { PostType } from "@/src/types/post"
@@ -15,7 +16,6 @@ import { SettingType } from "@/src/types/setting"
 import SettingServer from "@/src/services/setting"
 import Card from "@/src/components/Card"
 import ViewServer from "@/src/services/view"
-import Icon from "@/src/components/Icon"
 
 // @ts-ignore
 import { If, When, Otherwise, Choose } from 'babel-plugin-jsx-control-statements'
@@ -80,19 +80,19 @@ const Archives: NextPage<ArchivesProps> = (props) => {
       <div className={classNames('container', styles["detail__content"])}>
         <h2 className={styles["detail__title"]}>{getTitle()}</h2>
         <ul className={styles["detail__info"]}>
-          <li className={styles["detail__info-item"]}><Icon name="user"/>&nbsp;
+          <li className={styles["detail__info-item"]}><UserOutlined />&nbsp;
             <Link href={`/list/authors/${postDetail.post_author.user_name}`}>
               <a className="link-light">{postDetail.post_author.user_name}</a>
             </Link>
           </li>
           <li className={styles["detail__info-item"]}>
-            <Icon name="clock"/>&nbsp;{dayjs(postDetail.created_at).format('YYYY-MM-DD')}
+            <ClockCircleOutlined />&nbsp;{dayjs(postDetail.created_at).format('YYYY-MM-DD')}
           </li>
           <li className={styles["detail__info-item"]}>
-            <Icon name="message"/>&nbsp;{commentCount} 条留言
+            <MessageOutlined />&nbsp;{commentCount} 条留言
           </li>
           <li className={styles["detail__info-item"]}>
-            <Icon name="eye"/>&nbsp;{views === null ? <Icon name="loading" /> : views}&nbsp;次浏览
+            <EyeOutlined />&nbsp;{views === null ? <LoadingOutlined /> : views}&nbsp;次浏览
           </li>
         </ul>
         <If condition={postDetail.post_type === 3}>
@@ -117,7 +117,7 @@ const Archives: NextPage<ArchivesProps> = (props) => {
             <ul className={styles["detail__extra"]}>
               <If condition={postDetail.post_type === 2}>
                 <li className={styles["detail__extra-item"]}>
-                  <Icon name="camera"/>
+                  <CameraOutlined />
                   {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp;
                   拍摄于&nbsp;
                   {postDetail.gallery_location}
@@ -125,7 +125,7 @@ const Archives: NextPage<ArchivesProps> = (props) => {
               </If>
               <If condition={postDetail.post_type === 1}>
                 <li className={styles["detail__extra-item"]}>
-                  <Icon name="calendar"/>
+                  <CalendarOutlined />
                   上映时间：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
                 </li>
               </If>

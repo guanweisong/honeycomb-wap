@@ -15,6 +15,7 @@ body {
   margin: 0;
   font-size: $font-size-base;
   line-height: 1.5;
+  color: $color-black-darker;
 }
 .container {
   max-width: $width-layout-base;
@@ -30,7 +31,6 @@ a {
 }
 .link-light:hover {
   color: $color-primary;
-  text-decoration: underline;
 }
 .iconfont {
   vertical-align: middle;
@@ -40,7 +40,13 @@ a {
   html {
     background-color: $color-cyan-darker;
   }
+  body {
+    color: $color-black-lighter;
+  }
   .link-light:link, .link-light:visited{
     color: $color-black-lighter;
+  }
+  .link-light:hover {
+    color: $color-primary;
   }
 }

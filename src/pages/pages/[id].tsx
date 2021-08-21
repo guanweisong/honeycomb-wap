@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import styles from '../archives/index.module.scss'
 import {GetStaticPaths, GetStaticProps, NextPage} from "next"
+import { ClockCircleOutlined, MessageOutlined, EyeOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons'
 import SettingServer from "@/src/services/setting"
 import MenuServer from "@/src/services/menu"
 import PageServer from '@/src/services/page'
@@ -15,7 +16,6 @@ import Footer from "@/src/components/Footer"
 import Comment from "@/src/components/Commont"
 import ViewServer from "@/src/services/view"
 import { PlatformType } from "@/src/types/platform"
-import Icon from "@/src/components/Icon";
 
 interface PagesProps {
   id: string
@@ -66,19 +66,19 @@ const Pages: NextPage<PagesProps> = (props) => {
       <div className={classNames('container', styles["detail__content"])}>
         <h2 className={styles["detail__title"]}>{pageDetail.page_title}</h2>
         <ul className={styles["detail__info"]}>
-          <li className={styles["detail__info-item"]}><i className="iconfont icon-user"/>&nbsp;
+          <li className={styles["detail__info-item"]}><UserOutlined />&nbsp;
             <Link href={`/list/authors/${pageDetail.page_author.user_name}`}>
               <a className="link-light">{pageDetail.page_author.user_name}</a>
             </Link>
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-clock"/>&nbsp;{dayjs(pageDetail.created_at).format('YYYY-MM-DD')}
+            <ClockCircleOutlined />&nbsp;{dayjs(pageDetail.created_at).format('YYYY-MM-DD')}
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-chat"/>&nbsp;{commentCount} 条留言
+            <MessageOutlined/>&nbsp;{commentCount} 条留言
           </li>
           <li className={styles["detail__info-item"]}>
-            <i className="iconfont icon-eye"/>&nbsp;{views === null ? <Icon name="loading" /> : views}&nbsp;次浏览
+            <EyeOutlined />&nbsp;{views === null ? <LoadingOutlined /> : views}&nbsp;次浏览
           </li>
         </ul>
         <div

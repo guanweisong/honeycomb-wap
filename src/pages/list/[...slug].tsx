@@ -7,13 +7,13 @@ import Signature from '@/src/components/Signature'
 import { postClass } from '@/src/utils/mapping'
 import styles from './index.module.scss'
 import dayjs from "dayjs"
+import { ClockCircleOutlined, MessageOutlined, EyeOutlined} from '@ant-design/icons'
 import PostServer, { IIndexPostListParamsType } from "@/src/services/post"
 import MenuServer from "@/src/services/menu"
 import { PostType } from "@/src/types/post"
 import {MenuType} from "@/src/types/menu"
 import {SettingType} from "@/src/types/setting"
 import SettingServer from "@/src/services/setting"
-import Icon from "@/src/components/Icon"
 import { PlatformType } from "@/src/types/platform"
 import Footer from "@/src/components/Footer"
 import NoData from "@/src/components/NoData"
@@ -105,9 +105,9 @@ const Category: NextPage<CategoryProps> = (props) => {
                           </a>
                         </Link>
                         <ul className={styles["post-list__info"]}>
-                          <li className={styles["post-list__info-item"]}><Icon name={"clock"} />&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
-                          <li className={styles["post-list__info-item"]}><Icon name={"message"}/>&nbsp;{item.comment_count}&nbsp;条留言</li>
-                          <li className={styles["post-list__info-item"]}><Icon name={"eye"}/>&nbsp;{item.post_views}&nbsp;次浏览</li>
+                          <li className={styles["post-list__info-item"]}><ClockCircleOutlined />&nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}</li>
+                          <li className={styles["post-list__info-item"]}><MessageOutlined />&nbsp;{item.comment_count}&nbsp;条留言</li>
+                          <li className={styles["post-list__info-item"]}><EyeOutlined />&nbsp;{item.post_views}&nbsp;次浏览</li>
                         </ul>
                       </div>
                     </Link>

@@ -8,6 +8,7 @@
     "analyze": "cross-env ANALYZE=1 next build"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.3",
     "ahooks": "^2.10.8",
     "async-validator": "^3.5.2",
     "axios": "^0.21.1",

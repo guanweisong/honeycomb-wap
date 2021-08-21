@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useScroll } from 'ahooks'
-import Icon from '@/src/components/Icon'
+import { ToTopOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 
 const BackToTop = () => {
@@ -15,7 +15,7 @@ const BackToTop = () => {
     window.scrollTo(0, 0)
   }
 
-  return show ? <div className={styles["back-to-top"]} onClick={goTop}><Icon name={'left'}/></div> : <></>
+  return show ? <div className={styles["back-to-top"]} onClick={goTop}><ToTopOutlined /></div> : <></>
 
 }
 
