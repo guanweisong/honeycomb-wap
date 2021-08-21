@@ -1,9 +1,20 @@
+@import "../../assets/base";
+
 .card {
   margin: 20px 0;
   &__title {
     padding: 10px 0;
     margin-top: 20px;
-    border-bottom: 2px solid #eee;
-    font-size: 16px;
+    border-bottom: 2px solid $color-gray;
+    font-size: $font-size-larger;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    &__title {
+      color: $color-black-lighter;
+      border-bottom-color: $color-cyan-darker;
+    }
   }
 }

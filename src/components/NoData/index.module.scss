@@ -1,7 +1,15 @@
+@import "../../assets/base";
+
 .noData {
   text-align: center;
-  background: #fff;
+  background: $color-white;
   padding: 100px 0;
-  font-size: 16px;
-  color: #999;
+  font-size: $font-size-larger;
+  color: $color-black-lighter;
+}
+
+@media (prefers-color-scheme: dark) {
+  .noData {
+    background: $color-cyan;
+  }
 }

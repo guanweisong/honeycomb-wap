@@ -1,3 +1,5 @@
+@import "../../assets/base";
+
 .comment {
   margin-bottom: 0;
   &-list {
@@ -6,7 +8,7 @@
     }
   }
   &-wrap {
-    border-bottom: 1px dashed #ddd;
+    border-bottom: 1px dashed $color-gray-darker;
     padding: 20px 0;
     overflow: hidden;
   }
@@ -31,17 +33,17 @@
     right: 10px;
     top: 20px;
     &-item {
-      color: #999;
+      color: $color-black-lighter;
       display: inline-block;
       &--reply {
-        color: #eb005d;
+        color: $color-primary;
         cursor: pointer;
       }
       &:before{
         display: inline-block;
         margin: 0 5px;
         content: '/';
-        color: #999;
+        color: $color-black-lighter;
       }
       &:first-child {
         &:before {
@@ -51,23 +53,23 @@
     }
   }
   &-name {
-    color: #eb005d;
+    color: $color-primary;
   }
   &-text {
     margin-top: 5px;
-    color: #999;
+    color: $color-black-lighter;
   }
   &-reply {
     line-height: 3;
     &-label {
-      color: #eb005d;
+      color: $color-primary;
     }
     &-name {
       margin: 0 10px;
     }
     &-cancel {
       cursor: pointer;
-      color: #999;
+      color: $color-black-lighter;
     }
   }
 }
@@ -77,30 +79,41 @@
     display: block;
     width: 100%;
     border: none;
-    border-bottom: 1PX solid #eee;
+    border-bottom: 1PX solid $color-gray;
     line-height: 40px;
     outline: none;
-    font-size: 14px;
+    font-size: $font-size-base;
   }
   textarea {
     display: block;
     width: 100%;
     border: none;
     outline: none;
-    margin: 15px 0;
-    font-size: 14px;
-    border-bottom: 1PX solid #eee;
+    padding: 10px 0;
+    font-size: $font-size-base;
+    border-bottom: 1PX solid $color-gray;
   }
   button {
     padding: 0 20px;
     height: 36px;
     border: none;
-    background: #eb005d;
-    color: #fff;
+    background: $color-primary;
+    color: $color-white;
     cursor: pointer;
-    font-size: 14px;
+    font-size: $font-size-base;
+    margin-top: 10px;
     &:active {
       opacity: .7;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .form {
+    input[type=text], textarea {
+      background: $color-cyan-lighter;
+      border-bottom-color: $color-cyan;
+      color: $color-black-lighter;
     }
   }
 }

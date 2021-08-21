@@ -1,11 +1,13 @@
+@import "../../assets/base";
+
 .nav {
   position: relative;
   z-index: 100;
-  background: #fff;
+  background: $color-white;
   margin-bottom: 10px;
   height: 80px;
   &__container {
-    max-width: 1100px;
+    max-width: $width-layout-base;
     box-sizing: border-box;
     margin: 0 auto;
     display: flex;
@@ -15,21 +17,28 @@
   }
   &__home {
     a {
-      color: #eb005d;
+      color: $color-primary;
       font-weight: normal;
-      font-size: 24px;
+      font-size: $font-size-head;
       margin-left: 10px;
     }
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: $width-layout-min) {
   .nav {
     height: 40px;
     &__home {
       a {
-        font-size: 18px;
+        font-size: $font-size-larger;
       }
     }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .nav {
+    background-color: $color-cyan;
+    border-bottom: 1px solid $color-cyan-lighter;
   }
 }

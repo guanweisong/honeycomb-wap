@@ -1,23 +1,33 @@
+@import "../../assets/base";
+
 .back-to-top {
   position: fixed;
   bottom: 110px;
   left: 50%;
   margin-left: 560px;
-  background: #fff;
+  background: $color-white;
   width: 40px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 5px $color-gray-lighter;
   cursor: pointer;
   transition: all .2s;
   &:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 5px $color-gray;
   }
   img {
     display: block;
     transform: rotate(90deg);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .back-to-top {
+    background-color: $color-cyan;
+    border: 1px solid $color-cyan-lighter;
+    box-shadow: 0 0 5px $color-cyan-lighter;
   }
 }
