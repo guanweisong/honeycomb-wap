@@ -22,7 +22,7 @@ export default class PostServer {
   static indexPostList(params: IIndexPostListParamsType) {
     console.log('category=>service=>indexPostList');
     return request({
-      url: '/posts/list',
+      url: '/posts',
       method: 'get',
       params: params,
     })
@@ -32,7 +32,7 @@ export default class PostServer {
   static indexPostDetail(id: string) {
     console.log('post=>service=>indexPostDetail');
     return request({
-      url: `/posts/detail/${id}`,
+      url: `/posts/${id}`,
       method: 'get',
     })
   }
@@ -41,7 +41,7 @@ export default class PostServer {
   static indexRandomPostByCategoryId(params: IIndexRandomPostListParamsType) {
     console.log('category=>service=>indexRandomPostByCategoryId');
     return request({
-      url: '/posts/list/random',
+      url: '/posts/random',
       method: 'get',
       params: params,
     })

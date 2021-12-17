@@ -37,8 +37,8 @@ const Pages: NextPage<PagesProps> = (props) => {
 
   const handleViews = async (id: string) => {
     if (id) {
-      await ViewServer.updateViews({ type: 'page', id})
-      await ViewServer.indexViews({ type: 'page', id}).then(result => {
+      await ViewServer.updateViews({ type: 'pages', id})
+      await ViewServer.indexViews({ type: 'pages', id}).then(result => {
         if (result.status === 200) {
           setViews(result.data.count)
         }
@@ -118,7 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const promiseAllResult = await Promise.all(promise)
 
   props.menu = promiseAllResult[0].data.list
-  props.setting = promiseAllResult[1].data
+  props.setting = promiseAllResult[1].data[0]
 
   return {
     props,

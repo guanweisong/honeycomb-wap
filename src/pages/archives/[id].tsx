@@ -44,8 +44,8 @@ const Archives: NextPage<ArchivesProps> = (props) => {
 
   const handleViews = async (id: string) => {
     if (id) {
-      await ViewServer.updateViews({ type: 'post', id})
-      await ViewServer.indexViews({ type: 'post', id}).then(result => {
+      await ViewServer.updateViews({ type: 'posts', id})
+      await ViewServer.indexViews({ type: 'posts', id}).then(result => {
         if (result.status === 200) {
           setViews(result.data.count)
         }
@@ -195,8 +195,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const promiseAllResult = await Promise.all(promise)
 
   props.menu = promiseAllResult[0].data.list
-  props.randomPostsList = promiseAllResult[1].data?.filter((item: CommentType) => item._id !== id)
-  props.setting = promiseAllResult[2].data
+  // props.randomPostsList = promiseAllResult[1].data?.filter((item: CommentType) => item._id !== id)
+  props.setting = promiseAllResult[2].data[0]
 
   return {
     props,

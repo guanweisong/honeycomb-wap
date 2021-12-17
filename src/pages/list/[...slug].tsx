@@ -154,7 +154,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   // 获取网站配置
   const querySettingResult = await SettingServer.indexSetting()
-  props.setting = querySettingResult.data
+  props.setting = querySettingResult.data[0]
 
   // 获取列表类型
   props.type = typeof params?.slug !== "undefined" ? params?.slug[0] : undefined

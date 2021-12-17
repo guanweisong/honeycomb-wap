@@ -7,7 +7,7 @@ export interface MenuType {
   created_at: string;
   updated_at: string;
   isHome?: string;
-  type: 'page' | 'category';
+  type: 0 | 1;
   page_title?: string;
   power: number;
   children: MenuType[];

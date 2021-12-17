@@ -7,7 +7,7 @@ export default class PageServer {
    */
   public static indexPageDetail(id: string) {
     return request({
-      url: `/pages/detail/${id}`,
+      url: `/pages/${id}`,
       method: 'get',
     })
   }

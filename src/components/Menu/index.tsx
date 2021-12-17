@@ -80,10 +80,10 @@ const Menu = (props: MenuProps) => {
         url = '/list/category'
       } else {
         switch (item.type) {
-          case "category":
+          case 0:
             url = `/list/category/${getCurrentPath(item._id, "category_title_en").join("/")}`
             break
-          case "page":
+          case 1:
             url = `/pages/${item._id}`
             break
         }
