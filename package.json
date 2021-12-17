@@ -11,7 +11,7 @@
     "@ant-design/icons": "^4.6.3",
     "ahooks": "^2.10.8",
     "async-validator": "^3.5.2",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "can-param": "^1.1.1",
     "classnames": "^2.3.1",
     "dayjs": "^1.10.6",
