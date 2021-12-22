@@ -84,7 +84,7 @@ const Category: NextPage<CategoryProps> = (props) => {
                           <div className={styles["post-list__photo"]}>
                             <Link href={`/archives/${item._id}`}>
                               <a>
-                                <img src={`//${item.post_cover?.media_url_720p || item.post_cover?.media_url}`}/>
+                                <img src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}/>
                               </a>
                             </Link>
                           </div>
@@ -185,11 +185,13 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     }
     console.log('queryParams', queryParams)
     // 获取分类列表
-    const queryPostListResult = await PostServer.indexPostList(queryParams)
-    props.post = {
-      list: queryPostListResult.data.list,
-      total: queryPostListResult.data.total
-    }
+    try {
+      const queryPostListResult = await PostServer.indexPostList(queryParams)
+      props.post = {
+        list: queryPostListResult.data.list,
+        total: queryPostListResult.data.total
+      }
+    } catch (e) {console.error(99999, e)}
   }
 
   return {
@@ -197,39 +199,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     revalidate: 60 * 60, // 列表页静态页面生命1小时
   };
 }
-
-/**
- * 构建时无必要预生产静态页面，运行时生成即可
- */
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const allPath = [] as any
-//   // 根据菜单分类构建路径
-//   let categoryPaths: any = []
-//   const queryMenuResult = await MenuServer.indexMenu()
-//   if (queryMenuResult.status === 200) {
-//     const menu = queryMenuResult.data.list
-//     categoryPaths = Helper.getAllPathByMenu(menu)
-//   }
-//   categoryPaths.forEach((item: any) => {
-//     let path = ['/list/category']
-//     item.firstCategory && path.push(`/${item.firstCategory}`)
-//     item.secondCategory && path.push(`/${item.secondCategory}`)
-//     allPath.push(path.join(''))
-//   })
-//
-//   // 根据tags标签构建路径
-//   const queryTagResult = await TagServer.indexList({limit: 1, page: 1})
-//   if (queryTagResult.status === 200) {
-//     queryTagResult.data.list.forEach((item: any) => {
-//       allPath.push(`/list/tags/${item.tag_name}`)
-//     })
-//   }
-//
-//   return {
-//     paths: allPath,
-//     fallback: true,
-//   }
-// }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {

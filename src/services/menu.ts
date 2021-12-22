@@ -10,7 +10,6 @@ export default class MenuServer {
       method: 'get',
     }).then(result => {
       if (result.data?.list) {
-        // eslint-disable-next-line no-param-reassign
         result.data.list = result.data.list.map((item: MenuType) => ({...item, parent: item.parent || '0'}))
       }
       return result
