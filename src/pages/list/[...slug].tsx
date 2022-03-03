@@ -84,7 +84,7 @@ const Category: NextPage<CategoryProps> = (props) => {
                           <div className={styles["post-list__photo"]}>
                             <Link href={`/archives/${item._id}`}>
                               <a>
-                                <img src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}/>
+                                <img src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`} loading={"lazy"}/>
                               </a>
                             </Link>
                           </div>
