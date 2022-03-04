@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7002/api' : 'https://api.guanweisong.com/api',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7002' : 'https://api.guanweisong.com',
   withCredentials: true,
   timeout: 10000,
   headers: {},
