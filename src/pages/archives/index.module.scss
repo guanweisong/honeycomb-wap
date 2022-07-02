@@ -44,7 +44,7 @@
     font-style: italic;
   }
   &__extra {
-    border-top: 1px dashed $color-black-lighter;
+    border-top: 1px dashed $color-gray-darker;
     padding: 10px 0;
     color: $color-black;
     list-style: none;
@@ -58,11 +58,15 @@
     }
   }
   &__post-list {
-    list-style: inside circle;
+    list-style: outside circle;
     margin-top: 10px;
     line-height: 1.5;
+    margin-left: 20px;
     li {
       margin-top: 10px;
+      a {
+        display: block;
+      }
       &:first-child {
         margin-top: 0;
       }

@@ -39,7 +39,7 @@ export default class PostServer {
 
   // 获取随机文章列表
   static indexRandomPostByCategoryId(params: IIndexRandomPostListParamsType) {
-    console.log('category=>service=>indexRandomPostByCategoryId');
+    console.log('post=>service=>indexRandomPostByCategoryId');
     return request({
       url: '/posts/random',
       method: 'get',

@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import Link from 'next/link'
 import Header from '@/src/components/Header'
 import Tags from '@/src/components/Tags'
-import { ClockCircleOutlined, MessageOutlined, EyeOutlined, UserOutlined, LoadingOutlined, CameraOutlined, CalendarOutlined } from '@ant-design/icons'
+import { ClockCircleOutlined, MessageOutlined, EyeOutlined, UserOutlined, LoadingOutlined, CameraOutlined, CalendarOutlined, BookOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { NextPage, GetStaticPaths, GetStaticProps } from "next"
 import { PostType } from "@/src/types/post"
@@ -95,17 +95,17 @@ const Archives: NextPage<ArchivesProps> = (props) => {
             <EyeOutlined />&nbsp;{views === null ? <LoadingOutlined /> : views}&nbsp;次浏览
           </li>
         </ul>
-        <If condition={postDetail.post_type === 3}>
-          <div
-            className={classNames({
-              [styles["detail__quote"]]: true,
-            })}
-          >
-            {`"${postDetail.quote_content}"——${postDetail.quote_author}`}
-          </div>
-        </If>
-        <If condition={[0, 1, 2].includes(postDetail.post_type)}>
-          <>
+        <Choose>
+          <When condition={postDetail.post_type === 3}>
+            <div
+              className={classNames({
+                [styles["detail__quote"]]: true,
+              })}
+            >
+              {`"${postDetail.quote_content}"`}
+            </div>
+          </When>
+          <Otherwise>
             <div
               className={classNames({
                 [styles["detail__detail"]]: true,
@@ -114,25 +114,31 @@ const Archives: NextPage<ArchivesProps> = (props) => {
               // @ts-ignore
               dangerouslySetInnerHTML={{__html: postDetail.post_content}}
             />
-            <ul className={styles["detail__extra"]}>
-              <If condition={postDetail.post_type === 2}>
-                <li className={styles["detail__extra-item"]}>
-                  <CameraOutlined />
-                  {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp;
-                  拍摄于&nbsp;
-                  {postDetail.gallery_location}
-                </li>
-              </If>
-              <If condition={postDetail.post_type === 1}>
-                <li className={styles["detail__extra-item"]}>
-                  <CalendarOutlined />
-                  上映时间：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
-                </li>
-              </If>
-            </ul>
-            <Tags {...postDetail} />
-          </>
-        </If>
+          </Otherwise>
+        </Choose>
+        <ul className={styles["detail__extra"]}>
+          <If condition={postDetail.post_type === 2}>
+            <li className={styles["detail__extra-item"]}>
+              <CameraOutlined />
+              {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp;
+              拍摄于&nbsp;
+              {postDetail.gallery_location}
+            </li>
+          </If>
+          <If condition={postDetail.post_type === 1}>
+            <li className={styles["detail__extra-item"]}>
+              <CalendarOutlined />&nbsp;
+              上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
+            </li>
+          </If>
+          <If condition={postDetail.post_type === 3}>
+            <li className={styles["detail__extra-item"]}>
+              <BookOutlined />&nbsp;
+              引用自：{postDetail.quote_author}
+            </li>
+          </If>
+        </ul>
+        <Tags {...postDetail} />
         <If condition={randomPostsList.length > 0}>
           <Card title={"猜你喜欢"}>
             <ul className={styles["detail__post-list"]}>
@@ -195,7 +201,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const promiseAllResult = await Promise.all(promise)
 
   props.menu = promiseAllResult[0].data.list
-  // props.randomPostsList = promiseAllResult[1].data?.filter((item: CommentType) => item._id !== id)
+  props.randomPostsList = promiseAllResult[1].data?.filter((item: CommentType) => item._id !== id)
   props.setting = promiseAllResult[2].data[0]
 
   return {
