@@ -1,4 +1,4 @@
-@import "../assets/base";
+@import '../assets/base';
 
 html {
   background: $color-gray-lighter;
@@ -26,7 +26,8 @@ body {
 a {
   text-decoration: none;
 }
-.link-light:link, .link-light:visited{
+.link-light:link,
+.link-light:visited {
   color: $color-black;
 }
 .link-light:hover {
@@ -43,7 +44,8 @@ a {
   body {
     color: $color-black-lighter;
   }
-  .link-light:link, .link-light:visited{
+  .link-light:link,
+  .link-light:visited {
     color: $color-black-lighter;
   }
   .link-light:hover {

@@ -1,4 +1,4 @@
-export interface  PageType {
+export interface PageType {
   _id: string;
   page_title?: string;
   page_content?: string;

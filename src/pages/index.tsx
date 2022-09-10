@@ -1,14 +1,14 @@
-import { useLayoutEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useLayoutEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Index = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   useLayoutEffect(() => {
-    router.replace('/list/category')
-  }, [])
+    router.replace('/list/category');
+  }, []);
 
-  return (<></>)
-}
+  return <></>;
+};
 
-export default Index
+export default Index;

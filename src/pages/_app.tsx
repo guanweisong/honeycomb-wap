@@ -1,29 +1,40 @@
-import React  from 'react'
-import Router from 'next/router'
-import NProgress from 'nprogress'
-import { AppProps } from 'next/app'
-// @ts-ignore
-import withGA from 'next-ga'
-import BackToTop from '@/src/components/BackToTop'
-import '@/src/assets/markdown.scss'
-import './app.scss'
+import React, { useEffect } from 'react';
+import Router, { useRouter } from 'next/router';
+import NProgress from 'nprogress';
+import { AppProps } from 'next/app';
+import BackToTop from '@/src/components/BackToTop';
+import '@/src/assets/markdown.scss';
+import { initGA, logPageView } from '@/src/utils/analytics';
+import './app.scss';
 
-NProgress.configure({ showSpinner: false })
+NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', (url) => {
-  console.log(`Loading: ${url}`)
-  NProgress.start()
+  console.log(`Loading: ${url}`);
+  NProgress.start();
 });
-Router.events.on('routeChangeComplete', () => NProgress.done())
-Router.events.on('routeChangeError', () => NProgress.done())
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    initGA('UA-158268354-2');
+    // `routeChangeComplete` won't run for the first page load unless the query string is
+    // hydrated later on, so here we log a page view if this is the first render and
+    // there's no query string
+    if (!router.asPath.includes('?')) {
+      logPageView();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      <Component {...pageProps}/>
+      <Component {...pageProps} />
       <BackToTop />
     </>
-  )
-}
+  );
+};
 
-export default withGA("UA-158268354-2", Router)(MyApp);
+export default MyApp;

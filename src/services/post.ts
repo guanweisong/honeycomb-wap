@@ -2,7 +2,7 @@ import request from '@/src/utils/request';
 
 export interface IIndexPostListParamsType {
   category_id?: string;
-  post_status?: number [];
+  post_status?: number[];
   page?: number;
   limit?: number;
   tag_name?: string;
@@ -14,7 +14,7 @@ export interface IIndexPostListParamsType {
 
 export interface IIndexRandomPostListParamsType {
   number?: number;
-  post_category: string
+  post_category: string;
 }
 
 export default class PostServer {
@@ -25,7 +25,7 @@ export default class PostServer {
       url: '/posts',
       method: 'get',
       params: params,
-    })
+    });
   }
 
   // 获取文章详情
@@ -34,7 +34,7 @@ export default class PostServer {
     return request({
       url: `/posts/${id}`,
       method: 'get',
-    })
+    });
   }
 
   // 获取随机文章列表
@@ -44,6 +44,6 @@ export default class PostServer {
       url: '/posts/random',
       method: 'get',
       params: params,
-    })
+    });
   }
 }

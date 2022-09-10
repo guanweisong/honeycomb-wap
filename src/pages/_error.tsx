@@ -1,7 +1,5 @@
 function Error() {
-  return (
-    <p>'An error occurred on client'</p>
-  )
+  return <p>'An error occurred on client'</p>;
 }
 
-export default Error
+export default Error;

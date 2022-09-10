@@ -9,7 +9,6 @@ export default class PageServer {
     return request({
       url: `/pages/${id}`,
       method: 'get',
-    })
+    });
   }
 }
-

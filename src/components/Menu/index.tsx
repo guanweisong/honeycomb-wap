@@ -1,70 +1,71 @@
-import React, {useEffect, useState} from 'react'
-import classNames from 'classnames'
-import Link from 'next/link'
+import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import Link from 'next/link';
 // @ts-ignore
-import listToTree from 'list-to-tree-lite'
-import styles from './index.module.scss'
-import { MenuType } from "@/src/types/menu"
-import { useRouter } from "next/router"
+import listToTree from 'list-to-tree-lite';
+import styles from './index.module.scss';
+import { MenuType } from '@/src/types/menu';
+import { useRouter } from 'next/router';
 
 interface MenuProps {
-  menu: MenuType[]
-  currentMenu?: string
+  menu: MenuType[];
+  currentMenu?: string;
 }
 
 const Menu = (props: MenuProps) => {
-  const [visible, setVisible] = useState(false)
-  const router = useRouter()
+  const [visible, setVisible] = useState(false);
+  const router = useRouter();
 
   /**
    * 路由变化则关闭菜单
    */
   useEffect(() => {
-    setVisible(false)
-  }, [router.asPath])
+    setVisible(false);
+  }, [router.asPath]);
 
   const formatCategorise = () => {
-    const menuData = listToTree(props.menu, {idKey: '_id', parentKey: 'parent'})
+    const menuData = listToTree(props.menu, { idKey: '_id', parentKey: 'parent' });
     const result = [
       {
         category_title: '首页',
         category_title_en: '',
         isHome: true,
         children: [],
-      }
+        _id: 'home',
+      },
     ];
-    return [...result, ...menuData]
+    return [...result, ...menuData];
   };
 
-  const data = formatCategorise()
+  const data = formatCategorise();
 
   /**
    * 根据id寻找家族属性集合
    */
   const getCurrentPath = (id: string | undefined, familyProp: string) => {
-    const path = [] as string[]
-    const { menu } = props
+    const path = [] as string[];
+    const { menu } = props;
     if (id) {
       const find = (data: MenuType[]) => {
         if (data.length === 1) {
-          path.push(data[0][familyProp])
+          path.push(data[0][familyProp]);
         } else {
-          data.forEach(item => {
+          data.forEach((item) => {
             if (item._id === id) {
-              path.push(item[familyProp])
+              path.push(item[familyProp]);
               if (item.parent !== '0') {
-                find(data.filter(m => m._id === item.parent))
+                find(data.filter((m) => m._id === item.parent));
               }
             }
-          })
+          });
         }
-      }
-      find(menu)
+      };
+      find(menu);
     }
-    return path.reverse()
-  }
+    return path.reverse();
+  };
 
-  const currentPath = getCurrentPath(props.currentMenu, '_id')
+  const currentPath = getCurrentPath(props.currentMenu, '_id');
 
   /**
    * 渲染菜单
@@ -75,21 +76,21 @@ const Menu = (props: MenuProps) => {
      * @param item
      */
     const getUrl = (item: MenuType) => {
-      let url = ''
+      let url = '';
       if (item.isHome) {
-        url = '/list/category'
+        url = '/list/category';
       } else {
         switch (item.type) {
           case 0:
-            url = `/list/category/${getCurrentPath(item._id, "category_title_en").join("/")}`
-            break
+            url = `/list/category/${getCurrentPath(item._id, 'category_title_en').join('/')}`;
+            break;
           case 1:
-            url = `/pages/${item._id}`
-            break
+            url = `/pages/${item._id}`;
+            break;
         }
       }
-      return url
-    }
+      return url;
+    };
     /**
      * 获取菜单的标题
      * @param item
@@ -99,62 +100,57 @@ const Menu = (props: MenuProps) => {
         <Link href={getUrl(item)}>
           <a
             className={classNames({
-              [styles.current]: currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome)
+              [styles.current]:
+                currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome),
             })}
           >
             {item.category_title || item.page_title}
           </a>
         </Link>
-      )
-    }
+      );
+    };
     /**
      * 渲染菜单
      * @param data
      */
-    const renderUnit = (data:MenuType[]) => {
+    const renderUnit = (data: MenuType[]) => {
       return data.map((item) => {
         if (item.children.length === 0) {
-          return <li key={item._id}>{renderTitle(item)}</li>
+          return <li key={item._id}>{renderTitle(item)}</li>;
         } else {
           return (
             <li key={item._id}>
               {renderTitle(item)}
-              <ul>
-                {renderUnit(item.children)}
-              </ul>
+              <ul>{renderUnit(item.children)}</ul>
             </li>
-          )
+          );
         }
-      })
-    }
-    return renderUnit(data)
-  }
+      });
+    };
+    return renderUnit(data);
+  };
 
   return (
-    <div
-      className={styles.menu}
-    >
+    <div className={styles.menu}>
       <div
         className={classNames(styles.menu__more, {
-          [styles.show]: visible
+          [styles.show]: visible,
         })}
         onClick={() => setVisible(!visible)}
       >
-        <div className={styles.bar}/>
-        <div className={styles.bar}/>
-        <div className={styles.bar}/>
+        <div className={styles.bar} />
+        <div className={styles.bar} />
+        <div className={styles.bar} />
       </div>
       <ul
         className={classNames({
-          [styles.show]: visible
+          [styles.show]: visible,
         })}
       >
-        {
-          renderMenu()
-        }
+        {renderMenu()}
       </ul>
     </div>
-  )
-}
+  );
+};
 
 export default Menu;

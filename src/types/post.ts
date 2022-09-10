@@ -27,12 +27,12 @@ export interface PostType {
   };
   movie_time?: string;
   movie_name_en?: string;
-  movie_director?: TagType [];
-  movie_actor?: TagType [];
-  movie_style?: TagType [];
+  movie_director?: TagType[];
+  movie_actor?: TagType[];
+  movie_style?: TagType[];
   gallery_location?: string;
   gallery_time?: string;
-  gallery_style?: TagType [];
+  gallery_style?: TagType[];
   quote_author?: string;
   quote_content?: string;
   comment_count: number;

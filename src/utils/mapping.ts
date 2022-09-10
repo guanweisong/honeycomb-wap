@@ -3,4 +3,4 @@ export const postClass = {
   1: 'movie',
   2: 'gallery',
   3: 'quote',
-}
+};

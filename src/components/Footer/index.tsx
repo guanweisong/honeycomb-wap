@@ -1,14 +1,13 @@
-import { SettingType } from "@/src/types/setting"
-import dayjs from "dayjs"
-import styles from "./index.module.scss"
+import { SettingType } from '@/src/types/setting';
+import dayjs from 'dayjs';
+import styles from './index.module.scss';
 
 export interface FooterProps {
-  setting: SettingType
+  setting: SettingType;
 }
 
-const Footer = (props:FooterProps) => {
-
-  const { setting } = props
+const Footer = (props: FooterProps) => {
+  const { setting } = props;
 
   return (
     <div className={styles.footer}>
@@ -33,7 +32,7 @@ const Footer = (props:FooterProps) => {
         ) : null}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -1,3 +1,3 @@
 export interface PlatformType {
-  isPC: boolean
+  isPC: boolean;
 }

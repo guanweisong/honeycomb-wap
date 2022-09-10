@@ -1,4 +1,4 @@
-@import "../../assets/base";
+@import '../../assets/base';
 
 .back-to-top {
   position: fixed;
@@ -14,7 +14,7 @@
   border-radius: 50%;
   box-shadow: 0 0 5px $color-gray-lighter;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
   &:hover {
     box-shadow: 0 0 5px $color-gray;
   }

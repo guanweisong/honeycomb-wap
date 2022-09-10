@@ -1,8 +1,8 @@
-@import "../../assets/base";
+@import '../../assets/base';
 
 .detail {
   &__content {
-    padding: 1px 10px!important;
+    padding: 1px 10px !important;
     background: $color-white;
   }
   &__title {
@@ -24,7 +24,7 @@
       display: flex;
       align-items: center;
       color: $color-black-lighter;
-      &:before{
+      &:before {
         display: inline-block;
         margin: 0 5px;
         content: '/';

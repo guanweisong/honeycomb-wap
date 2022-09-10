@@ -15,13 +15,13 @@ export interface creatCommentType {
 
 export default class CommentServer {
   // 根据文章id获取评论列表
-  static index(id: string){
+  static index(id: string) {
     console.log('comment=>service=>index');
     return request({
       url: `/comments/${id}`,
       method: 'get',
-    })
-  };
+    });
+  }
 
   // 创建评论
   static create(params: creatCommentType) {
@@ -30,6 +30,6 @@ export default class CommentServer {
       url: '/comments',
       method: 'post',
       data: params,
-    })
-  };
+    });
+  }
 }

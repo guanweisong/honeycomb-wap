@@ -7,6 +7,6 @@ export default class SettingServer {
     return request({
       url: '/settings',
       method: 'get',
-    })
-  };
+    });
+  }
 }

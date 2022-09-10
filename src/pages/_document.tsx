@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   render() {
@@ -6,7 +6,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="shortcut icon" href="/static/images/favicon.ico" />
-          <link rel='stylesheet' type='text/css' href='/static/stylesheets/nprogress.css' />
+          <link rel="stylesheet" type="text/css" href="/static/stylesheets/nprogress.css" />
           <script src="https://ssl.captcha.qq.com/TCaptcha.js" />
         </Head>
         <body>
@@ -14,8 +14,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

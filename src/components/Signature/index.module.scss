@@ -1,10 +1,10 @@
-@import "../../assets/base";
+@import '../../assets/base';
 
 .signature {
   display: flex;
   margin: 20px 0;
   &__line {
-    height: 1PX;
+    height: 1px;
     flex: 1;
     background: $color-gray-lighter;
     margin-top: 10px;

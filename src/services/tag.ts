@@ -14,6 +14,6 @@ export default class TagServer {
       url: '/tags',
       method: 'get',
       params: params,
-    })
+    });
   }
 }

@@ -1,5 +1,5 @@
 import request from '@/src/utils/request';
-import {MenuType} from "@/src/types/menu";
+import { MenuType } from '@/src/types/menu';
 
 export default class MenuServer {
   // 获取菜单列表
@@ -8,11 +8,14 @@ export default class MenuServer {
     return request({
       url: '/menus',
       method: 'get',
-    }).then(result => {
+    }).then((result) => {
       if (result.data?.list) {
-        result.data.list = result.data.list.map((item: MenuType) => ({...item, parent: item.parent || '0'}))
+        result.data.list = result.data.list.map((item: MenuType) => ({
+          ...item,
+          parent: item.parent || '0',
+        }));
       }
-      return result
-    })
+      return result;
+    });
   }
 }

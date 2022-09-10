@@ -1,4 +1,4 @@
-@import "../../assets/base";
+@import '../../assets/base';
 
 .post-list {
   &__title {
@@ -18,13 +18,10 @@
       margin-bottom: 0;
     }
     &.post {
-
     }
     &.gallery {
-
     }
     &.movie {
-
     }
     &.quote {
       .post-list__content {
@@ -46,7 +43,7 @@
     font-size: $font-size-larger;
   }
   &__info {
-    border-top: 1PX dashed $color-gray-darker;
+    border-top: 1px dashed $color-gray-darker;
     padding: 0 10px 10px;
     font-size: $font-size-smaller;
     list-style: none;
@@ -54,7 +51,7 @@
     display: flex;
     justify-content: center;
     a {
-      color: $color-black-lighter!important;
+      color: $color-black-lighter !important;
     }
     &-item {
       display: flex;

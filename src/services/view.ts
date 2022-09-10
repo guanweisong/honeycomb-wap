@@ -12,7 +12,7 @@ export default class ViewServer {
     return request({
       url: `/${params.type}/${params.id}/views`,
       method: 'get',
-    })
+    });
   }
   // 更新浏览量
   static updateViews(params: IViewProps) {
@@ -20,6 +20,6 @@ export default class ViewServer {
     return request({
       url: `/${params.type}/${params.id}/views`,
       method: 'patch',
-    })
+    });
   }
 }

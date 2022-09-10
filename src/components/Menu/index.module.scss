@@ -1,4 +1,4 @@
-@import "../../assets/base";
+@import '../../assets/base';
 
 .menu {
   background: $color-white;
@@ -28,7 +28,6 @@
           color: $color-white !important;
           background: $color-primary !important;
         }
-
       }
 
       &:hover {
@@ -44,7 +43,7 @@
         left: 0;
         right: 0;
         transform: translateY(-100%);
-        transition: all .2s;
+        transition: all 0.2s;
         text-align: center;
         padding-left: 0;
 
@@ -133,7 +132,7 @@
       width: 100vw;
       background: $color-white;
       box-shadow: 0 5px 1px $color-gray-darker;
-      transition: transform .2s, opacity .2s;
+      transition: transform 0.2s, opacity 0.2s;
       &.show {
         top: 41px;
         transform: translateY(0);
@@ -149,8 +148,8 @@
         }
         > a {
           &.current {
-            background: none!important;
-            color: $color-primary!important;
+            background: none !important;
+            color: $color-primary !important;
             border-left: 3px solid $color-primary;
             padding-left: 17px;
           }
@@ -209,7 +208,7 @@
         & > li {
           & > a {
             &.current {
-              background-color: $color-cyan!important;
+              background-color: $color-cyan !important;
             }
           }
           & > ul {
