@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 import React, { useEffect, useState, useRef, FormEvent } from 'react';
 import { CommentType } from '@/src/types/comment';
 import CommentServer from '@/src/services/comment';

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 import { MenuType } from '@/src/types/menu';
 import Menu from '@/src/components/Menu';
 import Link from 'next/link';

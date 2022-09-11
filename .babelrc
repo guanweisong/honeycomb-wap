@@ -11,6 +11,6 @@
         "alias": {"@": "./"}
       }
     ],
-    ["import", {"libraryName": "antd-mobile"}]
+    ["import", {"libraryName": "antd-mobile", "libraryDirectory": "es/components", "style": false}]
   ]
 }

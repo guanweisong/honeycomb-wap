@@ -5,18 +5,18 @@
   bottom: 110px;
   left: 50%;
   margin-left: 560px;
-  background: $color-white;
+  background: @color-white;
   width: 40px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  box-shadow: 0 0 5px $color-gray-lighter;
+  box-shadow: 0 0 5px @color-gray-lighter;
   cursor: pointer;
   transition: all 0.2s;
   &:hover {
-    box-shadow: 0 0 5px $color-gray;
+    box-shadow: 0 0 5px @color-gray;
   }
   img {
     display: block;
@@ -26,8 +26,8 @@
 
 @media (prefers-color-scheme: dark) {
   .back-to-top {
-    background-color: $color-cyan;
-    border: 1px solid $color-cyan-lighter;
-    box-shadow: 0 0 5px $color-cyan-lighter;
+    background-color: @color-cyan;
+    border: 1px solid @color-cyan-lighter;
+    box-shadow: 0 0 5px @color-cyan-lighter;
   }
 }

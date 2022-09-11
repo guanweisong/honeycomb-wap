@@ -4,17 +4,17 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import Header from '@/src/components/Header';
 import Tags from '@/src/components/Tags';
+import { DotLoading } from 'antd-mobile';
 import {
-  ClockCircleOutlined,
-  MessageOutlined,
-  EyeOutlined,
-  UserOutlined,
-  LoadingOutlined,
-  CameraOutlined,
-  CalendarOutlined,
-  BookOutlined,
-} from '@ant-design/icons';
-import styles from './index.module.scss';
+  ClockCircleOutline,
+  MessageOutline,
+  EyeOutline,
+  UserOutline,
+  CameraOutline,
+  CalendarOutline,
+  ContentOutline,
+} from 'antd-mobile-icons';
+import styles from './index.module.less';
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { PostType } from '@/src/types/post';
 import { CommentType } from '@/src/types/comment';
@@ -92,23 +92,23 @@ const Archives: NextPage<ArchivesProps> = (props) => {
         <h2 className={styles['detail__title']}>{getTitle()}</h2>
         <ul className={styles['detail__info']}>
           <li className={styles['detail__info-item']}>
-            <UserOutlined />
+            <UserOutline />
             &nbsp;
             <Link href={`/list/authors/${postDetail.post_author.user_name}`}>
               <a className="link-light">{postDetail.post_author.user_name}</a>
             </Link>
           </li>
           <li className={styles['detail__info-item']}>
-            <ClockCircleOutlined />
+            <ClockCircleOutline />
             &nbsp;{dayjs(postDetail.created_at).format('YYYY-MM-DD')}
           </li>
           <li className={styles['detail__info-item']}>
-            <MessageOutlined />
+            <MessageOutline />
             &nbsp;{commentCount} 条留言
           </li>
           <li className={styles['detail__info-item']}>
-            <EyeOutlined />
-            &nbsp;{views === null ? <LoadingOutlined /> : views}&nbsp;次浏览
+            <EyeOutline />
+            &nbsp;{views === null ? <DotLoading /> : views}&nbsp;次浏览
           </li>
         </ul>
         <Choose>
@@ -135,20 +135,20 @@ const Archives: NextPage<ArchivesProps> = (props) => {
         <ul className={styles['detail__extra']}>
           <If condition={postDetail.post_type === 2}>
             <li className={styles['detail__extra-item']}>
-              <CameraOutlined />
+              <CameraOutline />
               {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
               {postDetail.gallery_location}
             </li>
           </If>
           <If condition={postDetail.post_type === 1}>
             <li className={styles['detail__extra-item']}>
-              <CalendarOutlined />
+              <CalendarOutline />
               &nbsp; 上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
             </li>
           </If>
           <If condition={postDetail.post_type === 3}>
             <li className={styles['detail__extra-item']}>
-              <BookOutlined />
+              <ContentOutline />
               &nbsp; 引用自：{postDetail.quote_author}
             </li>
           </If>
@@ -237,7 +237,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 };
 

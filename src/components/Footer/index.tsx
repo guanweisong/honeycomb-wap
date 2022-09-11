@@ -1,6 +1,6 @@
 import { SettingType } from '@/src/types/setting';
 import dayjs from 'dayjs';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 
 export interface FooterProps {
   setting: SettingType;

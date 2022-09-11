@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import classNames from 'classnames';
 import Header from '@/src/components/Header';
 import Signature from '@/src/components/Signature';
 import { postClass } from '@/src/utils/mapping';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 import dayjs from 'dayjs';
-import { ClockCircleOutlined, MessageOutlined, EyeOutlined } from '@ant-design/icons';
+import { ClockCircleOutline, MessageOutline, EyeOutline } from 'antd-mobile-icons';
 import PostServer, { IIndexPostListParamsType } from '@/src/services/post';
 import MenuServer from '@/src/services/menu';
 import { PostType } from '@/src/types/post';
@@ -33,9 +33,10 @@ interface CategoryProps {
 
 const Category: NextPage<CategoryProps> = (props) => {
   const { menu, setting, currentMenu = '', post, typeName, type = '', platform } = props;
+  const [postList, setPostList] = useState(post.list);
 
   useEffect(() => {
-    console.log('useEffect', props);
+    setPostList(post.list);
   }, [props]);
 
   const getTitle = () => {
@@ -67,10 +68,10 @@ const Category: NextPage<CategoryProps> = (props) => {
           <div className={styles['post-list__title']}>{getTitle()}</div>
         </If>
         <Choose>
-          <When condition={post?.list.length > 0}>
+          <When condition={postList.length > 0}>
             <>
               <div className={styles['post-list']}>
-                {post.list.map((item) => (
+                {postList.map((item) => (
                   <Link href={`/archives/${item._id}`} key={item._id}>
                     <div
                       className={classNames({
@@ -108,15 +109,15 @@ const Category: NextPage<CategoryProps> = (props) => {
                       </Link>
                       <ul className={styles['post-list__info']}>
                         <li className={styles['post-list__info-item']}>
-                          <ClockCircleOutlined />
+                          <ClockCircleOutline />
                           &nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}
                         </li>
                         <li className={styles['post-list__info-item']}>
-                          <MessageOutlined />
+                          <MessageOutline />
                           &nbsp;{item.comment_count}&nbsp;条留言
                         </li>
                         <li className={styles['post-list__info-item']}>
-                          <EyeOutlined />
+                          <EyeOutline />
                           &nbsp;{item.post_views}&nbsp;次浏览
                         </li>
                       </ul>
@@ -218,7 +219,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 };
 

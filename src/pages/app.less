@@ -1,7 +1,7 @@
 @import '../assets/base';
 
 html {
-  background: $color-gray-lighter;
+  background: @color-gray-lighter;
 }
 #__next {
   min-height: 100vh;
@@ -9,16 +9,16 @@ html {
 * {
   margin: 0;
   padding: 0;
-  font-family: $font-family-base;
+  font-family: @font-family-base;
 }
 body {
   margin: 0;
-  font-size: $font-size-base;
+  font-size: @font-size-base;
   line-height: 1.5;
-  color: $color-black-darker;
+  color: @color-black-darker;
 }
 .container {
-  max-width: $width-layout-base;
+  max-width: @width-layout-base;
   margin: 0 auto;
   padding: 1px 0;
   box-sizing: border-box;
@@ -28,10 +28,10 @@ a {
 }
 .link-light:link,
 .link-light:visited {
-  color: $color-black;
+  color: @color-black;
 }
 .link-light:hover {
-  color: $color-primary;
+  color: @color-primary;
 }
 .iconfont {
   vertical-align: middle;
@@ -39,16 +39,16 @@ a {
 
 @media (prefers-color-scheme: dark) {
   html {
-    background-color: $color-cyan-darker;
+    background-color: @color-cyan-darker;
   }
   body {
-    color: $color-black-lighter;
+    color: @color-black-lighter;
   }
   .link-light:link,
   .link-light:visited {
-    color: $color-black-lighter;
+    color: @color-black-lighter;
   }
   .link-light:hover {
-    color: $color-primary;
+    color: @color-primary;
   }
 }

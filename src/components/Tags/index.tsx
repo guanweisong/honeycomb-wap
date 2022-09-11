@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { TagType } from '@/src/types/tag';
 import { PostType } from '@/src/types/post';
-import styles from './index.module.scss';
+import styles from './index.module.less';
 
 const Tag = (props: PostType) => {
   const getTags = (item: TagType[] | undefined, label: string) => {

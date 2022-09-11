@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import styles from '../archives/index.module.scss';
+import styles from '../archives/index.module.less';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import {
-  ClockCircleOutlined,
-  MessageOutlined,
-  EyeOutlined,
-  UserOutlined,
-  LoadingOutlined,
-} from '@ant-design/icons';
+import { DotLoading } from 'antd-mobile';
+import { ClockCircleOutline, MessageOutline, EyeOutline, UserOutline } from 'antd-mobile-icons';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 import PageServer from '@/src/services/page';
@@ -74,23 +69,23 @@ const Pages: NextPage<PagesProps> = (props) => {
         <h2 className={styles['detail__title']}>{pageDetail.page_title}</h2>
         <ul className={styles['detail__info']}>
           <li className={styles['detail__info-item']}>
-            <UserOutlined />
+            <UserOutline />
             &nbsp;
             <Link href={`/list/authors/${pageDetail.page_author.user_name}`}>
               <a className="link-light">{pageDetail.page_author.user_name}</a>
             </Link>
           </li>
           <li className={styles['detail__info-item']}>
-            <ClockCircleOutlined />
+            <ClockCircleOutline />
             &nbsp;{dayjs(pageDetail.created_at).format('YYYY-MM-DD')}
           </li>
           <li className={styles['detail__info-item']}>
-            <MessageOutlined />
+            <MessageOutline />
             &nbsp;{commentCount} 条留言
           </li>
           <li className={styles['detail__info-item']}>
-            <EyeOutlined />
-            &nbsp;{views === null ? <LoadingOutlined /> : views}&nbsp;次浏览
+            <EyeOutline />
+            &nbsp;{views === null ? <DotLoading /> : views}&nbsp;次浏览
           </li>
         </ul>
         <div
@@ -138,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 };
 

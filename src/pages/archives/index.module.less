@@ -3,10 +3,10 @@
 .detail {
   &__content {
     padding: 1px 10px !important;
-    background: $color-white;
+    background: @color-white;
   }
   &__title {
-    font-size: $font-size-head;
+    font-size: @font-size-head;
     padding: 20px 0 0;
     text-align: center;
     &:empty {
@@ -16,14 +16,14 @@
   &__info {
     text-align: center;
     padding: 10px 0;
-    border-bottom: 1px dashed $color-gray-darker;
-    font-size: $font-size-smaller;
+    border-bottom: 1px dashed @color-gray-darker;
+    font-size: @font-size-smaller;
     display: flex;
     justify-content: center;
     &-item {
       display: flex;
       align-items: center;
-      color: $color-black-lighter;
+      color: @color-black-lighter;
       &:before {
         display: inline-block;
         margin: 0 5px;
@@ -44,9 +44,9 @@
     font-style: italic;
   }
   &__extra {
-    border-top: 1px dashed $color-gray-darker;
+    border-top: 1px dashed @color-gray-darker;
     padding: 10px 0;
-    color: $color-black;
+    color: @color-black;
     list-style: none;
     &-item {
       display: flex;
@@ -74,10 +74,10 @@
   }
 }
 
-@media screen and (max-width: $width-layout-min) {
+@media screen and (max-width: @width-layout-min) {
   .detail {
     &__title {
-      font-size: $font-size-larger;
+      font-size: @font-size-larger;
     }
   }
 }
@@ -85,18 +85,18 @@
 @media (prefers-color-scheme: dark) {
   .detail {
     &__content {
-      background: $color-cyan;
-      border: 1px solid $color-cyan-lighter;
+      background: @color-cyan;
+      border: 1px solid @color-cyan-lighter;
     }
     &__title {
-      color: $color-black-lighter;
+      color: @color-black-lighter;
     }
     &__info {
-      border-bottom-color: $color-cyan-lighter;
+      border-bottom-color: @color-cyan-lighter;
     }
     &__extra {
-      border-top-color: $color-cyan-lighter;
-      color: $color-black-lighter;
+      border-top-color: @color-cyan-lighter;
+      color: @color-black-lighter;
     }
   }
 }

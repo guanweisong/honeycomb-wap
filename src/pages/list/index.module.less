@@ -3,13 +3,13 @@
 .post-list {
   &__title {
     margin: 0 0 20px;
-    font-size: $font-size-larger;
+    font-size: @font-size-larger;
   }
   &__item {
     display: block;
-    color: $color-black-darker;
+    color: @color-black-darker;
     margin: 10px 0;
-    background: $color-white;
+    background: @color-white;
     padding: 10px;
     &:first-child {
       margin-top: 0;
@@ -38,20 +38,20 @@
   &__content {
     padding: 10px;
     display: block;
-    color: $color-black-darker;
+    color: @color-black-darker;
     text-align: center;
-    font-size: $font-size-larger;
+    font-size: @font-size-larger;
   }
   &__info {
-    border-top: 1px dashed $color-gray-darker;
+    border-top: 1px dashed @color-gray-darker;
     padding: 0 10px 10px;
-    font-size: $font-size-smaller;
+    font-size: @font-size-smaller;
     list-style: none;
-    color: $color-black-lighter;
+    color: @color-black-lighter;
     display: flex;
     justify-content: center;
     a {
-      color: $color-black-lighter !important;
+      color: @color-black-lighter !important;
     }
     &-item {
       display: flex;
@@ -61,15 +61,15 @@
     }
   }
   &__tag {
-    font-size: $font-size-smaller;
+    font-size: @font-size-smaller;
     padding: 0 10px 10px;
   }
 }
 
-@media screen and (max-width: $width-layout-min) {
+@media screen and (max-width: @width-layout-min) {
   .post-list {
     &__content {
-      font-size: $font-size-base;
+      font-size: @font-size-base;
     }
   }
 }
@@ -77,14 +77,14 @@
 @media (prefers-color-scheme: dark) {
   .post-list {
     &__item {
-      background-color: $color-cyan;
-      border: 1px solid $color-cyan-lighter;
+      background-color: @color-cyan;
+      border: 1px solid @color-cyan-lighter;
     }
     &__info {
-      border-top: 1px solid $color-cyan-lighter;
+      border-top: 1px solid @color-cyan-lighter;
     }
     &__content {
-      color: $color-black-lighter;
+      color: @color-black-lighter;
     }
   }
 }
