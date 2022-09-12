@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import classNames from 'classnames';
+import { InfiniteScroll } from 'antd-mobile';
 import Header from '@/src/components/Header';
 import Signature from '@/src/components/Signature';
 import { postClass } from '@/src/utils/mapping';
@@ -29,16 +30,45 @@ interface CategoryProps {
   typeName: string | undefined;
   type: string | undefined;
   platform: PlatformType;
+  queryParams: any;
 }
 
+const PAGE_SIZE = 10;
+
 const Category: NextPage<CategoryProps> = (props) => {
-  const { menu, setting, currentMenu = '', post, typeName, type = '', platform } = props;
+  const {
+    menu,
+    setting,
+    currentMenu = '',
+    post,
+    typeName,
+    type = '',
+    platform,
+    queryParams,
+  } = props;
   const [postList, setPostList] = useState(post.list);
+  const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
     setPostList(post.list);
+    setPageNo(1);
   }, [props]);
 
+  /**
+   * 滚动加载
+   */
+  const loadMore = async () => {
+    const queryPostListResult = await PostServer.indexPostList({
+      ...queryParams,
+      page: pageNo + 1,
+    });
+    setPageNo(pageNo + 1);
+    setPostList([...postList, ...queryPostListResult.data.list]);
+  };
+
+  /**
+   * 获取页面标题
+   */
   const getTitle = () => {
     let title = '';
     switch (type) {
@@ -52,6 +82,65 @@ const Category: NextPage<CategoryProps> = (props) => {
         title = `${typeName || '首页'}_${setting.site_name}`;
     }
     return title;
+  };
+
+  /**
+   * 渲染列表卡片
+   * @param item
+   */
+  const renderCard = (item: PostType) => {
+    return (
+      <Link href={`/archives/${item._id}`} key={item._id}>
+        <div
+          className={classNames({
+            [styles['post-list__item']]: true,
+            [styles[postClass[item.post_type]]]: true,
+          })}
+        >
+          <If condition={[0, 1, 2].includes(item.post_type)}>
+            <div className={styles['post-list__photo']}>
+              <Link href={`/archives/${item._id}`}>
+                <a>
+                  <img
+                    src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}
+                    loading={'lazy'}
+                  />
+                </a>
+              </Link>
+            </div>
+          </If>
+          <Link href={`/archives/${item._id}`}>
+            <a className={styles['post-list__content']}>
+              <If condition={item.post_type === 1}>
+                <>
+                  {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
+                </>
+              </If>
+              <If condition={[0, 2].includes(item.post_type)}>{item.post_title}</If>
+              <If condition={item.post_type === 3}>
+                <>
+                  “{item.quote_content}” —— {item.quote_author}
+                </>
+              </If>
+            </a>
+          </Link>
+          <ul className={styles['post-list__info']}>
+            <li className={styles['post-list__info-item']}>
+              <ClockCircleOutline />
+              &nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}
+            </li>
+            <li className={styles['post-list__info-item']}>
+              <MessageOutline />
+              &nbsp;{item.comment_count}&nbsp;条留言
+            </li>
+            <li className={styles['post-list__info-item']}>
+              <EyeOutline />
+              &nbsp;{item.post_views}&nbsp;次浏览
+            </li>
+          </ul>
+        </div>
+      </Link>
+    );
   };
 
   return (
@@ -70,62 +159,11 @@ const Category: NextPage<CategoryProps> = (props) => {
         <Choose>
           <When condition={postList.length > 0}>
             <>
-              <div className={styles['post-list']}>
-                {postList.map((item) => (
-                  <Link href={`/archives/${item._id}`} key={item._id}>
-                    <div
-                      className={classNames({
-                        [styles['post-list__item']]: true,
-                        [styles[postClass[item.post_type]]]: true,
-                      })}
-                    >
-                      <If condition={[0, 1, 2].includes(item.post_type)}>
-                        <div className={styles['post-list__photo']}>
-                          <Link href={`/archives/${item._id}`}>
-                            <a>
-                              <img
-                                src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}
-                                loading={'lazy'}
-                              />
-                            </a>
-                          </Link>
-                        </div>
-                      </If>
-                      <Link href={`/archives/${item._id}`}>
-                        <a className={styles['post-list__content']}>
-                          <If condition={item.post_type === 1}>
-                            <>
-                              {item.post_title} {item.movie_name_en} (
-                              {dayjs(item.movie_time).format('YYYY')})
-                            </>
-                          </If>
-                          <If condition={[0, 2].includes(item.post_type)}>{item.post_title}</If>
-                          <If condition={item.post_type === 3}>
-                            <>
-                              “{item.quote_content}” —— {item.quote_author}
-                            </>
-                          </If>
-                        </a>
-                      </Link>
-                      <ul className={styles['post-list__info']}>
-                        <li className={styles['post-list__info-item']}>
-                          <ClockCircleOutline />
-                          &nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}
-                        </li>
-                        <li className={styles['post-list__info-item']}>
-                          <MessageOutline />
-                          &nbsp;{item.comment_count}&nbsp;条留言
-                        </li>
-                        <li className={styles['post-list__info-item']}>
-                          <EyeOutline />
-                          &nbsp;{item.post_views}&nbsp;次浏览
-                        </li>
-                      </ul>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              {/*<Signature text="到底了"/>*/}
+              <div className={styles['post-list']}>{postList.map((item) => renderCard(item))}</div>
+              <InfiniteScroll
+                loadMore={loadMore}
+                hasMore={Math.ceil(post.total / PAGE_SIZE) > pageNo}
+              />
             </>
           </When>
           <Otherwise>
@@ -172,7 +210,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (props.type && ['category', 'tags', 'authors'].includes(props.type)) {
     const queryParams = {
       post_status: [0],
-      limit: 999,
+      limit: PAGE_SIZE,
     } as IIndexPostListParamsType;
     // @ts-ignore
     props.typeName = params?.slug?.pop();
@@ -198,6 +236,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         break;
     }
     console.log('queryParams', queryParams);
+    props.queryParams = queryParams;
     // 获取分类列表
     try {
       const queryPostListResult = await PostServer.indexPostList(queryParams);
