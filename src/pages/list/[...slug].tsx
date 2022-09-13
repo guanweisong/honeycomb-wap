@@ -62,8 +62,10 @@ const Category: NextPage<CategoryProps> = (props) => {
       ...queryParams,
       page: pageNo + 1,
     });
-    setPageNo(pageNo + 1);
-    setPostList([...postList, ...queryPostListResult.data.list]);
+    if (queryPostListResult.data?.list?.length) {
+      setPageNo(pageNo + 1);
+      setPostList([...postList, ...queryPostListResult.data.list]);
+    }
   };
 
   /**
@@ -142,6 +144,8 @@ const Category: NextPage<CategoryProps> = (props) => {
       </Link>
     );
   };
+
+  console.log('postList', postList);
 
   return (
     <>
