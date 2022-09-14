@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import classNames from 'classnames';
 import { InfiniteScroll } from 'antd-mobile';
 import Header from '@/src/components/Header';
-import Signature from '@/src/components/Signature';
 import { postClass } from '@/src/utils/mapping';
 import styles from './index.module.less';
 import dayjs from 'dayjs';
@@ -48,23 +47,35 @@ const Category: NextPage<CategoryProps> = (props) => {
   } = props;
   const [postList, setPostList] = useState(post.list);
   const [pageNo, setPageNo] = useState(1);
+  const dataRef = useRef<any>({ list: [], pageNo: 1 });
 
   useEffect(() => {
-    setPostList(post.list);
+    const list = post.list || [];
+    setPostList(list);
     setPageNo(1);
+    dataRef.current = {
+      list,
+      pageNo: 1,
+    };
   }, [props]);
 
   /**
    * 滚动加载
    */
   const loadMore = async () => {
+    const pageNo = dataRef.current.pageNo + 1;
     const queryPostListResult = await PostServer.indexPostList({
       ...queryParams,
-      page: pageNo + 1,
+      page: pageNo,
     });
     if (queryPostListResult.data?.list?.length) {
-      setPageNo(pageNo + 1);
-      setPostList([...postList, ...queryPostListResult.data.list]);
+      const list = [...dataRef.current.list, ...queryPostListResult.data.list];
+      dataRef.current = {
+        list,
+        pageNo,
+      };
+      setPageNo(pageNo);
+      setPostList(list);
     }
   };
 
@@ -144,8 +155,6 @@ const Category: NextPage<CategoryProps> = (props) => {
       </Link>
     );
   };
-
-  console.log('postList', postList);
 
   return (
     <>
