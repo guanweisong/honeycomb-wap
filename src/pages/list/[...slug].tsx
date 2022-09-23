@@ -172,22 +172,6 @@ const Category: NextPage<CategoryProps> = (props) => {
   );
 };
 
-Category.defaultProps = {
-  menu: [],
-  setting: {
-    _id: '',
-    site_copyright: '',
-    site_name: '',
-    site_record_no: '',
-    site_record_url: '',
-    site_signature: '',
-  },
-  post: {
-    total: 0,
-    list: [],
-  },
-};
-
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   console.log('getStaticProps', params);
 

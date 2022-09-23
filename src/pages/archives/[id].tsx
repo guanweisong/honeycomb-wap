@@ -171,19 +171,6 @@ const Archives: NextPage<ArchivesProps> = (props) => {
   );
 };
 
-Archives.defaultProps = {
-  menu: [],
-  setting: {
-    _id: '',
-    site_copyright: '',
-    site_name: '',
-    site_record_no: '',
-    site_record_url: '',
-    site_signature: '',
-  },
-  randomPostsList: [],
-};
-
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   // @ts-ignore
   const { id } = params;
@@ -218,18 +205,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     revalidate: 60 * 60 * 24, // 详情页静态页面生命1天
   };
 };
-
-/**
- * 构建时无必要预生产静态页面，运行时生成即可
- */
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const allPosts = await PostServer.indexPostList({limit: 1})
-//   const allPath = allPosts.data.list.map((post:PostType) => `/archives/${post._id}`) || []
-//   return {
-//     paths: allPath,
-//     fallback: true,
-//   }
-// }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
