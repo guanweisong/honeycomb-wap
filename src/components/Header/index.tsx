@@ -6,14 +6,12 @@ import { MenuType } from '@/src/types/menu';
 import Menu from '@/src/components/Menu';
 import Link from 'next/link';
 import { SettingType } from '@/src/types/setting';
-import { PlatformType } from '@/src/types/platform';
 
 export interface HeaderProps {
   title: string | undefined;
   menu: MenuType[];
   setting: SettingType;
   currentMenu?: string;
-  platform: PlatformType;
 }
 
 const Header = (props: HeaderProps) => {

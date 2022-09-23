@@ -30,7 +30,6 @@ import ViewServer from '@/src/services/view';
 import { If, When, Otherwise, Choose } from 'babel-plugin-jsx-control-statements';
 import Footer from '@/src/components/Footer';
 import Comment from '@/src/components/Commont';
-import { PlatformType } from '@/src/types/platform';
 
 export interface ArchivesProps {
   postDetail: PostType;
@@ -38,11 +37,10 @@ export interface ArchivesProps {
   menu: MenuType[];
   setting: SettingType;
   id: string;
-  platform: PlatformType;
 }
 
 const Archives: NextPage<ArchivesProps> = (props) => {
-  const { postDetail, randomPostsList, id, setting, menu, platform } = props;
+  const { postDetail, randomPostsList, id, setting, menu } = props;
   const [commentCount, setCommentCount] = useState<number>(0);
   const [views, setViews] = useState<null | number>(null);
 
@@ -86,7 +84,6 @@ const Archives: NextPage<ArchivesProps> = (props) => {
         setting={setting}
         menu={menu}
         currentMenu={postDetail.post_category._id}
-        platform={platform}
       />
       <div className={classNames('container', styles['detail__content'])}>
         <h2 className={styles['detail__title']}>{getTitle()}</h2>

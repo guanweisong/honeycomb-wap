@@ -16,18 +16,16 @@ import Link from 'next/link';
 import Footer from '@/src/components/Footer';
 import Comment from '@/src/components/Commont';
 import ViewServer from '@/src/services/view';
-import { PlatformType } from '@/src/types/platform';
 
 interface PagesProps {
   id: string;
   pageDetail: PageType;
   menu: MenuType[];
   setting: SettingType;
-  platform: PlatformType;
 }
 
 const Pages: NextPage<PagesProps> = (props) => {
-  const { pageDetail, id, setting, menu, platform } = props;
+  const { pageDetail, id, setting, menu } = props;
   const [commentCount, setCommentCount] = useState<number>(0);
   const [views, setViews] = useState<null | number>(null);
 
@@ -63,7 +61,6 @@ const Pages: NextPage<PagesProps> = (props) => {
         setting={setting}
         menu={menu}
         currentMenu={pageDetail._id}
-        platform={platform}
       />
       <div className={classNames('container', styles['detail__content'])}>
         <h2 className={styles['detail__title']}>{pageDetail.page_title}</h2>

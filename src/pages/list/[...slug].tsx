@@ -14,7 +14,6 @@ import { PostType } from '@/src/types/post';
 import { MenuType } from '@/src/types/menu';
 import { SettingType } from '@/src/types/setting';
 import SettingServer from '@/src/services/setting';
-import { PlatformType } from '@/src/types/platform';
 import Footer from '@/src/components/Footer';
 import NoData from '@/src/components/NoData';
 
@@ -28,23 +27,13 @@ interface CategoryProps {
   currentMenu: string;
   typeName: string | undefined;
   type: string | undefined;
-  platform: PlatformType;
   queryParams: any;
 }
 
 const PAGE_SIZE = 10;
 
 const Category: NextPage<CategoryProps> = (props) => {
-  const {
-    menu,
-    setting,
-    currentMenu = '',
-    post,
-    typeName,
-    type = '',
-    platform,
-    queryParams,
-  } = props;
+  const { menu, setting, currentMenu = '', post, typeName, type = '', queryParams } = props;
   const [postList, setPostList] = useState(post.list);
   const [pageNo, setPageNo] = useState(1);
   const dataRef = useRef<any>({ list: [], pageNo: 1 });
@@ -158,13 +147,7 @@ const Category: NextPage<CategoryProps> = (props) => {
 
   return (
     <>
-      <Header
-        title={getTitle()}
-        setting={setting}
-        menu={menu}
-        currentMenu={currentMenu}
-        platform={platform}
-      />
+      <Header title={getTitle()} setting={setting} menu={menu} currentMenu={currentMenu} />
       <div className={'container'}>
         <If condition={['tags', 'authors'].includes(type)}>
           <div className={styles['post-list__title']}>{getTitle()}</div>
