@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.API_DOMAIN,
+  baseURL: process.env.NEXT_PUBLIC_API_DOMAIN,
   withCredentials: true,
   timeout: 10000,
   headers: {},
