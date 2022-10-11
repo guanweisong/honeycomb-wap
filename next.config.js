@@ -20,6 +20,9 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack: (config, options) => {
     config.resolve.alias['@'] = path.join(__dirname, './');
     return config;
