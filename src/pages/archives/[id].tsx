@@ -32,6 +32,7 @@ import useQueryPostRandomList from '@/src/hooks/swr/post/use.query.post.random.l
 import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { PostType } from '@/src/types/post/PostType';
+import { PostEntity } from '@/src/types/post/post.entity';
 
 export interface ArchivesProps {
   id: string;

@@ -1,6 +1,6 @@
 import useSWRImmutable from 'swr/immutable';
 import PostServer from '@/src/services/post';
-import { PostRandomListQuery } from '@/src/types/post/query.post.random.list';
+import { PostRandomListQuery } from '@/src/types/post/post.random.list.query';
 
 const useQueryPostRandomList = (params: PostRandomListQuery) => {
   const { post_category, number = 10, post_id } = params;
@@ -10,9 +10,8 @@ const useQueryPostRandomList = (params: PostRandomListQuery) => {
   );
 
   return {
-    data: data,
-    isLoading: !error && !data,
-    isError: error,
+    data: data!,
+    error,
   };
 };
 

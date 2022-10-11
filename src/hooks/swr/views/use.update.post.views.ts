@@ -8,9 +8,8 @@ const useUpdateViews = (params: UpdateView) => {
   );
 
   return {
-    data: data,
-    isLoading: !error && !data,
-    isError: error,
+    data: data!,
+    error,
   };
 };
 

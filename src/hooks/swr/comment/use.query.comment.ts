@@ -5,9 +5,8 @@ const useQueryComment = (id: string) => {
   const { data, error } = useSWR(`/comments/${id}`, () => CommentServer.index(id));
 
   return {
-    data: data,
-    isLoading: !error && !data,
-    isError: error,
+    data: data!,
+    error,
   };
 };
 

@@ -5,9 +5,8 @@ const useQuerySetting = () => {
   const { data, error } = useSWR(`/settings`, () => SettingServer.indexSetting());
 
   return {
-    data: data,
-    isLoading: !error && !data,
-    isError: error,
+    data: data!,
+    error,
   };
 };
 

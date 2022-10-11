@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import classNames from 'classnames';
-import { Button } from 'antd-mobile';
+import { Button, InfiniteScroll } from 'antd-mobile';
 import Header from '@/src/components/Header';
 import { postClass } from '@/src/utils/mapping';
 import styles from './index.module.less';
@@ -21,15 +21,18 @@ import useQueryPostList from '@/src/hooks/swr/post/use.query.post.list';
 import { PostListQuery } from '@/src/types/post/post.list.query';
 import { PostType } from '@/src/types/post/PostType';
 import { PostStatus } from '@/src/types/post/PostStatus';
+import { MenuEntity } from '@/src/types/menu/menu.entity';
 import Signature from '@/src/components/Signature';
 
 interface CategoryProps {
   currentMenu: string;
-  typeName: string | undefined;
-  type: string | undefined;
-  queryParams: any;
+  typeName?: string;
+  type?: string;
+  queryParams: PostListQuery;
   fallback: any;
-  fallbackData: any;
+  fallbackData: {
+    queryPostList: PostEntity[];
+  };
 }
 
 const PAGE_SIZE = 10;
@@ -41,8 +44,22 @@ const Category: NextPage<CategoryProps> = (props) => {
   const { data: menu } = useQueryMenu();
   const { data, size, setSize } = useQueryPostList(queryParams, fallbackData.queryPostList);
 
-  const postList = data ? [].concat(...data) : [];
-  const isEnd = data && data[data.length - 1]?.length < PAGE_SIZE;
+  const postList = data.flat();
+  const isEnd = data[data.length - 1]?.length < PAGE_SIZE;
+  const isLoadingMore = typeof data[size - 1] === 'undefined';
+
+  /**
+   * 滚动加载
+   */
+  // const loadMore = () => {
+  //   setSize(size + 1);
+  //   console.log('isLoadingMore', isLoadingMore);
+  //   return new Promise<void>((resolve) => {
+  //     if (!isLoadingMore) {
+  //       resolve();
+  //     }
+  //   });
+  // };
 
   /**
    * 获取页面标题
@@ -138,8 +155,16 @@ const Category: NextPage<CategoryProps> = (props) => {
           <When condition={postList.length > 0}>
             <>
               <div className={styles['post-list']}>{postList.map((item) => renderCard(item))}</div>
+              {/*<InfiniteScroll loadMore={loadMore} hasMore={!isEnd} />*/}
               {!isEnd ? (
-                <Button style={{ marginTop: 10 }} onClick={() => setSize(size + 1)} block>
+                <Button
+                  style={{ marginTop: 10 }}
+                  onClick={() => setSize(size + 1)}
+                  block
+                  loading={isLoadingMore}
+                  color={'primary'}
+                  fill={'outline'}
+                >
                   加载更多
                 </Button>
               ) : (
@@ -158,8 +183,6 @@ const Category: NextPage<CategoryProps> = (props) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log('getStaticProps', params);
-
   const props = {} as CategoryProps;
   const fallback: any = {};
   const fallbackData: any = {};
@@ -189,14 +212,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       case 'category':
         // 获取分类ID
         const categoryId = fallback[`/menus`].find(
-          (item) => item.category_title_en === props.typeName,
+          (item: MenuEntity) => item.category_title_en === props.typeName,
         )?._id;
         props.currentMenu = categoryId || '';
         if (typeof categoryId !== 'undefined') {
           queryParams.category_id = categoryId;
         }
         props.typeName =
-          fallback[`/menus`].find((item) => item.category_title_en === props.typeName)
+          fallback[`/menus`].find((item: MenuEntity) => item.category_title_en === props.typeName)
             ?.category_title || '';
         break;
       case 'tags':
