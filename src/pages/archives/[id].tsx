@@ -1,90 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { SWRConfig, unstable_serialize } from 'swr';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import Link from 'next/link';
 import Header from '@/src/components/Header';
 import Tags from '@/src/components/Tags';
-import { DotLoading } from 'antd-mobile';
 import {
-  ClockCircleOutline,
-  MessageOutline,
-  EyeOutline,
-  UserOutline,
-  CameraOutline,
   CalendarOutline,
+  CameraOutline,
+  ClockCircleOutline,
   ContentOutline,
+  EyeOutline,
+  MessageOutline,
+  UserOutline,
 } from 'antd-mobile-icons';
 import styles from './index.module.less';
-import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
-import { PostType } from '@/src/types/post';
-import { CommentType } from '@/src/types/comment';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Comment from '@/src/components/Comment';
 import PostServer from '@/src/services/post';
-import { MenuType } from '@/src/types/menu';
 import MenuServer from '@/src/services/menu';
-import { SettingType } from '@/src/types/setting';
 import SettingServer from '@/src/services/setting';
 import Card from '@/src/components/Card';
-import ViewServer from '@/src/services/view';
 
 // @ts-ignore
-import { If, When, Otherwise, Choose } from 'babel-plugin-jsx-control-statements';
+import { Choose, If, Otherwise, When } from 'babel-plugin-jsx-control-statements';
 import Footer from '@/src/components/Footer';
-import Comment from '@/src/components/Commont';
+import useQueryPostDetail from '@/src/hooks/swr/post/use.query.post.detail';
+import useQuerySetting from '@/src/hooks/swr/setting/use.query.setting';
+import useQueryMenu from '@/src/hooks/swr/menu/use.query.menu';
+import useQueryPostRandomList from '@/src/hooks/swr/post/use.query.post.random.list';
+import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
+import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
+import { PostType } from '@/src/types/post/PostType';
 
 export interface ArchivesProps {
-  postDetail: PostType;
-  randomPostsList: PostType[];
-  menu: MenuType[];
-  setting: SettingType;
   id: string;
+  post_category: string;
+  fallback: any;
 }
 
-const Archives: NextPage<ArchivesProps> = (props) => {
-  const { postDetail, randomPostsList, id, setting, menu } = props;
-  const [commentCount, setCommentCount] = useState<number>(0);
-  const [views, setViews] = useState<null | number>(null);
+const Archives = (props: ArchivesProps) => {
+  console.log('props', props);
+  const { id, post_category } = props;
 
-  useEffect(() => {
-    handleViews(id);
-  }, [id]);
-
-  const handleViews = async (id: string) => {
-    if (id) {
-      await ViewServer.updateViews({ type: 'posts', id });
-      await ViewServer.indexViews({ type: 'posts', id })
-        .then((result) => {
-          if (result.status === 200) {
-            setViews(result.data.count);
-          }
-        })
-        .catch((e) => console.error(e));
-    }
-  };
-
-  const getCommentCount = (total: number) => {
-    setCommentCount(total);
-  };
+  const { data: setting } = useQuerySetting();
+  const { data: menu } = useQueryMenu();
+  const { data: postDetail } = useQueryPostDetail(id);
+  const { data: randomPostsList } = useQueryPostRandomList({ post_category, post_id: id });
+  useUpdateViews({ type: 'posts', id });
+  const { data: commentsData } = useQueryComment(id);
 
   const getTitle = () => {
-    return postDetail.post_type === 1
+    return postDetail.post_type === PostType.MOVIE
       ? `${postDetail.post_title} ${postDetail.movie_name_en} (${dayjs(
           postDetail.movie_time,
         ).format('YYYY')})`
       : postDetail.post_title;
   };
 
-  if (!postDetail) {
-    return null;
-  }
-
   return (
     <>
-      <Header
-        title={getTitle()}
-        setting={setting}
-        menu={menu}
-        currentMenu={postDetail.post_category._id}
-      />
+      <Header title={getTitle()} setting={setting} menu={menu} currentMenu={post_category} />
       <div className={classNames('container', styles['detail__content'])}>
         <h2 className={styles['detail__title']}>{getTitle()}</h2>
         <ul className={styles['detail__info']}>
@@ -101,15 +77,15 @@ const Archives: NextPage<ArchivesProps> = (props) => {
           </li>
           <li className={styles['detail__info-item']}>
             <MessageOutline />
-            &nbsp;{commentCount} 条留言
+            &nbsp;{commentsData?.total} 条留言
           </li>
           <li className={styles['detail__info-item']}>
             <EyeOutline />
-            &nbsp;{views === null ? <DotLoading /> : views}&nbsp;次浏览
+            &nbsp;{postDetail.post_views}&nbsp;次浏览
           </li>
         </ul>
         <Choose>
-          <When condition={postDetail.post_type === 3}>
+          <When condition={postDetail.post_type === PostType.QUOTE}>
             <div
               className={classNames({
                 [styles['detail__quote']]: true,
@@ -130,20 +106,20 @@ const Archives: NextPage<ArchivesProps> = (props) => {
           </Otherwise>
         </Choose>
         <ul className={styles['detail__extra']}>
-          <If condition={postDetail.post_type === 2}>
+          <If condition={postDetail.post_type === PostType.PHOTOGRAPH}>
             <li className={styles['detail__extra-item']}>
               <CameraOutline />
               {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
               {postDetail.gallery_location}
             </li>
           </If>
-          <If condition={postDetail.post_type === 1}>
+          <If condition={postDetail.post_type === PostType.MOVIE}>
             <li className={styles['detail__extra-item']}>
               <CalendarOutline />
               &nbsp; 上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
             </li>
           </If>
-          <If condition={postDetail.post_type === 3}>
+          <If condition={postDetail.post_type === PostType.QUOTE}>
             <li className={styles['detail__extra-item']}>
               <ContentOutline />
               &nbsp; 引用自：{postDetail.quote_author}
@@ -164,7 +140,7 @@ const Archives: NextPage<ArchivesProps> = (props) => {
             </ul>
           </Card>
         </If>
-        <Comment id={id} getCount={(total) => getCommentCount(total)} />
+        <Comment id={id} />
       </div>
       <Footer setting={setting} />
     </>
@@ -175,30 +151,40 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // @ts-ignore
   const { id } = params;
   const props = { id } as ArchivesProps;
+  const fallback: any = {};
 
   // 获取文章详情
   const queryPostDetailResult = await PostServer.indexPostDetail(id);
-  props.postDetail = queryPostDetailResult.data;
+  fallback[`/posts/${id}`] = queryPostDetailResult;
 
   // 并发获取其他信息
   const promise = [];
   // 获取菜单列表
   promise.push(MenuServer.indexMenu());
-  // 获取随机文章列表
-  promise.push(
-    PostServer.indexRandomPostByCategoryId({
-      post_category: props.postDetail.post_category._id,
-      number: 10,
-    }),
-  );
   // 获取网站配置
   promise.push(SettingServer.indexSetting());
+  // 获取随机文章列表
+  props.post_category = queryPostDetailResult.post_category._id;
+  promise.push(
+    PostServer.indexRandomPostByCategoryId({
+      post_category: props.post_category,
+      number: 10,
+      post_id: id,
+    }),
+  );
 
   const promiseAllResult = await Promise.all(promise);
 
-  props.menu = promiseAllResult[0].data.list;
-  props.randomPostsList = promiseAllResult[1].data?.filter((item: CommentType) => item._id !== id);
-  props.setting = promiseAllResult[2].data[0];
+  fallback[`/menus`] = promiseAllResult[0];
+  fallback[`/settings`] = promiseAllResult[1];
+  fallback[
+    unstable_serialize([
+      `/posts/random`,
+      { post_category: props.post_category, number: 10, post_id: id },
+    ])
+  ] = promiseAllResult[2];
+
+  props.fallback = fallback;
 
   return {
     props,
@@ -213,4 +199,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default Archives;
+const Page: NextPage<ArchivesProps> = (props) => {
+  const { fallback } = props;
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Archives {...props} />
+    </SWRConfig>
+  );
+};
+
+export default Page;

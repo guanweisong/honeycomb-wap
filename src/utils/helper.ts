@@ -1,5 +1,5 @@
-import { IIndexPostListParamsType } from '@/src/services/post';
-import { MenuType } from '@/src/types/menu';
+import { MenuEntity } from '@/src/types/menu/menu.entity';
+import { PostListQuery } from '@/src/types/post/post.list.query';
 
 export default class Helper {
   /**
@@ -7,7 +7,7 @@ export default class Helper {
    * @param query
    * @param menu
    */
-  static getCategoryIdByParmasAndMenu(query: IIndexPostListParamsType, menu: MenuType[]) {
+  static getCategoryIdByParmasAndMenu(query: PostListQuery, menu: MenuEntity[]) {
     const idEn = query.secondCategory || query.firstCategory;
     let category_id = '0';
     if (idEn) {
@@ -23,11 +23,11 @@ export default class Helper {
    * @param menu
    */
   static getConditionOfIndexPostListByParamsAndMenu(
-    { ...query }: IIndexPostListParamsType,
+    { ...query }: PostListQuery,
     asPath: string,
-    menu: MenuType[],
+    menu: MenuEntity[],
   ) {
-    const condition: IIndexPostListParamsType = {};
+    const condition: PostListQuery = {};
     query.tag_name && (condition.tag_name = query.tag_name);
     query.user_name && (condition.user_name = query.user_name);
     const category_id = this.getCategoryIdByParmasAndMenu(query, menu);

@@ -1,4 +1,4 @@
-export interface SettingType {
+export interface SettingEntity {
   _id: string;
   site_name: string;
   site_copyright: string;

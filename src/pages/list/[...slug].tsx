@@ -1,72 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import classNames from 'classnames';
-import { InfiniteScroll } from 'antd-mobile';
+import { Button } from 'antd-mobile';
 import Header from '@/src/components/Header';
 import { postClass } from '@/src/utils/mapping';
 import styles from './index.module.less';
 import dayjs from 'dayjs';
-import { ClockCircleOutline, MessageOutline, EyeOutline } from 'antd-mobile-icons';
-import PostServer, { IIndexPostListParamsType } from '@/src/services/post';
+import { ClockCircleOutline, EyeOutline, MessageOutline } from 'antd-mobile-icons';
+import PostServer from '@/src/services/post';
 import MenuServer from '@/src/services/menu';
-import { PostType } from '@/src/types/post';
-import { MenuType } from '@/src/types/menu';
-import { SettingType } from '@/src/types/setting';
+import { PostEntity } from '@/src/types/post/post.entity';
 import SettingServer from '@/src/services/setting';
 import Footer from '@/src/components/Footer';
 import NoData from '@/src/components/NoData';
+import { SWRConfig } from 'swr';
+import useQuerySetting from '@/src/hooks/swr/setting/use.query.setting';
+import useQueryMenu from '@/src/hooks/swr/menu/use.query.menu';
+import useQueryPostList from '@/src/hooks/swr/post/use.query.post.list';
+import { PostListQuery } from '@/src/types/post/post.list.query';
+import { PostType } from '@/src/types/post/PostType';
+import { PostStatus } from '@/src/types/post/PostStatus';
+import Signature from '@/src/components/Signature';
 
 interface CategoryProps {
-  post: {
-    total: number;
-    list: PostType[];
-  };
-  menu: MenuType[];
-  setting: SettingType;
   currentMenu: string;
   typeName: string | undefined;
   type: string | undefined;
   queryParams: any;
+  fallback: any;
+  fallbackData: any;
 }
 
 const PAGE_SIZE = 10;
 
 const Category: NextPage<CategoryProps> = (props) => {
-  const { menu, setting, currentMenu = '', post, typeName, type = '', queryParams } = props;
-  const [postList, setPostList] = useState(post.list);
-  const [pageNo, setPageNo] = useState(1);
-  const dataRef = useRef<any>({ list: [], pageNo: 1 });
+  const { currentMenu = '', typeName, type = '', queryParams, fallbackData } = props;
 
-  useEffect(() => {
-    const list = post.list || [];
-    setPostList(list);
-    setPageNo(1);
-    dataRef.current = {
-      list,
-      pageNo: 1,
-    };
-  }, [props]);
+  const { data: setting } = useQuerySetting();
+  const { data: menu } = useQueryMenu();
+  const { data, size, setSize } = useQueryPostList(queryParams, fallbackData.queryPostList);
 
-  /**
-   * 滚动加载
-   */
-  const loadMore = async () => {
-    const pageNo = dataRef.current.pageNo + 1;
-    const queryPostListResult = await PostServer.indexPostList({
-      ...queryParams,
-      page: pageNo,
-    });
-    if (queryPostListResult.data?.list?.length) {
-      const list = [...dataRef.current.list, ...queryPostListResult.data.list];
-      dataRef.current = {
-        list,
-        pageNo,
-      };
-      setPageNo(pageNo);
-      setPostList(list);
-    }
-  };
+  const postList = data ? [].concat(...data) : [];
+  const isEnd = data && data[data.length - 1]?.length < PAGE_SIZE;
 
   /**
    * 获取页面标题
@@ -90,7 +66,7 @@ const Category: NextPage<CategoryProps> = (props) => {
    * 渲染列表卡片
    * @param item
    */
-  const renderCard = (item: PostType) => {
+  const renderCard = (item: PostEntity) => {
     return (
       <Link href={`/archives/${item._id}`} key={item._id}>
         <div
@@ -99,7 +75,11 @@ const Category: NextPage<CategoryProps> = (props) => {
             [styles[postClass[item.post_type]]]: true,
           })}
         >
-          <If condition={[0, 1, 2].includes(item.post_type)}>
+          <If
+            condition={[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(
+              item.post_type,
+            )}
+          >
             <div className={styles['post-list__photo']}>
               <Link href={`/archives/${item._id}`}>
                 <a>
@@ -113,13 +93,15 @@ const Category: NextPage<CategoryProps> = (props) => {
           </If>
           <Link href={`/archives/${item._id}`}>
             <a className={styles['post-list__content']}>
-              <If condition={item.post_type === 1}>
+              <If condition={item.post_type === PostType.MOVIE}>
                 <>
                   {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
                 </>
               </If>
-              <If condition={[0, 2].includes(item.post_type)}>{item.post_title}</If>
-              <If condition={item.post_type === 3}>
+              <If condition={[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.post_type)}>
+                {item.post_title}
+              </If>
+              <If condition={item.post_type === PostType.QUOTE}>
                 <>
                   “{item.quote_content}” —— {item.quote_author}
                 </>
@@ -156,10 +138,13 @@ const Category: NextPage<CategoryProps> = (props) => {
           <When condition={postList.length > 0}>
             <>
               <div className={styles['post-list']}>{postList.map((item) => renderCard(item))}</div>
-              <InfiniteScroll
-                loadMore={loadMore}
-                hasMore={Math.ceil(post.total / PAGE_SIZE) > pageNo}
-              />
+              {!isEnd ? (
+                <Button style={{ marginTop: 10 }} onClick={() => setSize(size + 1)} block>
+                  加载更多
+                </Button>
+              ) : (
+                <Signature text={'到底了'} />
+              )}
             </>
           </When>
           <Otherwise>
@@ -176,28 +161,34 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   console.log('getStaticProps', params);
 
   const props = {} as CategoryProps;
-  // 获取菜单信息
-  const queryMenuResult = await MenuServer.indexMenu();
-  props.menu = queryMenuResult.data.list;
+  const fallback: any = {};
+  const fallbackData: any = {};
 
+  // 并发获取其他信息
+  const promise = [];
+  // 获取菜单列表
+  promise.push(MenuServer.indexMenu());
   // 获取网站配置
-  const querySettingResult = await SettingServer.indexSetting();
-  props.setting = querySettingResult.data[0];
+  promise.push(SettingServer.indexSetting());
+
+  const promiseAllResult = await Promise.all(promise);
+  fallback[`/menus`] = promiseAllResult[0];
+  fallback[`/settings`] = promiseAllResult[1];
 
   // 获取列表类型
   props.type = typeof params?.slug !== 'undefined' ? params?.slug[0] : undefined;
 
   if (props.type && ['category', 'tags', 'authors'].includes(props.type)) {
     const queryParams = {
-      post_status: [0],
+      post_status: [PostStatus.PUBLISHED],
       limit: PAGE_SIZE,
-    } as IIndexPostListParamsType;
+    } as PostListQuery;
     // @ts-ignore
     props.typeName = params?.slug?.pop();
     switch (props.type) {
       case 'category':
         // 获取分类ID
-        const categoryId = props.menu.find(
+        const categoryId = fallback[`/menus`].find(
           (item) => item.category_title_en === props.typeName,
         )?._id;
         props.currentMenu = categoryId || '';
@@ -205,8 +196,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           queryParams.category_id = categoryId;
         }
         props.typeName =
-          props.menu.find((item) => item.category_title_en === props.typeName)?.category_title ||
-          '';
+          fallback[`/menus`].find((item) => item.category_title_en === props.typeName)
+            ?.category_title || '';
         break;
       case 'tags':
         queryParams.tag_name = props.typeName;
@@ -218,16 +209,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     console.log('queryParams', queryParams);
     props.queryParams = queryParams;
     // 获取分类列表
-    try {
-      const queryPostListResult = await PostServer.indexPostList(queryParams);
-      props.post = {
-        list: queryPostListResult.data.list,
-        total: queryPostListResult.data.total,
-      };
-    } catch (e) {
-      console.error(99999, e);
-    }
+    const queryPostList = await PostServer.indexPostList(queryParams);
+    fallbackData.queryPostList = queryPostList;
   }
+
+  props.fallback = fallback;
+  props.fallbackData = fallbackData;
 
   return {
     props,
@@ -242,4 +229,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default Category;
+const Page: NextPage<CategoryProps> = (props) => {
+  const { fallback } = props;
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Category {...props} />
+    </SWRConfig>
+  );
+};
+
+export default Page;

@@ -1,58 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 import styles from '../archives/index.module.less';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { DotLoading } from 'antd-mobile';
 import { ClockCircleOutline, MessageOutline, EyeOutline, UserOutline } from 'antd-mobile-icons';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 import PageServer from '@/src/services/page';
-import { PageType } from '@/src/types/page';
-import { MenuType } from '@/src/types/menu';
-import { SettingType } from '@/src/types/setting';
 import Header from '@/src/components/Header';
 import Link from 'next/link';
 import Footer from '@/src/components/Footer';
-import Comment from '@/src/components/Commont';
-import ViewServer from '@/src/services/view';
+import Comment from '@/src/components/Comment';
+import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
+import useQuerySetting from '@/src/hooks/swr/setting/use.query.setting';
+import useQueryMenu from '@/src/hooks/swr/menu/use.query.menu';
+import useQueryPageDetail from '@/src/hooks/swr/page/use.query.page.detail';
+import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
+import { SWRConfig } from 'swr';
 
 interface PagesProps {
   id: string;
-  pageDetail: PageType;
-  menu: MenuType[];
-  setting: SettingType;
+  fallback: any;
 }
 
 const Pages: NextPage<PagesProps> = (props) => {
-  const { pageDetail, id, setting, menu } = props;
-  const [commentCount, setCommentCount] = useState<number>(0);
-  const [views, setViews] = useState<null | number>(null);
+  const { id } = props;
 
-  useEffect(() => {
-    handleViews(id);
-  }, [id]);
+  const { data: setting } = useQuerySetting();
+  const { data: menu } = useQueryMenu();
+  const { data: pageDetail } = useQueryPageDetail(id);
+  const { data: commentsData } = useQueryComment(id);
 
-  const handleViews = async (id: string) => {
-    if (id) {
-      await ViewServer.updateViews({ type: 'pages', id });
-      await ViewServer.indexViews({ type: 'pages', id })
-        .then((result) => {
-          if (result.status === 200) {
-            setViews(result.data.count);
-          }
-        })
-        .catch((e) => console.error(e));
-    }
-  };
-
-  const getCommentCount = (total: number) => {
-    setCommentCount(total);
-  };
-
-  if (!pageDetail) {
-    return null;
-  }
+  useUpdateViews({ type: 'pages', id });
 
   return (
     <>
@@ -78,11 +57,11 @@ const Pages: NextPage<PagesProps> = (props) => {
           </li>
           <li className={styles['detail__info-item']}>
             <MessageOutline />
-            &nbsp;{commentCount} 条留言
+            &nbsp;{commentsData?.total} 条留言
           </li>
           <li className={styles['detail__info-item']}>
             <EyeOutline />
-            &nbsp;{views === null ? <DotLoading /> : views}&nbsp;次浏览
+            &nbsp;{pageDetail.page_views}&nbsp;次浏览
           </li>
         </ul>
         <div
@@ -93,7 +72,7 @@ const Pages: NextPage<PagesProps> = (props) => {
           // @ts-ignore
           dangerouslySetInnerHTML={{ __html: pageDetail.page_content }}
         />
-        <Comment id={id} getCount={(total) => getCommentCount(total)} />
+        <Comment id={id} />
       </div>
       <Footer setting={setting} />
     </>
@@ -104,10 +83,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // @ts-ignore
   const { id } = params;
   const props = { id } as PagesProps;
+  const fallback: any = {};
 
   // 获取页面详情
   const queryPageDetailResult = await PageServer.indexPageDetail(id);
-  props.pageDetail = queryPageDetailResult.data;
+  fallback[`/pages/${id}`] = queryPageDetailResult;
 
   // 并发获取其他信息
   const promise = [];
@@ -118,8 +98,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const promiseAllResult = await Promise.all(promise);
 
-  props.menu = promiseAllResult[0].data.list;
-  props.setting = promiseAllResult[1].data[0];
+  fallback[`/menus`] = promiseAllResult[0];
+  fallback[`/settings`] = promiseAllResult[1];
 
   return {
     props,
@@ -134,4 +114,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default Pages;
+const Page: NextPage<PagesProps> = (props) => {
+  const { fallback } = props;
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Pages {...props} />
+    </SWRConfig>
+  );
+};
+
+export default Page;

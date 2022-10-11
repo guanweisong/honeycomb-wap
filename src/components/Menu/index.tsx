@@ -4,11 +4,11 @@ import Link from 'next/link';
 // @ts-ignore
 import listToTree from 'list-to-tree-lite';
 import styles from './index.module.less';
-import { MenuType } from '@/src/types/menu';
+import { MenuEntity } from '@/src/types/menu/menu.entity';
 import { useRouter } from 'next/router';
 
 interface MenuProps {
-  menu: MenuType[];
+  menu: MenuEntity[];
   currentMenu?: string;
 }
 
@@ -46,7 +46,7 @@ const Menu = (props: MenuProps) => {
     const path = [] as string[];
     const { menu } = props;
     if (id) {
-      const find = (data: MenuType[]) => {
+      const find = (data: MenuEntity[]) => {
         if (data.length === 1) {
           path.push(data[0][familyProp]);
         } else {
@@ -75,7 +75,7 @@ const Menu = (props: MenuProps) => {
      * 获取菜单的URL
      * @param item
      */
-    const getUrl = (item: MenuType) => {
+    const getUrl = (item: MenuEntity) => {
       let url = '';
       if (item.isHome) {
         url = '/list/category';
@@ -95,7 +95,7 @@ const Menu = (props: MenuProps) => {
      * 获取菜单的标题
      * @param item
      */
-    const renderTitle = (item: MenuType) => {
+    const renderTitle = (item: MenuEntity) => {
       return (
         <Link href={getUrl(item)}>
           <a
@@ -113,7 +113,7 @@ const Menu = (props: MenuProps) => {
      * 渲染菜单
      * @param data
      */
-    const renderUnit = (data: MenuType[]) => {
+    const renderUnit = (data: MenuEntity[]) => {
       return data.map((item) => {
         if (item.children.length === 0) {
           return <li key={item._id}>{renderTitle(item)}</li>;

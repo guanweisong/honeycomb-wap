@@ -1,4 +1,7 @@
-export interface PageType {
+import { PageStatus } from '@/src/types/page/PageStatus';
+import { EnableType } from '@/src/types/EnableType';
+
+export interface PageEntity {
   _id: string;
   page_title?: string;
   page_content?: string;
@@ -8,8 +11,8 @@ export interface PageType {
   };
   created_at: string;
   updated_at: string;
-  page_status: number;
-  comment_status: number;
+  page_status: PageStatus;
+  comment_status: EnableType;
   page_views: number;
   comment_count: number;
 }

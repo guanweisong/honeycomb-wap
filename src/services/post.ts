@@ -1,35 +1,22 @@
 import request from '@/src/utils/request';
-
-export interface IIndexPostListParamsType {
-  category_id?: string;
-  post_status?: number[];
-  page?: number;
-  limit?: number;
-  tag_name?: string;
-  user_name?: string;
-  firstCategory?: string;
-  secondCategory?: string;
-  asPath?: string;
-}
-
-export interface IIndexRandomPostListParamsType {
-  number?: number;
-  post_category: string;
-}
+import { PostEntity } from '@/src/types/post/post.entity';
+import PaginationResponse from '@/src/types/pagination.response';
+import { PostListQuery } from '@/src/types/post/post.list.query';
+import { PostRandomListQuery } from '@/src/types/post/post.random.list.query';
 
 export default class PostServer {
   // 获取文章列表
-  static indexPostList(params: IIndexPostListParamsType) {
+  static indexPostList(params: PostListQuery): Promise<PostEntity[]> {
     console.log('category=>service=>indexPostList');
-    return request({
+    return request<string, PaginationResponse<PostEntity[]>>({
       url: '/posts',
       method: 'get',
       params: params,
-    });
+    }).then((result) => result.list);
   }
 
   // 获取文章详情
-  static indexPostDetail(id: string) {
+  static indexPostDetail(id: string): Promise<PostEntity> {
     console.log('post=>service=>indexPostDetail');
     return request({
       url: `/posts/${id}`,
@@ -38,12 +25,12 @@ export default class PostServer {
   }
 
   // 获取随机文章列表
-  static indexRandomPostByCategoryId(params: IIndexRandomPostListParamsType) {
+  static indexRandomPostByCategoryId(params: PostRandomListQuery): Promise<PostEntity[]> {
     console.log('post=>service=>indexRandomPostByCategoryId');
-    return request({
+    return request<string, PostEntity[]>({
       url: '/posts/random',
       method: 'get',
       params: params,
-    });
+    }).then((result) => result.filter((item) => item._id !== params.post_id));
   }
 }

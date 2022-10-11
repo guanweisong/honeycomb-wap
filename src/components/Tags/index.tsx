@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { TagType } from '@/src/types/tag';
-import { PostType } from '@/src/types/post';
+import { TagEntity } from '@/src/types/tag/tag.entity';
+import { PostEntity } from '@/src/types/post/post.entity';
 import styles from './index.module.less';
 
-const Tag = (props: PostType) => {
-  const getTags = (item: TagType[] | undefined, label: string) => {
+const Tag = (props: PostEntity) => {
+  const getTags = (item: TagEntity[] | undefined, label: string) => {
     if (item && item.length > 0) {
       return (
         <li>

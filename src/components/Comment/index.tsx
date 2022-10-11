@@ -1,61 +1,28 @@
 import classNames from 'classnames';
 import styles from './index.module.less';
-import React, { useEffect, useState, useRef, FormEvent } from 'react';
-import { CommentType } from '@/src/types/comment';
+import React, { useState, useRef, FormEvent } from 'react';
+import { CommentEntity } from '@/src/types/comment/comment.entity';
 import CommentServer from '@/src/services/comment';
 import dayjs from 'dayjs';
 import Card from '../Card';
-
-export interface commentProps {
-  total: number;
-  list: CommentType[];
-}
+import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 
 export interface CommentProps {
   id: string;
-  getCount?: (total: number) => void;
 }
 
 const Comment = (props: CommentProps) => {
-  const { id, getCount } = props;
+  const { id } = props;
 
-  const [comment, setComment] = useState<commentProps>({ total: 0, list: [] });
-  const [replyTo, setReplyTo] = useState<CommentType | null>(null);
+  const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
   const formRef = useRef(null);
-
-  useEffect(() => {
-    if (id) {
-      getComment();
-    }
-  }, [id]);
-
-  /**
-   * 获取评论数据
-   */
-  const getComment = async () => {
-    const queryCommentResult = await CommentServer.index(id);
-    if (queryCommentResult.status === 200) {
-      setComment(queryCommentResult.data);
-      getCount && getCount(queryCommentResult.data.total);
-    }
-  };
-
-  /**
-   * 清空评论状态
-   */
-  useEffect(() => {
-    if (formRef.current) {
-      // @ts-ignore
-      formRef.current.reset();
-    }
-    handleReply(null);
-  }, [comment.total]);
+  const { data: comment } = useQueryComment(id);
 
   /**
    * 评论回复事件
    * @param item
    */
-  const handleReply = (item?: CommentType | null) => {
+  const handleReply = (item?: CommentEntity | null) => {
     if (item !== null) {
       window.scrollTo(0, 99999);
     }
@@ -92,8 +59,13 @@ const Comment = (props: CommentProps) => {
         console.log('handleSubmit', data);
         // @ts-ignore
         const result = await CommentServer.create(data);
-        if (result.status === 201) {
-          getComment();
+
+        if (result._id) {
+          if (formRef.current) {
+            // @ts-ignore
+            formRef.current.reset();
+          }
+          handleReply(null);
         }
       }
     });
@@ -104,8 +76,8 @@ const Comment = (props: CommentProps) => {
    * 评论列表渲染
    * @param data
    */
-  const renderCommentList = (data: CommentType[]) => {
-    return data.map((item) => {
+  const renderCommentList = (data: CommentEntity[]) => {
+    return data?.map((item) => {
       return (
         <li className={styles['comment-item']} key={item._id}>
           <div className={styles['comment-wrap']}>
@@ -151,9 +123,9 @@ const Comment = (props: CommentProps) => {
         [styles['block']]: true,
       })}
     >
-      <If condition={comment.total !== 0}>
-        <Card title={`${comment.total} 条留言`}>
-          <ul className={styles['comment-list']}>{renderCommentList(comment.list)}</ul>
+      <If condition={comment?.total !== 0}>
+        <Card title={`${comment?.total} 条留言`}>
+          <ul className={styles['comment-list']}>{renderCommentList(comment?.list)}</ul>
         </Card>
       </If>
       <Card title={'发表留言'}>

@@ -1,14 +1,11 @@
 import request from '@/src/utils/request';
-
-export interface IIndexTagListParamsType {
-  page?: number;
-  limit?: number;
-  keyword?: string;
-}
+import { TagListQuery } from '@/src/types/tag/tag.list.query';
+import PaginationResponse from '@/src/types/pagination.response';
+import { TagEntity } from '@/src/types/tag/tag.entity';
 
 export default class TagServer {
   // 获取标签列表
-  static indexList(params: IIndexTagListParamsType) {
+  static indexList(params: TagListQuery): Promise<PaginationResponse<TagEntity[]>> {
     console.log('category=>service=>indexTagList');
     return request({
       url: '/tags',

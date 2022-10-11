@@ -1,6 +1,9 @@
-import { TagType } from './tag';
+import { TagEntity } from '../tag/tag.entity';
+import { PostStatus } from '@/src/types/post/PostStatus';
+import { PostType } from '@/src/types/post/PostType';
+import { EnableType } from '@/src/types/EnableType';
 
-export interface PostType {
+export interface PostEntity {
   _id: string;
   post_title?: string;
   post_content?: string;
@@ -15,24 +18,22 @@ export interface PostType {
   };
   created_at: string;
   updated_at: string;
-  post_status: number;
-  comment_status: number;
+  post_status: PostStatus;
+  comment_status: EnableType;
   post_views: number;
-  post_type: number;
+  post_type: PostType;
   post_cover?: {
     _id: string;
     media_url: string;
-    media_url_720p?: string;
-    media_url_360p?: string;
   };
   movie_time?: string;
   movie_name_en?: string;
-  movie_director?: TagType[];
-  movie_actor?: TagType[];
-  movie_style?: TagType[];
+  movie_director?: TagEntity[];
+  movie_actor?: TagEntity[];
+  movie_style?: TagEntity[];
   gallery_location?: string;
   gallery_time?: string;
-  gallery_style?: TagType[];
+  gallery_style?: TagEntity[];
   quote_author?: string;
   quote_content?: string;
   comment_count: number;

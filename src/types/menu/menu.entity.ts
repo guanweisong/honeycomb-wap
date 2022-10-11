@@ -1,4 +1,6 @@
-export interface MenuType {
+import { MenuType } from '@/src/types/menu/MenuType';
+
+export interface MenuEntity {
   _id: string;
   category_title?: string;
   category_title_en?: string;
@@ -7,8 +9,8 @@ export interface MenuType {
   created_at: string;
   updated_at: string;
   isHome?: string;
-  type: 0 | 1;
+  type: MenuType;
   page_title?: string;
   power: number;
-  children: MenuType[];
+  children: MenuEntity[];
 }

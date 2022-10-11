@@ -2,15 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import styles from './index.module.less';
-import { MenuType } from '@/src/types/menu';
+import { MenuEntity } from '@/src/types/menu/menu.entity';
 import Menu from '@/src/components/Menu';
 import Link from 'next/link';
-import { SettingType } from '@/src/types/setting';
+import { SettingEntity } from '@/src/types/setting/setting.entity';
 
 export interface HeaderProps {
   title: string | undefined;
-  menu: MenuType[];
-  setting: SettingType;
+  menu: MenuEntity[];
+  setting: SettingEntity;
   currentMenu?: string;
 }
 

@@ -5,6 +5,7 @@ import { AppProps } from 'next/app';
 import BackToTop from '@/src/components/BackToTop';
 import '@/src/assets/markdown.less';
 import { initGA, logPageView } from '@/src/utils/analytics';
+import 'antd-mobile/es/global';
 import './app.less';
 
 NProgress.configure({ showSpinner: false });
@@ -15,7 +16,8 @@ Router.events.on('routeChangeStart', (url) => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+// @ts-ignore
+const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -37,4 +39,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default MyApp;
+export default App;

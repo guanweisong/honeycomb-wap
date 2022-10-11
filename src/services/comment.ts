@@ -1,21 +1,11 @@
 import request from '@/src/utils/request';
-
-export interface CaptchaType {
-  randstr: string;
-  ticket: string;
-}
-
-export interface creatCommentType {
-  comment_post: string;
-  comment_email: string;
-  comment_content: string;
-  comment_author: string;
-  captcha: CaptchaType;
-}
+import { CommentCreate } from '@/src/types/comment/comment.create';
+import PaginationResponse from '@/src/types/pagination.response';
+import { CommentEntity } from '@/src/types/comment/comment.entity';
 
 export default class CommentServer {
   // 根据文章id获取评论列表
-  static index(id: string) {
+  static index(id: string): Promise<PaginationResponse<CommentEntity[]>> {
     console.log('comment=>service=>index');
     return request({
       url: `/comments/${id}`,
@@ -24,7 +14,7 @@ export default class CommentServer {
   }
 
   // 创建评论
-  static create(params: creatCommentType) {
+  static create(params: CommentCreate): Promise<CommentEntity> {
     console.log('comment=>service=>create', params);
     return request({
       url: '/comments',

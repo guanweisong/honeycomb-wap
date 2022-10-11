@@ -1,4 +1,6 @@
-export interface CommentType {
+import { CommentStatus } from '@/src/types/comment/CommentStatus';
+
+export interface CommentEntity {
   _id: string;
   comment_post: string;
   comment_author: string;
@@ -7,9 +9,9 @@ export interface CommentType {
   created_at: string;
   updated_at: string;
   comment_content: string;
-  comment_status: number;
+  comment_status: CommentStatus;
   comment_agent: string;
   comment_parent: string;
   comment_avatar: string;
-  children: CommentType[];
+  children: CommentEntity[];
 }
