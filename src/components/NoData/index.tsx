@@ -1,14 +1,13 @@
 import React from 'react';
-import styles from './index.module.less';
 
-export interface INoData {
+export interface NoData {
   title: string;
 }
 
-const NoData = (props: INoData) => {
+const NoData = (props: NoData) => {
   const { title } = props;
 
-  return <div className={styles.noData}>{title}</div>;
+  return <div className="bg-white py-20 text-gray-400 text-center">{title}</div>;
 };
 
 export default NoData;

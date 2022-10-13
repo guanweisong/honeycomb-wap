@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useScroll } from 'ahooks';
 import { UpOutline } from 'antd-mobile-icons';
-import styles from './index.module.less';
 
 const BackToTop = () => {
   const scroll = useScroll();
@@ -17,9 +16,12 @@ const BackToTop = () => {
   };
 
   return show ? (
-    <div className={styles['back-to-top']} onClick={goTop}>
+    <a
+      className="fixed text-3xl translate-x-96 transition-all bottom-10 right-1/3 bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:shadow-xl"
+      onClick={goTop}
+    >
       <UpOutline />
-    </div>
+    </a>
   ) : (
     <></>
   );

@@ -1,58 +1,9 @@
 @import '../assets/base';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root:root {
   --adm-color-primary: @color-primary;
-}
-
-html {
-  background: @color-gray-lighter;
-}
-#__next {
-  min-height: 100vh;
-}
-* {
-  margin: 0;
-  padding: 0;
-  font-family: @font-family-base;
-}
-body {
-  margin: 0;
-  font-size: @font-size-base;
-  line-height: 1.5;
-  color: @color-black-darker;
-}
-.container {
-  max-width: @width-layout-base;
-  margin: 0 auto;
-  padding: 1px 0;
-  box-sizing: border-box;
-}
-a {
-  text-decoration: none;
-}
-.link-light:link,
-.link-light:visited {
-  color: @color-black;
-}
-.link-light:hover {
-  color: @color-primary;
-}
-.iconfont {
-  vertical-align: middle;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: @color-cyan-darker;
-  }
-  body {
-    color: @color-black-lighter;
-  }
-  .link-light:link,
-  .link-light:visited {
-    color: @color-black-lighter;
-  }
-  .link-light:hover {
-    color: @color-primary;
-  }
 }

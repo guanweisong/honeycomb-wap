@@ -1,20 +1,10 @@
 import React from 'react';
 import { SWRConfig, unstable_serialize } from 'swr';
 import dayjs from 'dayjs';
-import classNames from 'classnames';
 import Link from 'next/link';
 import Header from '@/src/components/Header';
 import Tags from '@/src/components/Tags';
-import {
-  CalendarOutline,
-  CameraOutline,
-  ClockCircleOutline,
-  ContentOutline,
-  EyeOutline,
-  MessageOutline,
-  UserOutline,
-} from 'antd-mobile-icons';
-import styles from './index.module.less';
+import { CalendarOutline, CameraOutline, ContentOutline } from 'antd-mobile-icons';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Comment from '@/src/components/Comment';
 import PostServer from '@/src/services/post';
@@ -32,7 +22,7 @@ import useQueryPostRandomList from '@/src/hooks/swr/post/use.query.post.random.l
 import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { PostType } from '@/src/types/post/PostType';
-import { PostEntity } from '@/src/types/post/post.entity';
+import PostInfo from '@/src/components/PostInfo';
 
 export interface ArchivesProps {
   id: string;
@@ -62,66 +52,43 @@ const Archives = (props: ArchivesProps) => {
   return (
     <>
       <Header title={getTitle()} setting={setting} menu={menu} currentMenu={post_category} />
-      <div className={classNames('container', styles['detail__content'])}>
-        <h2 className={styles['detail__title']}>{getTitle()}</h2>
-        <ul className={styles['detail__info']}>
-          <li className={styles['detail__info-item']}>
-            <UserOutline />
-            &nbsp;
-            <Link href={`/list/authors/${postDetail.post_author.user_name}`}>
-              <a className="link-light">{postDetail.post_author.user_name}</a>
-            </Link>
-          </li>
-          <li className={styles['detail__info-item']}>
-            <ClockCircleOutline />
-            &nbsp;{dayjs(postDetail.created_at).format('YYYY-MM-DD')}
-          </li>
-          <li className={styles['detail__info-item']}>
-            <MessageOutline />
-            &nbsp;{commentsData?.total} 条留言
-          </li>
-          <li className={styles['detail__info-item']}>
-            <EyeOutline />
-            &nbsp;{postDetail.post_views}&nbsp;次浏览
-          </li>
-        </ul>
+      <div className="container bg-white px-2 lg:px-4">
+        <h2 className="text-center text-xl lg:text-2xl pt-2 lg:pt-4">{getTitle()}</h2>
+        <PostInfo
+          author={postDetail.post_author.user_name}
+          date={postDetail.created_at}
+          comments={commentsData?.total}
+          views={postDetail.post_views}
+          border={'bottom'}
+        />
         <Choose>
           <When condition={postDetail.post_type === PostType.QUOTE}>
-            <div
-              className={classNames({
-                [styles['detail__quote']]: true,
-              })}
-            >
-              {`"${postDetail.quote_content}"`}
-            </div>
+            <div className="py-5 italic">{`"${postDetail.quote_content}"`}</div>
           </When>
           <Otherwise>
             <div
-              className={classNames({
-                [styles['detail__detail']]: true,
-                'markdown-body': true,
-              })}
+              className="markdown-body py-5"
               // @ts-ignore
               dangerouslySetInnerHTML={{ __html: postDetail.post_content }}
             />
           </Otherwise>
         </Choose>
-        <ul className={styles['detail__extra']}>
+        <ul className="border-t border-dashed py-2 text-gray-500">
           <If condition={postDetail.post_type === PostType.PHOTOGRAPH}>
-            <li className={styles['detail__extra-item']}>
+            <li className="flex items-center">
               <CameraOutline />
               {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
               {postDetail.gallery_location}
             </li>
           </If>
           <If condition={postDetail.post_type === PostType.MOVIE}>
-            <li className={styles['detail__extra-item']}>
+            <li className="flex items-center">
               <CalendarOutline />
               &nbsp; 上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
             </li>
           </If>
           <If condition={postDetail.post_type === PostType.QUOTE}>
-            <li className={styles['detail__extra-item']}>
+            <li className="flex items-center">
               <ContentOutline />
               &nbsp; 引用自：{postDetail.quote_author}
             </li>
@@ -130,11 +97,11 @@ const Archives = (props: ArchivesProps) => {
         <Tags {...postDetail} />
         <If condition={randomPostsList.length > 0}>
           <Card title={'猜你喜欢'}>
-            <ul className={styles['detail__post-list']}>
+            <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
               {randomPostsList.map((item: any) => (
-                <li key={item._id}>
+                <li key={item._id} className="my-2">
                   <Link href={`/archives/${item._id}`}>
-                    <a className="link-light">{item.post_title || item.quote_content}</a>
+                    <a className="block">{item.post_title || item.quote_content}</a>
                   </Link>
                 </li>
               ))}

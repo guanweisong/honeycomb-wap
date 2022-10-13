@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { TagEntity } from '@/src/types/tag/tag.entity';
 import { PostEntity } from '@/src/types/post/post.entity';
-import styles from './index.module.less';
 
 const Tag = (props: PostEntity) => {
   const getTags = (item: TagEntity[] | undefined, label: string) => {
@@ -15,7 +14,7 @@ const Tag = (props: PostEntity) => {
               <span key={n._id}>
                 {index !== 0 && '、'}
                 <Link href={`/list/tags/${encodeURI(n.tag_name)}`}>
-                  <a className="link-light">{n.tag_name}</a>
+                  <a>{n.tag_name}</a>
                 </Link>
               </span>
             );
@@ -26,7 +25,7 @@ const Tag = (props: PostEntity) => {
   };
 
   return (
-    <div className={styles.tags}>
+    <div className="list-none text-gray-400">
       {getTags(props.movie_director, '导演')}
       {getTags(props.movie_actor, '主演')}
       {getTags(props.movie_style, '风格')}

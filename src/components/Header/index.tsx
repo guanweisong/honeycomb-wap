@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import Head from 'next/head';
-import styles from './index.module.less';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import Menu from '@/src/components/Menu';
 import Link from 'next/link';
@@ -18,17 +16,17 @@ const Header = (props: HeaderProps) => {
   const { setting, menu, title, currentMenu } = props;
 
   return (
-    <div className={styles.nav}>
+    <div className="relative bg-white mb-4 h-12 lg:h-20 z-50 border-b">
       <Head>
         <title>{title || setting.site_name}</title>
       </Head>
-      <div className={styles.nav__container}>
-        <div className={styles.nav__home}>
+      <div className="container box-border h-full flex justify-between items-center">
+        <div>
           <Link href={'/'}>
-            <a>{setting.site_name}</a>
+            <a className="text-pink-500 text-xl lg:text-2xl ml-2">{setting.site_name}</a>
           </Link>
         </div>
-        <div className={styles.nav__menu}>
+        <div>
           <Menu menu={menu} currentMenu={currentMenu} />
         </div>
       </div>

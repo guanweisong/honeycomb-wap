@@ -1,6 +1,5 @@
-import classNames from 'classnames';
-import styles from './index.module.less';
 import React, { useState, useRef, FormEvent } from 'react';
+import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import CommentServer from '@/src/services/comment';
 import dayjs from 'dayjs';
@@ -79,37 +78,30 @@ const Comment = (props: CommentProps) => {
   const renderCommentList = (data: CommentEntity[]) => {
     return data?.map((item) => {
       return (
-        <li className={styles['comment-item']} key={item._id}>
-          <div className={styles['comment-wrap']}>
-            <div className={styles['comment-photo']}>
-              <img src={item.comment_avatar} />
+        <li className="relative" key={item._id}>
+          <div className="overflow-hidden py-4 border-b border-dashed">
+            <div className="float-left w-12 h-12 mr-5">
+              <img src={item.comment_avatar} className="w-full" />
             </div>
-            <div className={styles['comment-content']}>
-              <div className={styles['comment-name']}>{item.comment_author}</div>
-              <div className={styles['comment-text']}>
+            <div className="overflow-hidden">
+              <div className="text-pink-500">{item.comment_author}</div>
+              <div className="mt-1 text-gray-500">
                 <Choose>
                   <When condition={item.comment_status !== 3}>{item.comment_content}</When>
                   <Otherwise>该条评论已屏蔽</Otherwise>
                 </Choose>
               </div>
             </div>
-            <ul className={styles['comment-info']}>
-              <li className={styles['comment-info-item']}>
-                {dayjs(item.created_at).format('YYYY-MM-DD')}
-              </li>
-              <li
-                className={classNames({
-                  [styles['comment-info-item']]: true,
-                  [styles['comment-info-item--reply']]: true,
-                })}
-                onClick={() => handleReply(item)}
-              >
+            <div className="absolute right-2 top-4">
+              <span className="text-gray-400">{dayjs(item.created_at).format('YYYY-MM-DD')}</span>
+              <span className="text-gray-400 mx-1">/</span>
+              <a className="text-pink-500" onClick={() => handleReply(item)}>
                 Reply
-              </li>
-            </ul>
+              </a>
+            </div>
           </div>
           <If condition={item.children.length > 0}>
-            <ul className={styles['comment-list']}>{renderCommentList(item.children)}</ul>
+            <ul className="ml-10">{renderCommentList(item.children)}</ul>
           </If>
         </li>
       );
@@ -117,30 +109,29 @@ const Comment = (props: CommentProps) => {
   };
 
   return (
-    <div
-      className={classNames({
-        [styles['comment']]: true,
-        [styles['block']]: true,
-      })}
-    >
+    <div>
       <If condition={comment?.total !== 0}>
         <Card title={`${comment?.total} 条留言`}>
-          <ul className={styles['comment-list']}>{renderCommentList(comment?.list)}</ul>
+          <ul>{renderCommentList(comment?.list)}</ul>
         </Card>
       </If>
       <Card title={'发表留言'}>
         <>
           <If condition={!!replyTo}>
-            <div className={styles['comment-reply']}>
-              <span className={styles['comment-reply-label']}>Reply to:</span>
-              <span className={styles['comment-reply-name']}>{replyTo?.comment_author}</span>
-              <span className={styles['comment-reply-cancel']} onClick={() => handleReply(null)}>
+            <div className="leading-10">
+              <span className="text-pink-500">Reply to:</span>
+              <span className="mx-2">{replyTo?.comment_author}</span>
+              <a
+                className="text-gray-400 transition-all hover:text-gray-500"
+                onClick={() => handleReply(null)}
+              >
                 [取消]
-              </span>
+              </a>
             </div>
           </If>
-          <form className={styles.form} onSubmit={handleSubmit} ref={formRef}>
+          <form onSubmit={handleSubmit} ref={formRef}>
             <input
+              className="block border-b w-full leading-10 outline-0 focus:border-pink-400"
               type={'text'}
               placeholder={'请输入称呼'}
               name={'comment_author'}
@@ -148,6 +139,7 @@ const Comment = (props: CommentProps) => {
               required
             />
             <input
+              className="block border-b w-full leading-10 outline-0 focus:border-pink-400"
               type={'text'}
               placeholder={'请输入邮箱'}
               name={'comment_email'}
@@ -155,13 +147,16 @@ const Comment = (props: CommentProps) => {
               maxLength={30}
             />
             <textarea
+              className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2"
               placeholder={'请输入留言'}
               name={'comment_content'}
               required
               maxLength={200}
               rows={4}
             />
-            <button type={'submit'}>提交</button>
+            <Button type={'submit'} color={'primary'} size={'small'}>
+              提交
+            </Button>
           </form>
         </>
       </Card>

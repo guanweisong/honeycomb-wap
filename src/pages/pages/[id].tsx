@@ -1,14 +1,9 @@
 import React from 'react';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import styles from '../archives/index.module.less';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { ClockCircleOutline, MessageOutline, EyeOutline, UserOutline } from 'antd-mobile-icons';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 import PageServer from '@/src/services/page';
 import Header from '@/src/components/Header';
-import Link from 'next/link';
 import Footer from '@/src/components/Footer';
 import Comment from '@/src/components/Comment';
 import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
@@ -17,6 +12,7 @@ import useQueryMenu from '@/src/hooks/swr/menu/use.query.menu';
 import useQueryPageDetail from '@/src/hooks/swr/page/use.query.page.detail';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { SWRConfig } from 'swr';
+import PostInfo from '@/src/components/PostInfo';
 
 interface PagesProps {
   id: string;
@@ -41,34 +37,17 @@ const Pages: NextPage<PagesProps> = (props) => {
         menu={menu}
         currentMenu={pageDetail._id}
       />
-      <div className={classNames('container', styles['detail__content'])}>
-        <h2 className={styles['detail__title']}>{pageDetail.page_title}</h2>
-        <ul className={styles['detail__info']}>
-          <li className={styles['detail__info-item']}>
-            <UserOutline />
-            &nbsp;
-            <Link href={`/list/authors/${pageDetail.page_author.user_name}`}>
-              <a className="link-light">{pageDetail.page_author.user_name}</a>
-            </Link>
-          </li>
-          <li className={styles['detail__info-item']}>
-            <ClockCircleOutline />
-            &nbsp;{dayjs(pageDetail.created_at).format('YYYY-MM-DD')}
-          </li>
-          <li className={styles['detail__info-item']}>
-            <MessageOutline />
-            &nbsp;{commentsData?.total} 条留言
-          </li>
-          <li className={styles['detail__info-item']}>
-            <EyeOutline />
-            &nbsp;{pageDetail.page_views}&nbsp;次浏览
-          </li>
-        </ul>
+      <div className="container bg-white px-2 lg:px-4">
+        <h2 className="text-center text-xl lg:text-2xl pt-2 lg:pt-4">{pageDetail.page_title}</h2>
+        <PostInfo
+          author={pageDetail.page_author.user_name}
+          date={pageDetail.created_at}
+          comments={commentsData?.total}
+          views={pageDetail.page_views}
+          border={'bottom'}
+        />
         <div
-          className={classNames({
-            [styles['detail__detail']]: true,
-            'markdown-body': true,
-          })}
+          className="markdown-body py-5"
           // @ts-ignore
           dangerouslySetInnerHTML={{ __html: pageDetail.page_content }}
         />

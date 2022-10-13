@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './index.module.less';
 
 export interface BlockProps {
   title: string;
@@ -10,9 +9,9 @@ const Card = (props: BlockProps) => {
   const { title, children } = props;
 
   return (
-    <div className={styles['card']}>
-      <div className={styles['card__title']}>{title}</div>
-      <div className={styles['card__content']}>{children}</div>
+    <div className="my-5 lg:my-10">
+      <div className="text-xl border-b-2 py-2 border-gray-500">{title}</div>
+      <div>{children}</div>
     </div>
   );
 };

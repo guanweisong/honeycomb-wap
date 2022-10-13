@@ -1,13 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import classNames from 'classnames';
 import { Button, InfiniteScroll } from 'antd-mobile';
 import Header from '@/src/components/Header';
-import { postClass } from '@/src/utils/mapping';
-import styles from './index.module.less';
 import dayjs from 'dayjs';
-import { ClockCircleOutline, EyeOutline, MessageOutline } from 'antd-mobile-icons';
 import PostServer from '@/src/services/post';
 import MenuServer from '@/src/services/menu';
 import { PostEntity } from '@/src/types/post/post.entity';
@@ -23,6 +19,7 @@ import { PostType } from '@/src/types/post/PostType';
 import { PostStatus } from '@/src/types/post/PostStatus';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import Signature from '@/src/components/Signature';
+import PostInfo from '@/src/components/PostInfo';
 
 interface CategoryProps {
   currentMenu: string;
@@ -86,21 +83,17 @@ const Category: NextPage<CategoryProps> = (props) => {
   const renderCard = (item: PostEntity) => {
     return (
       <Link href={`/archives/${item._id}`} key={item._id}>
-        <div
-          className={classNames({
-            [styles['post-list__item']]: true,
-            [styles[postClass[item.post_type]]]: true,
-          })}
-        >
+        <div className="bg-white p-2 mt-4 first:mt-0">
           <If
             condition={[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(
               item.post_type,
             )}
           >
-            <div className={styles['post-list__photo']}>
+            <div>
               <Link href={`/archives/${item._id}`}>
                 <a>
                   <img
+                    className="w-full"
                     src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}
                     loading={'lazy'}
                   />
@@ -109,7 +102,7 @@ const Category: NextPage<CategoryProps> = (props) => {
             </div>
           </If>
           <Link href={`/archives/${item._id}`}>
-            <a className={styles['post-list__content']}>
+            <a className="p-4 text-center block text-lg">
               <If condition={item.post_type === PostType.MOVIE}>
                 <>
                   {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
@@ -125,20 +118,13 @@ const Category: NextPage<CategoryProps> = (props) => {
               </If>
             </a>
           </Link>
-          <ul className={styles['post-list__info']}>
-            <li className={styles['post-list__info-item']}>
-              <ClockCircleOutline />
-              &nbsp;{dayjs(item.created_at).format('YYYY-MM-DD')}
-            </li>
-            <li className={styles['post-list__info-item']}>
-              <MessageOutline />
-              &nbsp;{item.comment_count}&nbsp;条留言
-            </li>
-            <li className={styles['post-list__info-item']}>
-              <EyeOutline />
-              &nbsp;{item.post_views}&nbsp;次浏览
-            </li>
-          </ul>
+          <PostInfo
+            author={item.post_author.user_name}
+            date={item.created_at}
+            comments={item.comment_count}
+            views={item.post_views}
+            border={'top'}
+          />
         </div>
       </Link>
     );
@@ -149,12 +135,12 @@ const Category: NextPage<CategoryProps> = (props) => {
       <Header title={getTitle()} setting={setting} menu={menu} currentMenu={currentMenu} />
       <div className={'container'}>
         <If condition={['tags', 'authors'].includes(type)}>
-          <div className={styles['post-list__title']}>{getTitle()}</div>
+          <div className="mb-4 ml-4">{getTitle()}</div>
         </If>
         <Choose>
           <When condition={postList.length > 0}>
             <>
-              <div className={styles['post-list']}>{postList.map((item) => renderCard(item))}</div>
+              <div>{postList.map((item) => renderCard(item))}</div>
               {/*<InfiniteScroll loadMore={loadMore} hasMore={!isEnd} />*/}
               {!isEnd ? (
                 <Button

@@ -1,16 +1,19 @@
 import React from 'react';
-import styles from './index.module.less';
 
 interface IProps {
   text: string;
 }
 
 const Signature = (props: IProps) => {
+  const renderLine = () => {
+    return <span className="h-px flex-1 mt-3 bg-gray-100" />;
+  };
+
   return (
-    <div className={styles.signature}>
-      <span className={styles['signature__line']} />
-      <span className={styles['signature__text']}>{props.text}</span>
-      <span className={styles['signature__line']} />
+    <div className="flex my-4">
+      {renderLine()}
+      <span className="px-4 text-gray-400">{props.text}</span>
+      {renderLine()}
     </div>
   );
 };
