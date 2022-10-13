@@ -63,7 +63,7 @@ const Archives = (props: ArchivesProps) => {
         />
         <Choose>
           <When condition={postDetail.post_type === PostType.QUOTE}>
-            <div className="py-5 italic">{`"${postDetail.quote_content}"`}</div>
+            <div className="py-3 lg:py-5 italic">{`"${postDetail.quote_content}"`}</div>
           </When>
           <Otherwise>
             <div

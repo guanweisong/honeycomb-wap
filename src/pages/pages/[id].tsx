@@ -47,7 +47,7 @@ const Pages: NextPage<PagesProps> = (props) => {
           border={'bottom'}
         />
         <div
-          className="markdown-body py-5"
+          className="markdown-body py-3 lg:py-5"
           // @ts-ignore
           dangerouslySetInnerHTML={{ __html: pageDetail.page_content }}
         />
