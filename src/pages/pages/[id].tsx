@@ -101,6 +101,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   fallback[`/menus`] = promiseAllResult[0];
   fallback[`/settings`] = promiseAllResult[1];
 
+  props.fallback = fallback;
+
   return {
     props,
     revalidate: 60 * 60 * 24, // 页面静态页面生命1天
