@@ -53,7 +53,7 @@ const Archives = (props: ArchivesProps) => {
     <>
       <Header title={getTitle()} setting={setting} menu={menu} currentMenu={post_category} />
       <div className="container bg-white px-2 lg:px-4">
-        <h2 className="text-center text-xl lg:text-2xl pt-2 lg:pt-4">{getTitle()}</h2>
+        <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4">{getTitle()}</h2>
         <PostInfo
           author={postDetail.post_author.user_name}
           date={postDetail.created_at}
@@ -67,7 +67,7 @@ const Archives = (props: ArchivesProps) => {
           </When>
           <Otherwise>
             <div
-              className="markdown-body py-5"
+              className="markdown-body py-3 lg:py-5"
               // @ts-ignore
               dangerouslySetInnerHTML={{ __html: postDetail.post_content }}
             />

@@ -38,7 +38,7 @@ const Pages: NextPage<PagesProps> = (props) => {
         currentMenu={pageDetail._id}
       />
       <div className="container bg-white px-2 lg:px-4">
-        <h2 className="text-center text-xl lg:text-2xl pt-2 lg:pt-4">{pageDetail.page_title}</h2>
+        <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4">{pageDetail.page_title}</h2>
         <PostInfo
           author={pageDetail.page_author.user_name}
           date={pageDetail.created_at}

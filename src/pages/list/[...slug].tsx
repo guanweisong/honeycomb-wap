@@ -102,7 +102,7 @@ const Category: NextPage<CategoryProps> = (props) => {
             </div>
           </If>
           <Link href={`/archives/${item._id}`}>
-            <a className="p-4 text-center block text-lg">
+            <a className="p-2 lg:p-4 text-center block text-base lg:text-lg">
               <If condition={item.post_type === PostType.MOVIE}>
                 <>
                   {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
@@ -135,7 +135,7 @@ const Category: NextPage<CategoryProps> = (props) => {
       <Header title={getTitle()} setting={setting} menu={menu} currentMenu={currentMenu} />
       <div className={'container'}>
         <If condition={['tags', 'authors'].includes(type)}>
-          <div className="mb-4 ml-4">{getTitle()}</div>
+          <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
         </If>
         <Choose>
           <When condition={postList.length > 0}>
@@ -144,7 +144,7 @@ const Category: NextPage<CategoryProps> = (props) => {
               {/*<InfiniteScroll loadMore={loadMore} hasMore={!isEnd} />*/}
               {!isEnd ? (
                 <Button
-                  style={{ marginTop: 10 }}
+                  style={{ marginTop: 10, marginBottom: 10 }}
                   onClick={() => setSize(size + 1)}
                   block
                   loading={isLoadingMore}

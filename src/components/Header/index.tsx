@@ -16,7 +16,7 @@ const Header = (props: HeaderProps) => {
   const { setting, menu, title, currentMenu } = props;
 
   return (
-    <div className="relative bg-white mb-4 h-12 lg:h-20 z-50 border-b">
+    <div className="relative bg-white mb-2 lg:mb-4 h-12 lg:h-20 z-50 border-b">
       <Head>
         <title>{title || setting.site_name}</title>
       </Head>
