@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import Link from 'next/link';
 // @ts-ignore
 import listToTree from 'list-to-tree-lite';
-import styles from './index.module.less';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import { useRouter } from 'next/router';
 
@@ -95,14 +94,18 @@ const Menu = (props: MenuProps) => {
      * 获取菜单的标题
      * @param item
      */
-    const renderTitle = (item: MenuEntity) => {
+    const renderTitle = (item: MenuEntity, className?: string) => {
       return (
         <Link href={getUrl(item)}>
           <a
-            className={classNames({
-              [styles.current]:
-                currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome),
-            })}
+            className={classNames(
+              'block box-border w-full h-full flex items-center px-5 z-20 bg-white relative lg:group-hover:text-pink-500 lg:group-hover:bg-gray-100',
+              className,
+              {
+                ['text-pink-500 lg:bg-pink-500 lg:text-white lg:group-hover:text-white lg:group-hover:bg-pink-500']:
+                  currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome),
+              },
+            )}
           >
             {item.category_title || item.page_title}
           </a>
@@ -113,15 +116,27 @@ const Menu = (props: MenuProps) => {
      * 渲染菜单
      * @param data
      */
-    const renderUnit = (data: MenuEntity[]) => {
+    const renderUnit = (data: MenuEntity[], className?: string) => {
       return data.map((item) => {
         if (item.children.length === 0) {
-          return <li key={item._id}>{renderTitle(item)}</li>;
+          return (
+            <li
+              key={item._id}
+              className="relative leading-10 lg:flex items-center cursor-pointer lg:h-full group"
+            >
+              {renderTitle(item, className)}
+            </li>
+          );
         } else {
           return (
-            <li key={item._id}>
+            <li
+              key={item._id}
+              className="relative leading-10 lg:flex items-center cursor-pointer lg:h-full group lg:hover:bg-gray-100"
+            >
               {renderTitle(item)}
-              <ul>{renderUnit(item.children)}</ul>
+              <ul className="pl-4 lg:pl-0 lg:absolute transition-all bg-white z-10 left-0 right-0 lg:top-full lg:-translate-y-full lg:group-hover:translate-y-0 lg:border-t-2 lg:border-pink-700">
+                {renderUnit(item.children, 'lg:group-hover:bg-white lg:group-hover:text-gray-600')}
+              </ul>
             </li>
           );
         }
@@ -131,21 +146,19 @@ const Menu = (props: MenuProps) => {
   };
 
   return (
-    <div className={styles.menu}>
-      <div
-        className={classNames(styles.menu__more, {
-          [styles.show]: visible,
-        })}
-        onClick={() => setVisible(!visible)}
-      >
-        <div className={styles.bar} />
-        <div className={styles.bar} />
-        <div className={styles.bar} />
+    <div className="h-full flex items-center">
+      <div className="w-11 px-2 cursor-pointer lg:hidden" onClick={() => setVisible(!visible)}>
+        {[1, 1, 1].map(() => (
+          <div className="h-0.5 my-1.5 bg-gray-600" />
+        ))}
       </div>
       <ul
-        className={classNames({
-          [styles.show]: visible,
-        })}
+        className={classNames(
+          'absolute lg:relative lg:flex -translate-y-full lg:-translate-y-0 lg:h-full lg:items-center',
+          {
+            ['inset-x-0 top-full translate-y-0']: visible,
+          },
+        )}
       >
         {renderMenu()}
       </ul>
