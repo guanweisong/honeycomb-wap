@@ -94,13 +94,12 @@ const Menu = (props: MenuProps) => {
      * 获取菜单的标题
      * @param item
      */
-    const renderTitle = (item: MenuEntity, className?: string) => {
+    const renderTitle = (item: MenuEntity) => {
       return (
         <Link href={getUrl(item)}>
           <a
             className={classNames(
               'block box-border w-full h-full flex items-center px-5 z-20 bg-white relative lg:group-hover:text-pink-500 lg:group-hover:bg-gray-100',
-              className,
               {
                 ['text-pink-500 lg:bg-pink-500 lg:text-white lg:group-hover:text-white lg:group-hover:bg-pink-500']:
                   currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome),
@@ -116,7 +115,7 @@ const Menu = (props: MenuProps) => {
      * 渲染菜单
      * @param data
      */
-    const renderUnit = (data: MenuEntity[], className?: string) => {
+    const renderUnit = (data: MenuEntity[]) => {
       return data.map((item) => {
         if (item.children.length === 0) {
           return (
@@ -124,7 +123,7 @@ const Menu = (props: MenuProps) => {
               key={item._id}
               className="relative leading-10 lg:flex items-center cursor-pointer lg:h-full group"
             >
-              {renderTitle(item, className)}
+              {renderTitle(item)}
             </li>
           );
         } else {
@@ -134,8 +133,8 @@ const Menu = (props: MenuProps) => {
               className="relative leading-10 lg:flex items-center cursor-pointer lg:h-full group lg:hover:bg-gray-100"
             >
               {renderTitle(item)}
-              <ul className="pl-4 lg:pl-0 lg:absolute transition-all bg-white z-10 left-0 right-0 lg:top-full lg:-translate-y-full lg:group-hover:translate-y-0 lg:border-t-2 lg:border-pink-700">
-                {renderUnit(item.children, 'lg:group-hover:bg-white lg:group-hover:text-gray-600')}
+              <ul className="pl-4 lg:pl-0 lg:absolute transition-all bg-white z-10 left-0 right-0 lg:top-full lg:-translate-y-full lg:group-hover:translate-y-0 lg:group-hover:shadow lg:border-t-2 lg:border-pink-700">
+                {renderUnit(item.children)}
               </ul>
             </li>
           );
@@ -156,7 +155,8 @@ const Menu = (props: MenuProps) => {
         className={classNames(
           'absolute lg:relative lg:flex -translate-y-full lg:-translate-y-0 lg:h-full lg:items-center',
           {
-            ['inset-x-0 top-full translate-y-0']: visible,
+            ['inset-x-0 top-full translate-y-0 shadow-md']: visible,
+            ['hidden']: !visible,
           },
         )}
       >
