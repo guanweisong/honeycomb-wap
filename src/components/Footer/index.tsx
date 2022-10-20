@@ -17,7 +17,12 @@ const Footer = (props: FooterProps) => {
       <div>
         {setting.site_record_no ? (
           setting.site_record_url ? (
-            <a href={`${setting.site_record_url}`} target="_blank" rel="nofollow">
+            <a
+              className="link-light"
+              href={`${setting.site_record_url}`}
+              target="_blank"
+              rel="nofollow"
+            >
               {setting.site_record_no}
             </a>
           ) : (

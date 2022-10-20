@@ -1,9 +1,32 @@
-@import '../assets/base';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root:root {
-  --adm-color-primary: @color-primary;
+  --adm-color-primary: rgb(236, 72, 153);
+}
+
+a {
+  &.link-primary {
+    &:link{
+      @apply text-pink-500;
+    }
+    &:visited {
+      @apply text-pink-500;
+    }
+    &:hover {
+      @apply text-pink-700 underline;
+    }
+  }
+  &.link-light {
+    &:link{
+      @apply text-gray-500;
+    }
+    &:visited {
+      @apply text-gray-500;
+    }
+    &:hover {
+      @apply text-gray-500 underline;
+    }
+  }
 }

@@ -101,7 +101,7 @@ const Archives = (props: ArchivesProps) => {
               {randomPostsList.map((item: any) => (
                 <li key={item._id} className="my-2">
                   <Link href={`/archives/${item._id}`}>
-                    <a className="block">{item.post_title || item.quote_content}</a>
+                    <a className="block link-light">{item.post_title || item.quote_content}</a>
                   </Link>
                 </li>
               ))}

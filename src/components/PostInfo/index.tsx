@@ -21,7 +21,7 @@ const PostInfo = (props: PostInfoProps) => {
       icon: <UserOutline />,
       content: (
         <Link href={`/list/authors/${author}`}>
-          <a>{author}</a>
+          <a className="link-light">{author}</a>
         </Link>
       ),
     });

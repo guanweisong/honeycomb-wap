@@ -10,7 +10,7 @@ const Card = (props: BlockProps) => {
 
   return (
     <div className="my-5 lg:my-10">
-      <div className="text-xl border-b-2 py-2 border-gray-500">{title}</div>
+      <div className="text-lg border-b-2 py-2 border-gray-300">{title}</div>
       <div>{children}</div>
     </div>
   );

@@ -14,7 +14,7 @@ const Tag = (props: PostEntity) => {
               <span key={n._id}>
                 {index !== 0 && '、'}
                 <Link href={`/list/tags/${encodeURI(n.tag_name)}`}>
-                  <a>{n.tag_name}</a>
+                  <a className="link-light">{n.tag_name}</a>
                 </Link>
               </span>
             );
