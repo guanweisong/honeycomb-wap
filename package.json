@@ -8,8 +8,8 @@
     "analyze": "cross-env ANALYZE=1 next build"
   },
   "dependencies": {
-    "ahooks": "^3.7.1",
-    "antd-mobile": "^5.22.0",
+    "ahooks": "^3.7.2",
+    "antd-mobile": "^5.24.1",
     "async-validator": "^4.2.5",
     "axios": "^1.1.2",
     "can-param": "^1.2.0",

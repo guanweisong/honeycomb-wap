@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { Button, InfiniteScroll } from 'antd-mobile';
+import { DotLoading, AutoCenter } from 'antd-mobile';
+import { useScroll } from 'ahooks';
 import Header from '@/src/components/Header';
 import dayjs from 'dayjs';
 import PostServer from '@/src/services/post';
@@ -36,6 +37,7 @@ const PAGE_SIZE = 10;
 
 const Category: NextPage<CategoryProps> = (props) => {
   const { currentMenu = '', typeName, type = '', queryParams, fallbackData } = props;
+  const scroll = useScroll(typeof document !== 'undefined' ? document : null);
 
   const { data: setting } = useQuerySetting();
   const { data: menu } = useQueryMenu();
@@ -45,18 +47,17 @@ const Category: NextPage<CategoryProps> = (props) => {
   const isEnd = data[data.length - 1]?.length < PAGE_SIZE;
   const isLoadingMore = typeof data[size - 1] === 'undefined';
 
-  /**
-   * 滚动加载
-   */
-  // const loadMore = () => {
-  //   setSize(size + 1);
-  //   console.log('isLoadingMore', isLoadingMore);
-  //   return new Promise<void>((resolve) => {
-  //     if (!isLoadingMore) {
-  //       resolve();
-  //     }
-  //   });
-  // };
+  useEffect(() => {
+    if (typeof document !== 'undefined' && !isLoadingMore && !isEnd) {
+      const { top = 0 } = scroll ?? {};
+      const documentHeight = document.body.scrollHeight;
+      const scrollTop = top + window.innerHeight;
+      const difference = documentHeight - scrollTop;
+      if (difference < 300) {
+        setSize(size + 1);
+      }
+    }
+  }, [scroll, isLoadingMore]);
 
   /**
    * 获取页面标题
@@ -141,20 +142,11 @@ const Category: NextPage<CategoryProps> = (props) => {
           <When condition={postList.length > 0}>
             <>
               <div>{postList.map((item) => renderCard(item))}</div>
-              {/*<InfiniteScroll loadMore={loadMore} hasMore={!isEnd} />*/}
-              {!isEnd ? (
-                <Button
-                  style={{ marginTop: 10, marginBottom: 10 }}
-                  onClick={() => setSize(size + 1)}
-                  block
-                  loading={isLoadingMore}
-                  color={'primary'}
-                  fill={'outline'}
-                >
-                  加载更多
-                </Button>
-              ) : (
-                <Signature text={'到底了'} />
+              {isEnd && <Signature text={'到底了'} />}
+              {isLoadingMore && (
+                <AutoCenter>
+                  <DotLoading />
+                </AutoCenter>
               )}
             </>
           </When>

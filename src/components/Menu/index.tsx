@@ -146,10 +146,10 @@ const Menu = (props: MenuProps) => {
 
   return (
     <div className="h-full flex items-center">
-      <div className="w-11 px-2 cursor-pointer lg:hidden" onClick={() => setVisible(!visible)}>
+      <div className="w-10 px-2 cursor-pointer lg:hidden" onClick={() => setVisible(!visible)}>
         {[1, 1, 1].map(() => (
           <div
-            className={classNames('h-0.5 my-1.5 bg-gray-600 transition-all', {
+            className={classNames('h-0.5 my-1.5 bg-gray-400 transition-all', {
               'first:translate-y-2 first:rotate-45 even:opacity-0 last:-translate-y-2 last:-rotate-45':
                 visible,
             })}
