@@ -3,13 +3,11 @@ import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { DotLoading, AutoCenter } from 'antd-mobile';
 import { useScroll } from 'ahooks';
-import Header from '@/src/components/Header';
 import dayjs from 'dayjs';
 import PostServer from '@/src/services/post';
 import MenuServer from '@/src/services/menu';
 import { PostEntity } from '@/src/types/post/post.entity';
 import SettingServer from '@/src/services/setting';
-import Footer from '@/src/components/Footer';
 import NoData from '@/src/components/NoData';
 import { SWRConfig } from 'swr';
 import useQuerySetting from '@/src/hooks/swr/setting/use.query.setting';
@@ -21,6 +19,7 @@ import { PostStatus } from '@/src/types/post/PostStatus';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import Signature from '@/src/components/Signature';
 import PostInfo from '@/src/components/PostInfo';
+import Layout from '@/src/components/Layout';
 
 interface CategoryProps {
   currentMenu: string;
@@ -84,7 +83,7 @@ const Category: NextPage<CategoryProps> = (props) => {
   const renderCard = (item: PostEntity) => {
     return (
       <Link href={`/archives/${item._id}`} key={item._id}>
-        <div className="bg-white p-2 mt-4 first:mt-0">
+        <div className="mt-4 first:mt-0">
           <If
             condition={[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(
               item.post_type,
@@ -103,7 +102,7 @@ const Category: NextPage<CategoryProps> = (props) => {
             </div>
           </If>
           <Link href={`/archives/${item._id}`}>
-            <a className="p-2 lg:p-4 text-center block text-base lg:text-lg">
+            <a className="p-2 lg:p-4 text-center block text-base lg:text-lg dark:text-gray-400">
               <If condition={item.post_type === PostType.MOVIE}>
                 <>
                   {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
@@ -132,8 +131,7 @@ const Category: NextPage<CategoryProps> = (props) => {
   };
 
   return (
-    <>
-      <Header title={getTitle()} setting={setting} menu={menu} currentMenu={currentMenu} />
+    <Layout title={getTitle()} setting={setting} menu={menu} currentMenu={currentMenu}>
       <div className={'container'}>
         <If condition={['tags', 'authors'].includes(type)}>
           <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
@@ -155,8 +153,7 @@ const Category: NextPage<CategoryProps> = (props) => {
           </Otherwise>
         </Choose>
       </div>
-      <Footer setting={setting} />
-    </>
+    </Layout>
   );
 };
 

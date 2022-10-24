@@ -13,6 +13,7 @@ import useQueryPageDetail from '@/src/hooks/swr/page/use.query.page.detail';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { SWRConfig } from 'swr';
 import PostInfo from '@/src/components/PostInfo';
+import Layout from '@/src/components/Layout';
 
 interface PagesProps {
   id: string;
@@ -30,31 +31,29 @@ const Pages: NextPage<PagesProps> = (props) => {
   useUpdateViews({ type: 'pages', id });
 
   return (
-    <>
-      <Header
-        title={`${pageDetail.page_title}_${setting.site_name}`}
-        setting={setting}
-        menu={menu}
-        currentMenu={pageDetail._id}
+    <Layout
+      title={`${pageDetail.page_title}_${setting.site_name}`}
+      setting={setting}
+      menu={menu}
+      currentMenu={pageDetail._id}
+    >
+      <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
+        {pageDetail.page_title}
+      </h2>
+      <PostInfo
+        author={pageDetail.page_author.user_name}
+        date={pageDetail.created_at}
+        comments={commentsData?.total}
+        views={pageDetail.page_views}
+        border={'bottom'}
       />
-      <div className="container bg-white px-2 lg:px-4">
-        <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4">{pageDetail.page_title}</h2>
-        <PostInfo
-          author={pageDetail.page_author.user_name}
-          date={pageDetail.created_at}
-          comments={commentsData?.total}
-          views={pageDetail.page_views}
-          border={'bottom'}
-        />
-        <div
-          className="markdown-body py-3 lg:py-5"
-          // @ts-ignore
-          dangerouslySetInnerHTML={{ __html: pageDetail.page_content }}
-        />
-        <Comment id={id} />
-      </div>
-      <Footer setting={setting} />
-    </>
+      <div
+        className="markdown-body py-3 lg:py-5"
+        // @ts-ignore
+        dangerouslySetInnerHTML={{ __html: pageDetail.page_content }}
+      />
+      <Comment id={id} />
+    </Layout>
   );
 };
 

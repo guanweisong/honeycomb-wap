@@ -2,7 +2,6 @@ import React from 'react';
 import { SWRConfig, unstable_serialize } from 'swr';
 import dayjs from 'dayjs';
 import Link from 'next/link';
-import Header from '@/src/components/Header';
 import Tags from '@/src/components/Tags';
 import { CalendarOutline, CameraOutline, ContentOutline } from 'antd-mobile-icons';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
@@ -23,6 +22,7 @@ import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { PostType } from '@/src/types/post/PostType';
 import PostInfo from '@/src/components/PostInfo';
+import Layout from '@/src/components/Layout';
 
 export interface ArchivesProps {
   id: string;
@@ -50,68 +50,66 @@ const Archives = (props: ArchivesProps) => {
   };
 
   return (
-    <>
-      <Header title={getTitle()} setting={setting} menu={menu} currentMenu={post_category} />
-      <div className="container bg-white px-2 lg:px-4">
-        <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4">{getTitle()}</h2>
-        <PostInfo
-          author={postDetail.post_author.user_name}
-          date={postDetail.created_at}
-          comments={commentsData?.total}
-          views={postDetail.post_views}
-          border={'bottom'}
-        />
-        <Choose>
-          <When condition={postDetail.post_type === PostType.QUOTE}>
-            <div className="py-3 lg:py-5 italic">{`"${postDetail.quote_content}"`}</div>
-          </When>
-          <Otherwise>
-            <div
-              className="markdown-body py-3 lg:py-5"
-              // @ts-ignore
-              dangerouslySetInnerHTML={{ __html: postDetail.post_content }}
-            />
-          </Otherwise>
-        </Choose>
-        <ul className="border-t border-dashed py-2 text-gray-500">
-          <If condition={postDetail.post_type === PostType.PHOTOGRAPH}>
-            <li className="flex items-center">
-              <CameraOutline />
-              {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
-              {postDetail.gallery_location}
-            </li>
-          </If>
-          <If condition={postDetail.post_type === PostType.MOVIE}>
-            <li className="flex items-center">
-              <CalendarOutline />
-              &nbsp; 上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
-            </li>
-          </If>
-          <If condition={postDetail.post_type === PostType.QUOTE}>
-            <li className="flex items-center">
-              <ContentOutline />
-              &nbsp; 引用自：{postDetail.quote_author}
-            </li>
-          </If>
-        </ul>
-        <Tags {...postDetail} />
-        <If condition={randomPostsList.length > 0}>
-          <Card title={'猜你喜欢'}>
-            <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
-              {randomPostsList.map((item: any) => (
-                <li key={item._id} className="my-2">
-                  <Link href={`/archives/${item._id}`}>
-                    <a className="block link-light">{item.post_title || item.quote_content}</a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Card>
+    <Layout title={getTitle()} setting={setting} menu={menu} currentMenu={post_category}>
+      <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
+        {getTitle()}
+      </h2>
+      <PostInfo
+        author={postDetail.post_author.user_name}
+        date={postDetail.created_at}
+        comments={commentsData?.total}
+        views={postDetail.post_views}
+        border={'bottom'}
+      />
+      <Choose>
+        <When condition={postDetail.post_type === PostType.QUOTE}>
+          <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quote_content}"`}</div>
+        </When>
+        <Otherwise>
+          <div
+            className="markdown-body py-3 lg:py-5"
+            // @ts-ignore
+            dangerouslySetInnerHTML={{ __html: postDetail.post_content }}
+          />
+        </Otherwise>
+      </Choose>
+      <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-600">
+        <If condition={postDetail.post_type === PostType.PHOTOGRAPH}>
+          <li className="flex items-center">
+            <CameraOutline />
+            {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
+            {postDetail.gallery_location}
+          </li>
         </If>
-        <Comment id={id} />
-      </div>
-      <Footer setting={setting} />
-    </>
+        <If condition={postDetail.post_type === PostType.MOVIE}>
+          <li className="flex items-center">
+            <CalendarOutline />
+            &nbsp; 上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
+          </li>
+        </If>
+        <If condition={postDetail.post_type === PostType.QUOTE}>
+          <li className="flex items-center">
+            <ContentOutline />
+            &nbsp; 引用自：{postDetail.quote_author}
+          </li>
+        </If>
+      </ul>
+      <Tags {...postDetail} />
+      <If condition={randomPostsList.length > 0}>
+        <Card title={'猜你喜欢'}>
+          <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
+            {randomPostsList.map((item: any) => (
+              <li key={item._id} className="my-2">
+                <Link href={`/archives/${item._id}`}>
+                  <a className="block link-light">{item.post_title || item.quote_content}</a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </If>
+      <Comment id={id} />
+    </Layout>
   );
 };
 

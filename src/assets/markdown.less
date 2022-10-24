@@ -1,10 +1,10 @@
 .markdown-body {
-  @apply break-words;
+  @apply break-words dark:text-gray-400;
   p, blockquote, ul, ol, dl, table, pre, code {
     @apply mb-4;
   }
   hr {
-    @apply h-1 my-2 bg-gray-300;
+    @apply h-1 my-2 bg-gray-300 dark:bg-gray-600;
   }
   blockquote {
     @apply py-2 text-gray-500 border-l-2 border-gray-500 pl-4;
@@ -13,16 +13,16 @@
     }
   }
   kbd {
-    @apply inline-block px-2 py-1 text-sm text-gray-500 bg-gray-300 border rounded-sm shadow-sm;
+    @apply inline-block px-2 py-1 text-sm text-gray-500 bg-gray-300 dark:bg-gray-600 border rounded-sm shadow-sm;
   }
   h1, h2, h3, h4 ,h5, h6 {
     @apply mt-3 mb-2 font-semibold;
   }
   h1 {
-    @apply text-2xl border-b border-gray-200 pb-4;
+    @apply text-2xl border-b border-gray-200 dark:border-gray-600 pb-4;
   }
   h2 {
-    @apply text-xl border-b border-gray-200 pb-3;
+    @apply text-xl border-b border-gray-200 dark:border-gray-600 pb-3;
   }
   h3 {
     @apply text-lg;
@@ -45,16 +45,16 @@
       @apply font-semibold;
     }
     th, td {
-      @apply py-2 px-4 border border-gray-400;
+      @apply py-2 px-4 border border-gray-400 dark:border-gray-600;
     }
     tr:nth-child(2n) {
-      @apply bg-gray-200;
+      @apply bg-gray-200 dark:border-gray-500;
     }
   }
   img {
     @apply max-w-full block;
   }
   code, tt {
-    @apply py-2 px-4 bg-gray-200 rounded;
+    @apply py-2 px-4 bg-gray-200 dark:border-gray-600 rounded;
   }
 }

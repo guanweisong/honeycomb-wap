@@ -79,7 +79,7 @@ const Comment = (props: CommentProps) => {
     return data?.map((item) => {
       return (
         <li className="relative" key={item._id}>
-          <div className="overflow-hidden py-4 border-b border-dashed">
+          <div className="overflow-hidden py-4 border-b border-dashed dark:border-gray-600">
             <div className="float-left w-12 h-12 mr-5">
               <img src={item.comment_avatar} className="w-full" />
             </div>
@@ -131,7 +131,7 @@ const Comment = (props: CommentProps) => {
           </If>
           <form onSubmit={handleSubmit} ref={formRef}>
             <input
-              className="block border-b w-full leading-10 outline-0 focus:border-pink-400"
+              className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-600"
               type={'text'}
               placeholder={'请输入称呼'}
               name={'comment_author'}
@@ -139,7 +139,7 @@ const Comment = (props: CommentProps) => {
               required
             />
             <input
-              className="block border-b w-full leading-10 outline-0 focus:border-pink-400"
+              className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-600"
               type={'text'}
               placeholder={'请输入邮箱'}
               name={'comment_email'}
@@ -147,7 +147,7 @@ const Comment = (props: CommentProps) => {
               maxLength={30}
             />
             <textarea
-              className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2"
+              className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2 bg-transparent dark:border-gray-600"
               placeholder={'请输入留言'}
               name={'comment_content'}
               required

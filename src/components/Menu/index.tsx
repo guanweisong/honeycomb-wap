@@ -99,9 +99,9 @@ const Menu = (props: MenuProps) => {
         <Link href={getUrl(item)}>
           <a
             className={classNames(
-              'block box-border w-full h-full flex items-center px-5 z-20 bg-white relative lg:group-hover:text-pink-500 lg:group-hover:bg-gray-100',
+              'bg-white dark:bg-gray-800 block box-border w-full h-full flex items-center px-5 z-20 dark:text-gray-400 relative lg:group-hover:text-pink-500 lg:group-hover:bg-gray-100 dark:lg:group-hover:bg-gray-900',
               {
-                ['text-pink-500 lg:bg-pink-500 lg:text-white lg:group-hover:text-white lg:group-hover:bg-pink-500']:
+                ['text-pink-500 lg:bg-pink-500 lg:text-white lg:group-hover:text-white lg:group-hover:bg-pink-500 dark:lg:group-hover:bg-pink-500']:
                   currentPath.includes(item._id) || (currentPath.length === 0 && item.isHome),
               },
             )}
@@ -133,7 +133,7 @@ const Menu = (props: MenuProps) => {
               className="relative leading-10 lg:flex items-center cursor-pointer lg:h-full group lg:hover:bg-gray-100"
             >
               {renderTitle(item)}
-              <ul className="pl-4 lg:pl-0 lg:absolute transition-all bg-white z-10 left-0 right-0 lg:top-full lg:-translate-y-full lg:group-hover:translate-y-0 lg:group-hover:shadow lg:border-t-2 lg:border-pink-700">
+              <ul className="pl-4 lg:pl-0 lg:absolute transition-all z-10 left-0 right-0 lg:top-full lg:-translate-y-full lg:group-hover:translate-y-0 lg:group-hover:shadow lg:border-t-2 lg:border-pink-700">
                 {renderUnit(item.children)}
               </ul>
             </li>
@@ -158,7 +158,7 @@ const Menu = (props: MenuProps) => {
       </div>
       <ul
         className={classNames(
-          'absolute lg:relative lg:flex -translate-y-full lg:-translate-y-0 lg:h-full lg:items-center',
+          'absolute lg:relative bg-white dark:bg-gray-800 lg:flex -translate-y-full lg:-translate-y-0 lg:h-full lg:items-center',
           {
             ['inset-x-0 top-full translate-y-0 shadow-md']: visible,
             ['hidden']: !visible,

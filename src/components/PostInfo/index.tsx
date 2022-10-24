@@ -54,10 +54,13 @@ const PostInfo = (props: PostInfoProps) => {
 
   return (
     <ul
-      className={classNames('flex justify-center text-sm py-2 border-dashed  text-gray-500', {
-        'border-b': border === 'bottom',
-        'border-t': border === 'top',
-      })}
+      className={classNames(
+        'flex justify-center text-sm py-2 border-dashed text-gray-500 dark:border-gray-600',
+        {
+          'border-b': border === 'bottom',
+          'border-t': border === 'top',
+        },
+      )}
     >
       {data.map((item) => (
         <li className="flex items-center mx-1">
