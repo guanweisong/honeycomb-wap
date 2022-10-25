@@ -55,7 +55,7 @@ const PostInfo = (props: PostInfoProps) => {
   return (
     <ul
       className={classNames(
-        'flex justify-center text-sm py-2 border-dashed text-gray-500 dark:border-gray-600',
+        'flex justify-center text-sm py-2 border-dashed text-gray-500 dark:border-gray-900',
         {
           'border-b': border === 'bottom',
           'border-t': border === 'top',

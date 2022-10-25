@@ -6,7 +6,7 @@ interface IProps {
 
 const Signature = (props: IProps) => {
   const renderLine = () => {
-    return <span className="h-px flex-1 mt-2.5 bg-gray-100 dark:bg-gray-600" />;
+    return <span className="h-px flex-1 mt-2.5 bg-gray-100 dark:bg-gray-900" />;
   };
 
   return (

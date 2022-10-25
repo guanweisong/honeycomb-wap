@@ -73,7 +73,7 @@ const Archives = (props: ArchivesProps) => {
           />
         </Otherwise>
       </Choose>
-      <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-600">
+      <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-900">
         <If condition={postDetail.post_type === PostType.PHOTOGRAPH}>
           <li className="flex items-center">
             <CameraOutline />
