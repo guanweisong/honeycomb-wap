@@ -110,8 +110,11 @@ const Header = (props: HeaderProps) => {
       </Head>
       <div className="container relative box-border h-full flex justify-between items-center">
         <div className="h-full flex items-center">
-          <Link href={'/list/category'} scroll={false}>
-            <a className="text-pink-500 text-xl lg:text-2xl ml-2">{setting.site_name}</a>
+          <Link
+            href={'/list/category'}
+            scroll={false}
+            className="text-pink-500 text-xl lg:text-2xl ml-2">
+            {setting.site_name}
           </Link>
         </div>
         <div className="h-full flex items-center">

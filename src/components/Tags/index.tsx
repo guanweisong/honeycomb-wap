@@ -13,8 +13,8 @@ const Tag = (props: PostEntity) => {
             return (
               <span key={n._id}>
                 {index !== 0 && '、'}
-                <Link href={`/list/tags/${encodeURI(n.tag_name)}`}>
-                  <a className="link-light">{n.tag_name}</a>
+                <Link href={`/list/tags/${encodeURI(n.tag_name)}`} className="link-light">
+                  {n.tag_name}
                 </Link>
               </span>
             );

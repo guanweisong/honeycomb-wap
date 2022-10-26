@@ -82,7 +82,7 @@ const Category: NextPage<CategoryProps> = (props) => {
    */
   const renderCard = (item: PostEntity) => {
     return (
-      <Link href={`/archives/${item._id}`} key={item._id}>
+      <Link href={`/archives/${item._id}`} key={item._id} legacyBehavior>
         <div className="mt-4 first:mt-0">
           <If
             condition={[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(
@@ -91,32 +91,34 @@ const Category: NextPage<CategoryProps> = (props) => {
           >
             <div>
               <Link href={`/archives/${item._id}`}>
-                <a>
-                  <img
-                    className="w-full"
-                    src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}
-                    loading={'lazy'}
-                  />
-                </a>
+
+                <img
+                  className="w-full"
+                  src={`//${item.post_cover?.media_url}?imageMogr2/thumbnail/1280x`}
+                  loading={'lazy'}
+                />
+
               </Link>
             </div>
           </If>
-          <Link href={`/archives/${item._id}`}>
-            <a className="p-2 lg:p-4 text-center block text-base lg:text-lg dark:text-gray-400">
-              <If condition={item.post_type === PostType.MOVIE}>
-                <>
-                  {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
-                </>
-              </If>
-              <If condition={[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.post_type)}>
-                {item.post_title}
-              </If>
-              <If condition={item.post_type === PostType.QUOTE}>
-                <>
-                  “{item.quote_content}” —— {item.quote_author}
-                </>
-              </If>
-            </a>
+          <Link
+            href={`/archives/${item._id}`}
+            className="p-2 lg:p-4 text-center block text-base lg:text-lg dark:text-gray-400">
+
+            <If condition={item.post_type === PostType.MOVIE}>
+              <>
+                {item.post_title} {item.movie_name_en} ({dayjs(item.movie_time).format('YYYY')})
+              </>
+            </If>
+            <If condition={[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.post_type)}>
+              {item.post_title}
+            </If>
+            <If condition={item.post_type === PostType.QUOTE}>
+              <>
+                “{item.quote_content}” —— {item.quote_author}
+              </>
+            </If>
+
           </Link>
           <PostInfo
             author={item.post_author.user_name}

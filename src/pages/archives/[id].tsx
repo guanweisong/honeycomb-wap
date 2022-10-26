@@ -100,8 +100,8 @@ const Archives = (props: ArchivesProps) => {
           <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
             {randomPostsList.map((item: any) => (
               <li key={item._id} className="my-2">
-                <Link href={`/archives/${item._id}`}>
-                  <a className="block link-light">{item.post_title || item.quote_content}</a>
+                <Link href={`/archives/${item._id}`} className="block link-light">
+                  {item.post_title || item.quote_content}
                 </Link>
               </li>
             ))}

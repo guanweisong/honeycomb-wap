@@ -20,8 +20,8 @@ const PostInfo = (props: PostInfoProps) => {
     data.push({
       icon: <UserOutline />,
       content: (
-        <Link href={`/list/authors/${author}`}>
-          <a className="link-light">{author}</a>
+        <Link href={`/list/authors/${author}`} className="link-light">
+          {author}
         </Link>
       ),
     });

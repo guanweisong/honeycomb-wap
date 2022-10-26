@@ -26,36 +26,36 @@ const Menu = (props: MenuProps) => {
       >
         {data.map((m) => (
           <li className="lg:relative lg:flex group">
-            <Link href={m.link}>
-              <a
-                className={classNames(
-                  'lg:relative leading-10 lg:z-20 px-4 lg:px-6 lg:flex lg:items-center',
-                  {
-                    'lg:bg-pink-500 text-pink-500 lg:text-white': m.isActive,
-                    'lg:bg-white dark:lg:bg-gray-800 dark:text-gray-500 group-hover:lg:text-pink-500 group-hover:lg:bg-gray-100 dark:group-hover:lg:bg-gray-900':
-                      !m.isActive,
-                  },
-                )}
-              >
-                {m.label}
-              </a>
+            <Link
+              href={m.link}
+              className={classNames(
+                'lg:relative leading-10 lg:z-20 px-4 lg:px-6 lg:flex lg:items-center',
+                {
+                  'lg:bg-pink-500 text-pink-500 lg:text-white': m.isActive,
+                  'lg:bg-white dark:lg:bg-gray-800 dark:text-gray-500 group-hover:lg:text-pink-500 group-hover:lg:bg-gray-100 dark:group-hover:lg:bg-gray-900':
+                    !m.isActive,
+                },
+              )}>
+
+              {m.label}
+
             </Link>
             {m.children && (
               <ul className="lg:absolute lg:bg-white dark:lg:bg-gray-900 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md">
                 {m.children.map((n) => (
                   <li>
-                    <Link href={n.link}>
-                      <a
-                        className={classNames(
-                          'block leading-10 lg:text-center hover:lg:text-pink-500 px-8 lg:px-0',
-                          {
-                            'text-pink-500': n.isActive,
-                            'dark:text-gray-500': !n.isActive,
-                          },
-                        )}
-                      >
-                        {n.label}
-                      </a>
+                    <Link
+                      href={n.link}
+                      className={classNames(
+                        'block leading-10 lg:text-center hover:lg:text-pink-500 px-8 lg:px-0',
+                        {
+                          'text-pink-500': n.isActive,
+                          'dark:text-gray-500': !n.isActive,
+                        },
+                      )}>
+
+                      {n.label}
+
                     </Link>
                   </li>
                 ))}
