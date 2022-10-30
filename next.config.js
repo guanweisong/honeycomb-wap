@@ -22,11 +22,12 @@ const nextConfig = {
   },
   experimental: {
     scrollRestoration: true,
+    appDir: true,
   },
-  webpack: (config, options) => {
-    config.resolve.alias['@'] = path.join(__dirname, './');
-    return config;
-  },
+  // webpack: (config, options) => {
+  //   config.resolve.alias['@'] = path.join(__dirname, './');
+  //   return config;
+  // },
 };
 
-module.exports = withLess(withTM(nextConfig));
+module.exports = nextConfig;

@@ -1,5 +1,5 @@
 export interface PostRandomListQuery {
-  number?: number;
+  number: number;
   post_category: string;
   post_id: string;
 }

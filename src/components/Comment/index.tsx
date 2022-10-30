@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, FormEvent } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
@@ -5,16 +7,20 @@ import CommentServer from '@/src/services/comment';
 import dayjs from 'dayjs';
 import Card from '../Card';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
+import { MenuType } from '@/src/types/menu/MenuType';
+import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 
 export interface CommentProps {
   id: string;
+  type: MenuType;
 }
 
 const Comment = (props: CommentProps) => {
-  const { id } = props;
+  const { id, type } = props;
 
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
   const formRef = useRef(null);
+  useUpdateViews({ type, id });
   const { data: comment } = useQueryComment(id);
 
   /**
@@ -110,9 +116,9 @@ const Comment = (props: CommentProps) => {
 
   return (
     <div>
-      <If condition={comment?.total !== 0}>
-        <Card title={`${comment?.total} 条留言`}>
-          <ul>{renderCommentList(comment?.list)}</ul>
+      <If condition={comment && comment.total !== 0}>
+        <Card title={`${comment.total} 条留言`}>
+          <ul>{renderCommentList(comment.list)}</ul>
         </Card>
       </If>
       <Card title={'发表留言'}>

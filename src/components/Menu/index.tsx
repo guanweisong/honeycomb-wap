@@ -1,6 +1,9 @@
+'use client';
+
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export interface MenuItem {
   label: React.ReactNode;
@@ -16,6 +19,12 @@ export interface MenuProps {
 const Menu = (props: MenuProps) => {
   const { data } = props;
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setVisible(false);
+  }, [pathname]);
+
   const renderItem = (data: MenuItem[]) => {
     return (
       <ul
@@ -35,10 +44,9 @@ const Menu = (props: MenuProps) => {
                   'lg:bg-white dark:lg:bg-gray-800 dark:text-gray-500 group-hover:lg:text-pink-500 group-hover:lg:bg-gray-100 dark:group-hover:lg:bg-gray-900':
                     !m.isActive,
                 },
-              )}>
-
+              )}
+            >
               {m.label}
-
             </Link>
             {m.children && (
               <ul className="lg:absolute lg:bg-white dark:lg:bg-gray-900 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md">
@@ -52,10 +60,9 @@ const Menu = (props: MenuProps) => {
                           'text-pink-500': n.isActive,
                           'dark:text-gray-500': !n.isActive,
                         },
-                      )}>
-
+                      )}
+                    >
                       {n.label}
-
                     </Link>
                   </li>
                 ))}
