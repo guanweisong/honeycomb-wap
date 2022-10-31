@@ -110,9 +110,9 @@ const Comment = (props: CommentProps) => {
 
   return (
     <div>
-      <If condition={comment?.total !== 0}>
-        <Card title={`${comment?.total} 条留言`}>
-          <ul>{renderCommentList(comment?.list)}</ul>
+      <If condition={comment && comment.total !== 0}>
+        <Card title={`${comment.total} 条留言`}>
+          <ul>{renderCommentList(comment.list)}</ul>
         </Card>
       </If>
       <Card title={'发表留言'}>
