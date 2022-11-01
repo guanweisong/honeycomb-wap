@@ -7,6 +7,8 @@ import MenuServer from '@/src/services/menu';
 import SettingServer from '@/src/services/setting';
 import PostList from '@/src/components/PostList';
 import NoData from '@/src/components/NoData';
+import Layout from '@/src/components/Layout';
+import Title from '@/src/components/Title';
 
 export const PAGE_SIZE = 10;
 
@@ -24,6 +26,7 @@ export default async function List(props) {
   } as PostListQuery;
   // @ts-ignore
   let typeName = params?.slug?.pop();
+  let currentMenu;
   switch (type) {
     case 'category':
       // 获取分类ID
@@ -31,6 +34,7 @@ export default async function List(props) {
       if (typeof categoryId !== 'undefined') {
         queryParams = { ...queryParams, category_id: categoryId };
       }
+      currentMenu = categoryId;
       typeName =
         menu.find((item: MenuEntity) => item.category_title_en === typeName)?.category_title || '';
       break;
@@ -64,7 +68,8 @@ export default async function List(props) {
   };
 
   return (
-    <>
+    <Layout currentMenu={currentMenu}>
+      <Title title={getTitle()} />
       <If condition={['tags', 'authors'].includes(type)}>
         <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
       </If>
@@ -76,6 +81,6 @@ export default async function List(props) {
           <NoData title={'该分类暂时没有文章哦！'} />
         </Otherwise>
       </Choose>
-    </>
+    </Layout>
   );
 }

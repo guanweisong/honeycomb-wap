@@ -12,6 +12,8 @@ import Link from 'next/link';
 import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
 import { MenuType } from '@/src/types/menu/MenuType';
+import Layout from '@/src/components/Layout';
+import Title from '@/src/components/Title';
 
 export default async function Archives(props) {
   const { params } = props;
@@ -36,7 +38,8 @@ export default async function Archives(props) {
   };
 
   return (
-    <>
+    <Layout currentMenu={postDetail.post_category._id}>
+      <Title title={getTitle()} />
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
         {getTitle()}
       </h2>
@@ -95,6 +98,6 @@ export default async function Archives(props) {
         </Card>
       </If>
       <Comment id={id} type={MenuType.POST} />
-    </>
+    </Layout>
   );
 }

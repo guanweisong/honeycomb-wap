@@ -7,11 +7,14 @@ import { MenuType } from '@/src/types/menu/MenuType';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 
-export default async function Header() {
+export interface HeaderProps {
+  currentMenu?: string;
+}
+
+export default async function Header(props: HeaderProps) {
+  const { currentMenu } = props;
   const setting = await SettingServer.indexSetting();
   const menu = await MenuServer.indexMenu();
-
-  const currentMenu = undefined;
 
   /**
    * 根据id寻找家族属性集合
@@ -95,7 +98,7 @@ export default async function Header() {
 
   const menuDataFormat = getMenuData();
 
-  console.log('menuData', menuDataFormat);
+  console.log('currentPath', currentPath);
 
   return (
     <div className="relative mb-2 lg:mb-4 h-12 lg:h-20 z-50 border-b dark:border-gray-900">
