@@ -7,8 +7,7 @@ import { MenuType } from '@/src/types/menu/MenuType';
 import Layout from '@/src/components/Layout';
 import Title from '@/src/components/Title';
 
-export default async function Pages(props) {
-  const { params } = props;
+export default async function Pages({ params }: { params: { id: string } }) {
   const { id } = params;
   const pageDetail = await PageServer.indexPageDetail(id);
   const commentsData = await CommentServer.index(id);

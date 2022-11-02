@@ -7,7 +7,7 @@ import CommentServer from '@/src/services/comment';
 import dayjs from 'dayjs';
 import Card from '../Card';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
-import { MenuType } from '@/src/types/menu/MenuType';
+import { MenuType, MenuTypeName } from '@/src/types/menu/MenuType';
 import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 
 export interface CommentProps {
@@ -20,7 +20,7 @@ const Comment = (props: CommentProps) => {
 
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
   const formRef = useRef(null);
-  useUpdateViews({ type, id });
+  useUpdateViews({ type: MenuTypeName[MenuType[type]], id });
   const { data: comment } = useQueryComment(id);
 
   /**

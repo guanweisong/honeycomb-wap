@@ -12,12 +12,10 @@ import Title from '@/src/components/Title';
 
 export const PAGE_SIZE = 10;
 
-export default async function List(props) {
-  const { params } = props;
+export default async function List({ params }: { params: { slug: string } }) {
   const setting = await SettingServer.indexSetting();
   const menu = await MenuServer.indexMenu();
 
-  // 获取列表类型
   const type = typeof params?.slug !== 'undefined' ? params?.slug[0] : undefined;
 
   let queryParams = {
@@ -70,6 +68,7 @@ export default async function List(props) {
   return (
     <Layout currentMenu={currentMenu}>
       <Title title={getTitle()} />
+      {/** @ts-ignore **/}
       <If condition={['tags', 'authors'].includes(type)}>
         <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
       </If>

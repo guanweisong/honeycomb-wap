@@ -1,5 +1,5 @@
 const path = require('path');
-const withLess = require('next-with-less');
+const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(['antd-mobile']);
 
 /**
@@ -24,10 +24,10 @@ const nextConfig = {
     scrollRestoration: true,
     appDir: true,
   },
-  // webpack: (config, options) => {
-  //   config.resolve.alias['@'] = path.join(__dirname, './');
-  //   return config;
-  // },
+  webpack: (config, options) => {
+    config.resolve.alias['@'] = path.join(__dirname, './');
+    return config;
+  },
 };
 
-module.exports = nextConfig;
+module.exports = withPlugins([], nextConfig);

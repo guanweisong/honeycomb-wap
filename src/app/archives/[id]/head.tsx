@@ -2,8 +2,7 @@ import PostServer from '@/src/services/post';
 import { PostType } from '@/src/types/post/PostType';
 import dayjs from 'dayjs';
 
-export default async function Head(props) {
-  const { params } = props;
+export default async function Head({ params }: { params: { id: string } }) {
   const { id } = params;
   const postDetail = await PostServer.indexPostDetail(id);
 

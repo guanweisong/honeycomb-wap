@@ -15,8 +15,7 @@ import { MenuType } from '@/src/types/menu/MenuType';
 import Layout from '@/src/components/Layout';
 import Title from '@/src/components/Title';
 
-export default async function Archives(props) {
-  const { params } = props;
+export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
   const postDetail = await PostServer.indexPostDetail(id);
   const randomPostsList = await PostServer.indexRandomPostByCategoryId({
