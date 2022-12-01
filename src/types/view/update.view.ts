@@ -1,4 +1,6 @@
+import { MenuTypeName } from '@/src/types/menu/MenuType';
+
 export interface UpdateView {
-  type: 'posts' | 'pages';
+  type: MenuTypeName;
   id: string;
 }

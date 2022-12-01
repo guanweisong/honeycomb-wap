@@ -1,7 +1,9 @@
+'use client';
+
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 export interface MenuItem {
   label: React.ReactNode;
@@ -16,12 +18,12 @@ export interface MenuProps {
 
 const Menu = (props: MenuProps) => {
   const { data } = props;
-  const router = useRouter();
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setVisible(false);
-  }, [router.asPath]);
+  }, [pathname]);
 
   const renderItem = (data: MenuItem[]) => {
     return (

@@ -1,12 +1,8 @@
-import { SettingEntity } from '@/src/types/setting/setting.entity';
 import dayjs from 'dayjs';
+import SettingServer from '@/src/services/setting';
 
-export interface FooterProps {
-  setting: SettingEntity;
-}
-
-const Footer = (props: FooterProps) => {
-  const { setting } = props;
+export default async function Footer() {
+  const setting = await SettingServer.indexSetting();
 
   return (
     <div className="text-center py-2 px-2 text-xs text-gray-500 lg:py-4">
@@ -32,6 +28,4 @@ const Footer = (props: FooterProps) => {
       </div>
     </div>
   );
-};
-
-export default Footer;
+}

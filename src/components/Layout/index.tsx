@@ -1,26 +1,21 @@
 import React from 'react';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
-import { SettingEntity } from '@/src/types/setting/setting.entity';
-import { MenuEntity } from '@/src/types/menu/menu.entity';
+import BackToTop from '@/src/components/BackToTop';
 
 export interface LayoutProps {
-  title: string | undefined;
-  menu: MenuEntity[];
-  currentMenu?: string;
-  setting: SettingEntity;
   children: React.ReactNode;
+  currentMenu?: string;
 }
 
-const Layout = (props: LayoutProps) => {
-  const { children, title, setting, menu, currentMenu } = props;
+export default function Layout(props: LayoutProps) {
+  const { children, currentMenu } = props;
   return (
     <div className="min-h-full">
-      <Header title={title} setting={setting} menu={menu} currentMenu={currentMenu} />
+      <Header currentMenu={currentMenu} />
       <div className={'container px-2'}>{children}</div>
-      <Footer setting={setting} />
+      <Footer />
+      <BackToTop />
     </div>
   );
-};
-
-export default Layout;
+}

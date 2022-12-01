@@ -11,7 +11,7 @@ app.prepare().then(() => {
   createServer((req, res) => {
     const parsedUrl = parse(req.url, true);
     const { pathname, query } = parsedUrl;
-    // console.log('parsedUrl', parsedUrl)
+    console.log('parsedUrl', parsedUrl);
     handle(req, res, parsedUrl);
   }).listen(port, (err) => {
     if (err) throw err;

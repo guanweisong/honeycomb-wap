@@ -12,7 +12,7 @@ export default class PostServer {
       url: '/posts',
       method: 'get',
       params: params,
-    }).then((result) => result.list);
+    }).then((result) => result?.list ?? []);
   }
 
   // 获取文章详情
