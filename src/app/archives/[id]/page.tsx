@@ -100,3 +100,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
     </Layout>
   );
 }
+
+export async function generateStaticParams() {
+  return [];
+}

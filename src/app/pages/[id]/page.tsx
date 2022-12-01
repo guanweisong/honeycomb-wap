@@ -34,3 +34,7 @@ export default async function Pages({ params }: { params: { id: string } }) {
     </Layout>
   );
 }
+
+export async function generateStaticParams() {
+  return [];
+}

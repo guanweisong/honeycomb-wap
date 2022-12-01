@@ -23,7 +23,7 @@ export default async function List({ params }: { params: { slug: string } }) {
     limit: PAGE_SIZE,
   } as PostListQuery;
   // @ts-ignore
-  let typeName = params?.slug?.pop();
+  let typeName = decodeURI(params?.slug?.pop());
   let currentMenu;
   switch (type) {
     case 'category':
@@ -68,8 +68,7 @@ export default async function List({ params }: { params: { slug: string } }) {
   return (
     <Layout currentMenu={currentMenu}>
       <Title title={getTitle()} />
-      {/** @ts-ignore **/}
-      <If condition={['tags', 'authors'].includes(type)}>
+      <If condition={['tags', 'authors'].includes(type!)}>
         <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
       </If>
       <Choose>
@@ -82,4 +81,8 @@ export default async function List({ params }: { params: { slug: string } }) {
       </Choose>
     </Layout>
   );
+}
+
+export async function generateStaticParams() {
+  return [];
 }
