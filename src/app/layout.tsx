@@ -3,7 +3,7 @@ import '@/src/assets/markdown.scss';
 import 'antd-mobile/es/global';
 import './app.scss';
 
-export const revalidate = 60 * 10;
+export const revalidate = 60 * 60;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
