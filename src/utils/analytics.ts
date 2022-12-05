@@ -1,8 +1,8 @@
 import ReactGA from 'react-ga';
 
-export const initGA = (id: string) => {
+export const initGA = () => {
   console.log('GA init');
-  ReactGA.initialize(id);
+  ReactGA.initialize('UA-158268354-2');
 };
 
 export const logPageView = () => {
