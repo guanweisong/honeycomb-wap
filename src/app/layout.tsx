@@ -1,10 +1,9 @@
 import React from 'react';
-import GA from '@/src/components/GA';
 import '@/src/assets/markdown.scss';
 import 'antd-mobile/es/global';
 import './app.scss';
 
-export const revalidate = 3600;
+export const revalidate = 60 * 60;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,7 +15,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script src="https://ssl.captcha.qq.com/TCaptcha.js" />
       </head>
       <body>{children}</body>
-      <GA />
     </html>
   );
 }
