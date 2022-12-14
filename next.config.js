@@ -1,13 +1,11 @@
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['antd-mobile']);
 
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
   reactStrictMode: false,
-  // assetPrefix: isProd ? 'https://cdn.guanweisong.com' : '',
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
