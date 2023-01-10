@@ -32,6 +32,6 @@ export default class PostServer {
       url: `/posts/${post_category}/random`,
       method: 'get',
       params: rest,
-    }).then((result) => result.filter((item) => item._id !== post_id));
+    }).then((result) => result?.filter((item) => item._id !== post_id) ?? []);
   }
 }
