@@ -11,10 +11,10 @@ const Tag = (props: PostEntity) => {
           <span>{label}：</span>
           {item.map((n, index) => {
             return (
-              <span key={n._id}>
+              <span key={n.id}>
                 {index !== 0 && '、'}
-                <Link href={`/list/tags/${encodeURI(n.tag_name)}`} className="link-light">
-                  {n.tag_name}
+                <Link href={`/list/tags/${encodeURI(n.name)}`} className="link-light">
+                  {n.name}
                 </Link>
               </span>
             );
@@ -26,10 +26,10 @@ const Tag = (props: PostEntity) => {
 
   return (
     <div className="list-none text-gray-400">
-      {getTags(props.movie_director, '导演')}
-      {getTags(props.movie_actor, '主演')}
-      {getTags(props.movie_style, '风格')}
-      {getTags(props.gallery_style, '风格')}
+      {getTags(props.movieDirectors, '导演')}
+      {getTags(props.movieActors, '主演')}
+      {getTags(props.movieStyles, '风格')}
+      {getTags(props.galleryStyles, '风格')}
     </div>
   );
 };

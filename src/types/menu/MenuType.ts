@@ -1,9 +1,9 @@
 export enum MenuType {
-  POST,
-  PAGE,
+  PAGE = 'PAGE',
+  CATEGORY = 'CATEGORY',
 }
 
 export enum MenuTypeName {
-  POST = 'posts',
-  PAGE = 'pages',
+  PAGE = 'page',
+  CATEGORY = 'post',
 }

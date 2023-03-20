@@ -8,7 +8,7 @@ export default class MenuServer {
     console.log('menu=>service=>indexMenu');
     // @ts-ignore
     return request<string, PaginationResponse<MenuEntity[]>>({
-      url: '/menus',
+      url: '/menu',
       method: 'get',
     }).then((result) => {
       if (result.list) {

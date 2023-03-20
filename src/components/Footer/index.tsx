@@ -6,23 +6,23 @@ export default async function Footer() {
 
   return (
     <div className="text-center py-2 px-2 text-xs text-gray-500 lg:py-4">
-      <div>{setting.site_signature}</div>
+      <div>{setting.siteSignature}</div>
       <div>
-        ©{dayjs().format('YYYY')}&nbsp;{setting.site_copyright}
+        ©{dayjs().format('YYYY')}&nbsp;{setting.siteCopyright}
       </div>
       <div>
-        {setting.site_record_no ? (
-          setting.site_record_url ? (
+        {setting.siteRecordNo ? (
+          setting.siteRecordUrl ? (
             <a
               className="link-light"
-              href={`${setting.site_record_url}`}
+              href={`${setting.siteRecordUrl}`}
               target="_blank"
               rel="nofollow"
             >
-              {setting.site_record_no}
+              {setting.siteRecordNo}
             </a>
           ) : (
-            setting.site_record_no
+            setting.siteRecordNo
           )
         ) : null}
       </div>

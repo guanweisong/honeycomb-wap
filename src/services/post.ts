@@ -9,7 +9,7 @@ export default class PostServer {
   static indexPostList(params: PostListQuery): Promise<PostEntity[]> {
     console.log('category=>service=>indexPostList');
     return request<string, PaginationResponse<PostEntity[]>>({
-      url: '/posts',
+      url: '/post',
       method: 'get',
       params: params,
     }).then((result) => result?.list ?? []);
@@ -19,7 +19,7 @@ export default class PostServer {
   static indexPostDetail(id: string): Promise<PostEntity> {
     console.log('post=>service=>indexPostDetail');
     return request({
-      url: `/posts/${id}`,
+      url: `/post/${id}`,
       method: 'get',
     });
   }
@@ -29,7 +29,7 @@ export default class PostServer {
     console.log('post=>service=>indexRandomPostByCategoryId');
     const { post_category, post_id, ...rest } = params;
     return request<string, PostEntity[]>({
-      url: `/posts/${post_category}/random`,
+      url: `/post/${post_category}/random`,
       method: 'get',
       params: rest,
     }).then((result) => result?.filter((item) => item._id !== post_id) ?? []);

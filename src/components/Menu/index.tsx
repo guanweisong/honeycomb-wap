@@ -36,7 +36,7 @@ const Menu = (props: MenuProps) => {
         {data.map((m) => (
           <li className="lg:relative lg:flex group">
             <Link
-              href={m.link}
+              href={m.link ?? ''}
               className={classNames(
                 'lg:relative leading-10 lg:z-20 px-4 lg:px-6 lg:flex lg:items-center',
                 {
@@ -53,7 +53,7 @@ const Menu = (props: MenuProps) => {
                 {m.children.map((n) => (
                   <li>
                     <Link
-                      href={n.link}
+                      href={n.link ?? ''}
                       className={classNames(
                         'block leading-10 lg:text-center hover:lg:text-pink-500 px-8 lg:px-0',
                         {

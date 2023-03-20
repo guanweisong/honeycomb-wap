@@ -8,7 +8,7 @@ export default class TagServer {
   static indexList(params: TagListQuery): Promise<PaginationResponse<TagEntity[]>> {
     console.log('category=>service=>indexTagList');
     return request({
-      url: '/tags',
+      url: '/tag',
       method: 'get',
       params: params,
     });

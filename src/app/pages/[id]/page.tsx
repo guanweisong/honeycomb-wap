@@ -13,24 +13,23 @@ export default async function Pages({ params }: { params: { id: string } }) {
   const commentsData = await CommentServer.index(id);
 
   return (
-    <Layout currentMenu={pageDetail._id}>
-      <Title title={pageDetail.page_title} />
+    <Layout currentMenu={pageDetail.id}>
+      <Title title={pageDetail.title} />
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
-        {pageDetail.page_title}
+        {pageDetail.title}
       </h2>
       <PostInfo
-        author={pageDetail.page_author.user_name}
-        date={pageDetail.created_at}
+        author={pageDetail.author.name}
+        date={pageDetail.createdAt}
         comments={commentsData?.total}
-        views={pageDetail.page_views}
+        views={pageDetail.views}
         border={'bottom'}
       />
       <div
         className="markdown-body py-3 lg:py-5"
-        // @ts-ignore
-        dangerouslySetInnerHTML={{ __html: pageDetail.page_content }}
+        dangerouslySetInnerHTML={{ __html: pageDetail.content ?? '' }}
       />
-      <Comment id={id} type={MenuType.PAGE} />
+      <Comment id={id} type={MenuType.CATEGORY} />
     </Layout>
   );
 }

@@ -8,7 +8,7 @@ export default class PageServer {
    */
   public static indexPageDetail(id: string): Promise<PageEntity> {
     return request({
-      url: `/pages/${id}`,
+      url: `/page/${id}`,
       method: 'get',
     });
   }

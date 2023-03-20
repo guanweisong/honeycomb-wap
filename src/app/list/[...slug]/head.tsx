@@ -2,7 +2,7 @@ import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 
-export default async function Head(props) {
+export default async function Head(props: any) {
   const { params } = props;
   const setting = await SettingServer.indexSetting();
   const menu = await MenuServer.indexMenu();
@@ -12,8 +12,7 @@ export default async function Head(props) {
   let typeName = params?.slug?.pop();
   switch (type) {
     case 'category':
-      typeName =
-        menu.find((item: MenuEntity) => item.category_title_en === typeName)?.category_title || '';
+      typeName = menu.find((item: MenuEntity) => item.titleEn === typeName)?.title || '';
       break;
   }
 
@@ -30,7 +29,7 @@ export default async function Head(props) {
         title = `作者“${typeName}”下的所有文章`;
         break;
       default:
-        title = `${typeName || '首页'}_${setting.site_name}`;
+        title = `${typeName || '首页'}_${setting.siteName}`;
     }
     return title;
   };

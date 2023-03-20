@@ -19,7 +19,7 @@ export default async function List({ params }: { params: { slug: string } }) {
   const type = typeof params?.slug !== 'undefined' ? params?.slug[0] : undefined;
 
   let queryParams = {
-    post_status: [PostStatus.PUBLISHED],
+    status: [PostStatus.PUBLISHED],
     limit: PAGE_SIZE,
   } as PostListQuery;
   // @ts-ignore
@@ -28,19 +28,18 @@ export default async function List({ params }: { params: { slug: string } }) {
   switch (type) {
     case 'category':
       // 获取分类ID
-      const categoryId = menu.find((item: MenuEntity) => item.category_title_en === typeName)?._id;
+      const categoryId = menu.find((item: MenuEntity) => item.titleEn === typeName)?.id;
       if (typeof categoryId !== 'undefined') {
-        queryParams = { ...queryParams, category_id: categoryId };
+        queryParams = { ...queryParams, categoryId: categoryId };
       }
       currentMenu = categoryId;
-      typeName =
-        menu.find((item: MenuEntity) => item.category_title_en === typeName)?.category_title || '';
+      typeName = menu.find((item: MenuEntity) => item.titleEn === typeName)?.title || '';
       break;
     case 'tags':
-      queryParams = { ...queryParams, tag_name: typeName };
+      queryParams = { ...queryParams, tagName: typeName };
       break;
     case 'authors':
-      queryParams = { ...queryParams, user_name: typeName };
+      queryParams = { ...queryParams, userName: typeName };
       break;
   }
   console.log('queryParams', queryParams);
@@ -60,7 +59,7 @@ export default async function List({ params }: { params: { slug: string } }) {
         title = `作者“${typeName}”下的所有文章`;
         break;
       default:
-        title = `${typeName || '首页'}_${setting.site_name}`;
+        title = `${typeName || '首页'}_${setting.siteName}`;
     }
     return title;
   };

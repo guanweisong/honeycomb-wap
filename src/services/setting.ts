@@ -6,8 +6,8 @@ export default class SettingServer {
   static indexSetting(): Promise<SettingEntity> {
     console.log('setting=>service=>indexSetting');
     return request({
-      url: '/settings',
+      url: '/setting',
       method: 'get',
-    }).then((result) => result[0]);
+    });
   }
 }

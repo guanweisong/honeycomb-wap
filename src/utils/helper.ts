@@ -11,7 +11,7 @@ export default class Helper {
     const idEn = query.secondCategory || query.firstCategory;
     let category_id = '0';
     if (idEn) {
-      category_id = menu.find((item) => item.category_title_en === idEn)?._id || '0';
+      category_id = menu.find((item) => item.titleEn === idEn)?.id || '0';
     }
     return category_id;
   }
@@ -28,16 +28,16 @@ export default class Helper {
     menu: MenuEntity[],
   ) {
     const condition: PostListQuery = {};
-    query.tag_name && (condition.tag_name = query.tag_name);
-    query.user_name && (condition.user_name = query.user_name);
+    query.tagName && (condition.tagName = query.tagName);
+    query.userName && (condition.userName = query.userName);
     const category_id = this.getCategoryIdByParmasAndMenu(query, menu);
     if (category_id !== '0') {
-      condition.category_id = category_id;
+      condition.categoryId = category_id;
     }
     delete query.firstCategory;
     delete query.secondCategory;
     query.asPath = asPath;
-    return { ...condition, post_status: [0], ...query };
+    return { ...condition, status: [0], ...query };
   }
 
   /**

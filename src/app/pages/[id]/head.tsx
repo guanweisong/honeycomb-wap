@@ -6,7 +6,7 @@ export default async function Head({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <title>{pageDetail.page_title}</title>
+      <title>{pageDetail.title}</title>
     </>
   );
 }
