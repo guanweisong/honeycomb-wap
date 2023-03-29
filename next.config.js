@@ -19,7 +19,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    // scrollRestoration: true,
+    scrollRestoration: true,
     appDir: true,
   },
   webpack: (config, options) => {

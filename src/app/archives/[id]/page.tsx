@@ -88,7 +88,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
             {randomPostsList.map((item: any) => (
               <li key={item.id} className="my-2">
                 <Link href={`/archives/${item.id}`} className="block link-light">
-                  {item.post_title || item.quote_content}
+                  {item.title || item.quoteContent}
                 </Link>
               </li>
             ))}

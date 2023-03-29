@@ -27,11 +27,11 @@ export default class PostServer {
   // 获取随机文章列表
   static indexRandomPostByCategoryId(params: PostRandomListQuery): Promise<PostEntity[]> {
     console.log('post=>service=>indexRandomPostByCategoryId');
-    const { post_category, post_id, ...rest } = params;
+    const { postCategory, postId, ...rest } = params;
     return request<string, PostEntity[]>({
-      url: `/post/${post_category}/random`,
+      url: `/post/${postCategory}/random`,
       method: 'get',
       params: rest,
-    }).then((result) => result?.filter((item) => item._id !== post_id) ?? []);
+    }).then((result) => result?.filter((item) => item.id !== postId) ?? []);
   }
 }
