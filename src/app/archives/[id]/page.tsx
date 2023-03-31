@@ -13,7 +13,6 @@ import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
 import { MenuType } from '@/src/types/menu/MenuType';
 import Layout from '@/src/components/Layout';
-import Title from '@/src/components/Title';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -38,7 +37,6 @@ export default async function Archives({ params }: { params: { id: string } }) {
 
   return (
     <Layout currentMenu={postDetail.category.id}>
-      <Title title={getTitle()} />
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
         {getTitle()}
       </h2>
@@ -98,6 +96,31 @@ export default async function Archives({ params }: { params: { id: string } }) {
       <Comment id={id} type={MenuType.CATEGORY} />
     </Layout>
   );
+}
+
+export interface GenerateMetadataProps {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export async function generateMetadata(props: GenerateMetadataProps) {
+  const { id } = props.params;
+  const postDetail = await PostServer.indexPostDetail(id);
+
+  /**
+   * 格式化文章标题
+   */
+  const getTitle = () => {
+    return postDetail.type === PostType.MOVIE
+      ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
+          'YYYY',
+        )})`
+      : postDetail.title;
+  };
+
+  return {
+    title: decodeURI(getTitle() as string),
+  };
 }
 
 export async function generateStaticParams() {

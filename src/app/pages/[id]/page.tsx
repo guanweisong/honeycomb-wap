@@ -5,7 +5,6 @@ import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
 import { MenuType } from '@/src/types/menu/MenuType';
 import Layout from '@/src/components/Layout';
-import Title from '@/src/components/Title';
 
 export default async function Pages({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -14,7 +13,6 @@ export default async function Pages({ params }: { params: { id: string } }) {
 
   return (
     <Layout currentMenu={pageDetail.id}>
-      <Title title={pageDetail.title} />
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
         {pageDetail.title}
       </h2>
@@ -32,6 +30,20 @@ export default async function Pages({ params }: { params: { id: string } }) {
       <Comment id={id} type={MenuType.CATEGORY} />
     </Layout>
   );
+}
+
+export interface GenerateMetadataProps {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export async function generateMetadata(props: GenerateMetadataProps) {
+  const { id } = props.params;
+  const pageDetail = await PageServer.indexPageDetail(id);
+
+  return {
+    title: decodeURI(pageDetail.title as string),
+  };
 }
 
 export async function generateStaticParams() {
