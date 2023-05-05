@@ -12,17 +12,27 @@ import Link from 'next/link';
 import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
 import { MenuType } from '@/src/types/menu/MenuType';
-import Layout from '@/src/components/Layout';
+import { PostEntity } from '@/src/types/post/post.entity';
+import PaginationResponse from '@/src/types/pagination.response';
+import { CommentEntity } from '@/src/types/comment/comment.entity';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
   const postDetail = await PostServer.indexPostDetail(id);
-  const randomPostsList = await PostServer.indexRandomPostByCategoryId({
-    postCategory: postDetail.category.id,
-    postId: id,
-    number: 10,
-  });
-  const commentsData = await CommentServer.index(id);
+
+  const promise = [];
+  promise.push(
+    PostServer.indexRandomPostByCategoryId({
+      postCategory: postDetail.category.id,
+      postId: id,
+      number: 10,
+    }),
+  );
+  promise.push(CommentServer.index(id));
+  const [randomPostsList, commentsData] = (await Promise.all(promise)) as [
+    PostEntity[],
+    PaginationResponse<CommentEntity[]>,
+  ];
 
   /**
    * 格式化文章标题
@@ -32,11 +42,11 @@ export default async function Archives({ params }: { params: { id: string } }) {
       ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
           'YYYY',
         )})`
-      : postDetail.title;
+      : postDetail.title ?? postDetail.quoteContent;
   };
 
   return (
-    <Layout currentMenu={postDetail.category.id}>
+    <>
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
         {getTitle()}
       </h2>
@@ -94,7 +104,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
         </Card>
       </If>
       <Comment id={id} type={MenuType.CATEGORY} />
-    </Layout>
+    </>
   );
 }
 
@@ -115,7 +125,7 @@ export async function generateMetadata(props: GenerateMetadataProps) {
       ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
           'YYYY',
         )})`
-      : postDetail.title;
+      : postDetail.title ?? postDetail.quoteContent;
   };
 
   return {
@@ -123,6 +133,6 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   };
 }
 
-export async function generateStaticParams() {
-  return [];
-}
+// export async function generateStaticParams() {
+//   return [];
+// }

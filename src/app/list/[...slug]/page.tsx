@@ -7,13 +7,15 @@ import MenuServer from '@/src/services/menu';
 import SettingServer from '@/src/services/setting';
 import PostList from '@/src/components/PostList';
 import NoData from '@/src/components/NoData';
-import Layout from '@/src/components/Layout';
+import { SettingEntity } from '@/src/types/setting/setting.entity';
 
 const PAGE_SIZE = 10;
 
 export default async function List({ params }: { params: { slug: string } }) {
-  const setting = await SettingServer.indexSetting();
-  const menu = await MenuServer.indexMenu();
+  const promise = [];
+  promise.push(SettingServer.indexSetting());
+  promise.push(MenuServer.indexMenu());
+  const [setting, menu] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
 
   const type = typeof params?.slug !== 'undefined' ? params?.slug[0] : undefined;
 
@@ -64,7 +66,7 @@ export default async function List({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <Layout currentMenu={currentMenu}>
+    <>
       <If condition={['tags', 'authors'].includes(type!)}>
         <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
       </If>
@@ -76,7 +78,7 @@ export default async function List({ params }: { params: { slug: string } }) {
           <NoData title={'该分类暂时没有文章哦！'} />
         </Otherwise>
       </Choose>
-    </Layout>
+    </>
   );
 }
 
@@ -121,6 +123,6 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   };
 }
 
-export async function generateStaticParams() {
-  return [];
-}
+// export async function generateStaticParams() {
+//   return [];
+// }

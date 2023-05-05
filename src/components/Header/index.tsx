@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { MenuType } from '@/src/types/menu/MenuType';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
+import { SettingEntity } from '@/src/types/setting/setting.entity';
 
 export interface HeaderProps {
   currentMenu?: string;
@@ -13,8 +14,10 @@ export interface HeaderProps {
 
 export default async function Header(props: HeaderProps) {
   const { currentMenu } = props;
-  const setting = await SettingServer.indexSetting();
-  const menu = await MenuServer.indexMenu();
+  const promise = [];
+  promise.push(SettingServer.indexSetting());
+  promise.push(MenuServer.indexMenu());
+  const [setting, menu] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
 
   /**
    * 根据id寻找家族属性集合
