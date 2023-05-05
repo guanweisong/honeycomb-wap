@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { MenuType } from '@/src/types/menu/MenuType';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
+import { SettingEntity } from '@/src/types/setting/setting.entity';
 
 export interface HeaderProps {
   currentMenu?: string;
@@ -13,8 +14,10 @@ export interface HeaderProps {
 
 export default async function Header(props: HeaderProps) {
   const { currentMenu } = props;
-  const setting = await SettingServer.indexSetting();
-  const menu = await MenuServer.indexMenu();
+  const promise = [];
+  promise.push(SettingServer.indexSetting());
+  promise.push(MenuServer.indexMenu());
+  const [setting, menu] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
 
   /**
    * 根据id寻找家族属性集合
@@ -27,10 +30,10 @@ export default async function Header(props: HeaderProps) {
           path.push(data[0][familyProp]);
         } else {
           data.forEach((item) => {
-            if (item._id === id) {
+            if (item.id === id) {
               path.push(item[familyProp]);
               if (item.parent !== '0') {
-                find(data.filter((m) => m._id === item.parent));
+                find(data.filter((m) => m.id === item.parent));
               }
             }
           });
@@ -41,20 +44,20 @@ export default async function Header(props: HeaderProps) {
     return path.reverse();
   };
 
-  const currentPath = getCurrentPath(currentMenu, '_id');
+  const currentPath = getCurrentPath(currentMenu, 'id');
 
   /**
    * 格式化菜单树
    */
   const formatCategorise = () => {
-    const menuData = listToTree(menu, { idKey: '_id', parentKey: 'parent' });
+    const menuData = listToTree(menu, { idKey: 'id', parentKey: 'parent' });
     const result = [
       {
-        category_title: '首页',
-        category_title_en: '',
+        title: '首页',
+        titleEn: '',
         isHome: true,
         children: [],
-        _id: 'home',
+        id: 'home',
       },
     ];
     return [...result, ...menuData];
@@ -69,20 +72,18 @@ export default async function Header(props: HeaderProps) {
     const result: MenuItem[] = [];
     const getItem = (data: MenuEntity) => {
       const item = {
-        isActive: currentPath.includes(data._id) || (currentPath.length === 0 && data.isHome),
+        isActive: currentPath.includes(data.id) || (currentPath.length === 0 && data.isHome),
+        label: data.title,
       } as MenuItem;
       if (data.isHome) {
-        item.label = data.category_title;
         item.link = '/list/category';
       }
       switch (data.type) {
         case MenuType.PAGE:
-          item.label = data.page_title;
-          item.link = `/pages/${data._id}`;
+          item.link = `/pages/${data.id}`;
           break;
-        case MenuType.POST:
-          item.label = data.category_title;
-          item.link = `/list/category/${getCurrentPath(data._id, 'category_title_en').join('/')}`;
+        case MenuType.CATEGORY:
+          item.link = `/list/category/${getCurrentPath(data.id, 'titleEn').join('/')}`;
           break;
       }
       if (data.children?.length) {
@@ -109,7 +110,7 @@ export default async function Header(props: HeaderProps) {
             scroll={false}
             className="text-pink-500 text-xl lg:text-2xl ml-2"
           >
-            {setting.site_name}
+            {setting.siteName}
           </Link>
         </div>
         <div className="h-full flex items-center">

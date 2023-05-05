@@ -1,4 +1,4 @@
 export enum EnableType {
-  DISABLE = 0, // 禁用
-  ENABLE = 1, // 启用
+  DISABLE = 'DISABLE', // 禁用
+  ENABLE = 'ENABLE', // 启用
 }

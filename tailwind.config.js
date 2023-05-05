@@ -7,8 +7,5 @@ module.exports = {
     },
     extend: {},
   },
-  variants: {
-    // container: ['sm', 'md', 'lg', 'xl'],
-  },
   plugins: [],
 };

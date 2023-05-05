@@ -12,73 +12,80 @@ import Link from 'next/link';
 import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
 import { MenuType } from '@/src/types/menu/MenuType';
-import Layout from '@/src/components/Layout';
-import Title from '@/src/components/Title';
+import { PostEntity } from '@/src/types/post/post.entity';
+import PaginationResponse from '@/src/types/pagination.response';
+import { CommentEntity } from '@/src/types/comment/comment.entity';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
   const postDetail = await PostServer.indexPostDetail(id);
-  const randomPostsList = await PostServer.indexRandomPostByCategoryId({
-    post_category: postDetail.post_category._id,
-    post_id: id,
-    number: 10,
-  });
-  const commentsData = await CommentServer.index(id);
+
+  const promise = [];
+  promise.push(
+    PostServer.indexRandomPostByCategoryId({
+      postCategory: postDetail.category.id,
+      postId: id,
+      number: 10,
+    }),
+  );
+  promise.push(CommentServer.index(id));
+  const [randomPostsList, commentsData] = (await Promise.all(promise)) as [
+    PostEntity[],
+    PaginationResponse<CommentEntity[]>,
+  ];
 
   /**
    * 格式化文章标题
    */
   const getTitle = () => {
-    return postDetail.post_type === PostType.MOVIE
-      ? `${postDetail.post_title} ${postDetail.movie_name_en} (${dayjs(
-          postDetail.movie_time,
-        ).format('YYYY')})`
-      : postDetail.post_title;
+    return postDetail.type === PostType.MOVIE
+      ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
+          'YYYY',
+        )})`
+      : postDetail.title ?? postDetail.quoteContent;
   };
 
   return (
-    <Layout currentMenu={postDetail.post_category._id}>
-      <Title title={getTitle()} />
+    <>
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
         {getTitle()}
       </h2>
       <PostInfo
-        author={postDetail.post_author.user_name}
-        date={postDetail.created_at}
+        author={postDetail.author.name}
+        date={postDetail.createdAt}
         comments={commentsData?.total}
-        views={postDetail.post_views}
+        views={postDetail.views}
         border={'bottom'}
       />
       <Choose>
-        <When condition={postDetail.post_type === PostType.QUOTE}>
-          <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quote_content}"`}</div>
+        <When condition={postDetail.type === PostType.QUOTE}>
+          <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quoteContent}"`}</div>
         </When>
         <Otherwise>
           <div
             className="markdown-body py-3 lg:py-5"
-            // @ts-ignore
-            dangerouslySetInnerHTML={{ __html: postDetail.post_content }}
+            dangerouslySetInnerHTML={{ __html: postDetail.content ?? '' }}
           />
         </Otherwise>
       </Choose>
       <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-900">
-        <If condition={postDetail.post_type === PostType.PHOTOGRAPH}>
+        <If condition={postDetail.type === PostType.PHOTOGRAPH}>
           <li className="flex items-center">
             <CameraOutline />
-            {dayjs(postDetail.gallery_time).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
-            {postDetail.gallery_location}
+            {dayjs(postDetail.galleryTime).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
+            {postDetail.galleryLocation}
           </li>
         </If>
-        <If condition={postDetail.post_type === PostType.MOVIE}>
+        <If condition={postDetail.type === PostType.MOVIE}>
           <li className="flex items-center">
             <CalendarOutline />
-            &nbsp; 上映于：{dayjs(postDetail.movie_time).format('YYYY-MM-DD')}
+            &nbsp; 上映于：{dayjs(postDetail.movieTime).format('YYYY-MM-DD')}
           </li>
         </If>
-        <If condition={postDetail.post_type === PostType.QUOTE}>
+        <If condition={postDetail.type === PostType.QUOTE}>
           <li className="flex items-center">
             <ContentOutline />
-            &nbsp; 引用自：{postDetail.quote_author}
+            &nbsp; 引用自：{postDetail.quoteAuthor}
           </li>
         </If>
       </ul>
@@ -87,20 +94,45 @@ export default async function Archives({ params }: { params: { id: string } }) {
         <Card title={'猜你喜欢'}>
           <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
             {randomPostsList.map((item: any) => (
-              <li key={item._id} className="my-2">
-                <Link href={`/archives/${item._id}`} className="block link-light">
-                  {item.post_title || item.quote_content}
+              <li key={item.id} className="my-2">
+                <Link href={`/archives/${item.id}`} className="block link-light">
+                  {item.title || item.quoteContent}
                 </Link>
               </li>
             ))}
           </ul>
         </Card>
       </If>
-      <Comment id={id} type={MenuType.POST} />
-    </Layout>
+      <Comment id={id} type={MenuType.CATEGORY} />
+    </>
   );
 }
 
-export async function generateStaticParams() {
-  return [];
+export interface GenerateMetadataProps {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
+
+export async function generateMetadata(props: GenerateMetadataProps) {
+  const { id } = props.params;
+  const postDetail = await PostServer.indexPostDetail(id);
+
+  /**
+   * 格式化文章标题
+   */
+  const getTitle = () => {
+    return postDetail.type === PostType.MOVIE
+      ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
+          'YYYY',
+        )})`
+      : postDetail.title ?? postDetail.quoteContent;
+  };
+
+  return {
+    title: decodeURI(getTitle() as string),
+  };
+}
+
+// export async function generateStaticParams() {
+//   return [];
+// }

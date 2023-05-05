@@ -1,12 +1,12 @@
 import { PostStatus } from '@/src/types/post/PostStatus';
 
 export interface PostListQuery {
-  category_id?: string;
-  post_status?: PostStatus[];
+  categoryId?: string;
+  status?: PostStatus[];
   page?: number;
   limit?: number;
-  tag_name?: string;
-  user_name?: string;
+  tagName?: string;
+  userName?: string;
   firstCategory?: string;
   secondCategory?: string;
   asPath?: string;

@@ -8,7 +8,7 @@ export default class CommentServer {
   static index(id: string): Promise<PaginationResponse<CommentEntity[]>> {
     console.log('comment=>service=>index');
     return request({
-      url: `/comments/${id}`,
+      url: `/comment/${id}`,
       method: 'get',
     });
   }
@@ -17,7 +17,7 @@ export default class CommentServer {
   static create(params: CommentCreate): Promise<CommentEntity> {
     console.log('comment=>service=>create', params);
     return request({
-      url: '/comments',
+      url: '/comment',
       method: 'post',
       data: params,
     });

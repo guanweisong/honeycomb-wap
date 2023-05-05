@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, FormEvent } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import CommentServer from '@/src/services/comment';
@@ -9,6 +9,7 @@ import Card from '../Card';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { MenuType, MenuTypeName } from '@/src/types/menu/MenuType';
 import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
+import { CommentStatus } from '@/src/types/comment/CommentStatus';
 
 export interface CommentProps {
   id: string;
@@ -59,13 +60,13 @@ const Comment = (props: CommentProps) => {
           },
         };
         if (replyTo !== null) {
-          data = { ...data, comment_parent: replyTo._id };
+          data = { ...data, comment_parent: replyTo.id };
         }
         console.log('handleSubmit', data);
         // @ts-ignore
         const result = await CommentServer.create(data);
 
-        if (result._id) {
+        if (result.id) {
           if (formRef.current) {
             // @ts-ignore
             formRef.current.reset();
@@ -84,22 +85,22 @@ const Comment = (props: CommentProps) => {
   const renderCommentList = (data: CommentEntity[]) => {
     return data?.map((item) => {
       return (
-        <li className="relative" key={item._id}>
+        <li className="relative" key={item.id}>
           <div className="overflow-hidden py-4 border-b border-dashed dark:border-gray-900">
             <div className="float-left w-12 h-12 mr-5">
-              <img src={item.comment_avatar} className="w-full" />
+              <img src={item.avatar} className="w-full" />
             </div>
             <div className="overflow-hidden">
-              <div className="text-pink-500">{item.comment_author}</div>
+              <div className="text-pink-500">{item.author}</div>
               <div className="mt-1 text-gray-500">
                 <Choose>
-                  <When condition={item.comment_status !== 3}>{item.comment_content}</When>
+                  <When condition={item.status !== CommentStatus.BAN}>{item.content}</When>
                   <Otherwise>该条评论已屏蔽</Otherwise>
                 </Choose>
               </div>
             </div>
             <div className="absolute right-2 top-4">
-              <span className="text-gray-400">{dayjs(item.created_at).format('YYYY-MM-DD')}</span>
+              <span className="text-gray-400">{dayjs(item.createdAt).format('YYYY-MM-DD')}</span>
               <span className="text-gray-400 mx-1">/</span>
               <a className="text-pink-500" onClick={() => handleReply(item)}>
                 Reply
@@ -126,7 +127,7 @@ const Comment = (props: CommentProps) => {
           <If condition={!!replyTo}>
             <div className="leading-10">
               <span className="text-pink-500">Reply to:</span>
-              <span className="mx-2">{replyTo?.comment_author}</span>
+              <span className="mx-2">{replyTo?.author}</span>
               <a
                 className="text-gray-400 transition-all hover:text-gray-500"
                 onClick={() => handleReply(null)}
