@@ -67,17 +67,14 @@ export default async function List({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <If condition={['tags', 'authors'].includes(type!)}>
+      {['tags', 'authors'].includes(type!) && (
         <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base dark:text-gray-400">{getTitle()}</div>
-      </If>
-      <Choose>
-        <When condition={postList.length > 0}>
-          <PostList initData={postList} pageSize={PAGE_SIZE} queryParams={queryParams} />
-        </When>
-        <Otherwise>
-          <NoData title={'该分类暂时没有文章哦！'} />
-        </Otherwise>
-      </Choose>
+      )}
+      {postList.length > 0 ? (
+        <PostList initData={postList} pageSize={PAGE_SIZE} queryParams={queryParams} />
+      ) : (
+        <NoData title={'该分类暂时没有文章哦！'} />
+      )}
     </>
   );
 }

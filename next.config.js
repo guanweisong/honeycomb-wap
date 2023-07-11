@@ -1,5 +1,4 @@
 const path = require('path');
-const withPlugins = require('next-compose-plugins');
 
 /**
  * @type {import('next').NextConfig}
@@ -28,4 +27,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins([], nextConfig);
+module.exports = nextConfig;

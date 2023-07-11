@@ -14,7 +14,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="viewport" content="width=device-width" />
         <link rel="shortcut icon" href="/static/images/favicon.ico" />
-        <link rel="stylesheet" type="text/css" href="/static/stylesheets/nprogress.css" />
         <script src="https://ssl.captcha.qq.com/TCaptcha.js" />
       </head>
       <body>

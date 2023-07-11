@@ -24,6 +24,7 @@ export default function PostList(props: PostListProps) {
   const { data, size, setSize } = useQueryPostList(queryParams, initData);
 
   const postList = data.flat();
+  // @ts-ignore
   const isEnd = data[data.length - 1]?.length < pageSize;
   const isLoadingMore = typeof data[size - 1] === 'undefined';
 
@@ -47,9 +48,7 @@ export default function PostList(props: PostListProps) {
     return (
       <Link href={`/archives/${item.id}`} key={item.id} legacyBehavior>
         <div className="mt-4 first:mt-0">
-          <If
-            condition={[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(item.type)}
-          >
+          {[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(item.type) && (
             <div>
               <Link href={`/archives/${item.id}`}>
                 <img
@@ -59,24 +58,22 @@ export default function PostList(props: PostListProps) {
                 />
               </Link>
             </div>
-          </If>
+          )}
           <Link
             href={`/archives/${item.id}`}
             className="p-2 lg:p-4 text-center block text-base lg:text-lg dark:text-gray-400"
           >
-            <If condition={item.type === PostType.MOVIE}>
+            {item.type === PostType.MOVIE && (
               <>
                 {item.title} {item.movieNameEn} ({dayjs(item.movieTime).format('YYYY')})
               </>
-            </If>
-            <If condition={[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.type)}>
-              {item.title}
-            </If>
-            <If condition={item.type === PostType.QUOTE}>
+            )}
+            {[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.type) && <>{item.title}</>}
+            {item.type === PostType.QUOTE && (
               <>
                 “{item.quoteContent}” —— {item.quoteAuthor}
               </>
-            </If>
+            )}
           </Link>
           <PostInfo
             author={item.author.name}

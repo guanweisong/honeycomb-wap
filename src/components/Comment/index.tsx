@@ -93,10 +93,7 @@ const Comment = (props: CommentProps) => {
             <div className="overflow-hidden">
               <div className="text-pink-500">{item.author}</div>
               <div className="mt-1 text-gray-500">
-                <Choose>
-                  <When condition={item.status !== CommentStatus.BAN}>{item.content}</When>
-                  <Otherwise>该条评论已屏蔽</Otherwise>
-                </Choose>
+                {item.status !== CommentStatus.BAN ? item.content : '该条评论已屏蔽'}
               </div>
             </div>
             <div className="absolute right-2 top-4">
@@ -107,9 +104,9 @@ const Comment = (props: CommentProps) => {
               </a>
             </div>
           </div>
-          <If condition={item.children.length > 0}>
+          {item.children.length > 0 && (
             <ul className="ml-10">{renderCommentList(item.children)}</ul>
-          </If>
+          )}
         </li>
       );
     });
@@ -117,14 +114,14 @@ const Comment = (props: CommentProps) => {
 
   return (
     <div>
-      <If condition={comment && comment.total !== 0}>
+      {comment && comment.total !== 0 && (
         <Card title={`${comment.total} 条留言`}>
           <ul>{renderCommentList(comment.list)}</ul>
         </Card>
-      </If>
+      )}
       <Card title={'发表留言'}>
         <>
-          <If condition={!!replyTo}>
+          {!!replyTo && (
             <div className="leading-10">
               <span className="text-pink-500">Reply to:</span>
               <span className="mx-2">{replyTo?.author}</span>
@@ -135,7 +132,7 @@ const Comment = (props: CommentProps) => {
                 [取消]
               </a>
             </div>
-          </If>
+          )}
           <form onSubmit={handleSubmit} ref={formRef}>
             <input
               className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"

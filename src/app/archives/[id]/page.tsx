@@ -3,8 +3,6 @@ import PostServer from '@/src/services/post';
 import { PostType } from '@/src/types/post/PostType';
 import dayjs from 'dayjs';
 import PostInfo from '@/src/components/PostInfo';
-// @ts-ignore
-import { Choose, If, Otherwise, When } from 'babel-plugin-jsx-control-statements';
 import { CalendarOutline, CameraOutline, ContentOutline } from 'antd-mobile-icons';
 import Tags from '@/src/components/Tags';
 import Card from '@/src/components/Card';
@@ -57,40 +55,37 @@ export default async function Archives({ params }: { params: { id: string } }) {
         views={postDetail.views}
         border={'bottom'}
       />
-      <Choose>
-        <When condition={postDetail.type === PostType.QUOTE}>
-          <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quoteContent}"`}</div>
-        </When>
-        <Otherwise>
-          <div
-            className="markdown-body py-3 lg:py-5"
-            dangerouslySetInnerHTML={{ __html: postDetail.content ?? '' }}
-          />
-        </Otherwise>
-      </Choose>
+      {postDetail.type === PostType.QUOTE ? (
+        <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quoteContent}"`}</div>
+      ) : (
+        <div
+          className="markdown-body py-3 lg:py-5"
+          dangerouslySetInnerHTML={{ __html: postDetail.content ?? '' }}
+        />
+      )}
       <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-900">
-        <If condition={postDetail.type === PostType.PHOTOGRAPH}>
+        {postDetail.type === PostType.PHOTOGRAPH && (
           <li className="flex items-center">
             <CameraOutline />
             {dayjs(postDetail.galleryTime).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
             {postDetail.galleryLocation}
           </li>
-        </If>
-        <If condition={postDetail.type === PostType.MOVIE}>
+        )}
+        {postDetail.type === PostType.MOVIE && (
           <li className="flex items-center">
             <CalendarOutline />
             &nbsp; 上映于：{dayjs(postDetail.movieTime).format('YYYY-MM-DD')}
           </li>
-        </If>
-        <If condition={postDetail.type === PostType.QUOTE}>
+        )}
+        {postDetail.type === PostType.QUOTE && (
           <li className="flex items-center">
             <ContentOutline />
             &nbsp; 引用自：{postDetail.quoteAuthor}
           </li>
-        </If>
+        )}
       </ul>
       <Tags {...postDetail} />
-      <If condition={randomPostsList.length > 0}>
+      {randomPostsList.length > 0 && (
         <Card title={'猜你喜欢'}>
           <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
             {randomPostsList.map((item: any) => (
@@ -102,7 +97,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
             ))}
           </ul>
         </Card>
-      </If>
+      )}
       <Comment id={id} type={MenuType.CATEGORY} />
     </>
   );
