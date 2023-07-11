@@ -68,7 +68,7 @@ export default async function List({ params }: { params: { slug: string } }) {
   return (
     <>
       <If condition={['tags', 'authors'].includes(type!)}>
-        <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base">{getTitle()}</div>
+        <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base dark:text-gray-400">{getTitle()}</div>
       </If>
       <Choose>
         <When condition={postList.length > 0}>
