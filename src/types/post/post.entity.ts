@@ -8,6 +8,7 @@ export interface PostEntity {
   title?: string;
   content?: string;
   excerpt?: string;
+  categoryId: string;
   category: {
     id: string;
     title: string;

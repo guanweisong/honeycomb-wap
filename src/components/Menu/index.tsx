@@ -3,27 +3,59 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSelectedLayoutSegments, useSelectedLayoutSegment } from 'next/navigation';
+import PostServer from '@/src/services/post';
+import { MenuEntity } from '@/src/types/menu/menu.entity';
+import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 
 export interface MenuItem {
   label: React.ReactNode;
   link: string;
-  isActive: boolean;
   children?: MenuItem[];
 }
 
 export interface MenuProps {
   data: MenuItem[];
+  flatMenuData: MenuEntity[];
 }
 
 const Menu = (props: MenuProps) => {
-  const { data } = props;
+  const { data, flatMenuData } = props;
   const [visible, setVisible] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState<string[]>([]);
+
   const pathname = usePathname();
+  const segments = useSelectedLayoutSegments();
 
   useEffect(() => {
     setVisible(false);
+    judgeCurrentMenu();
   }, [pathname]);
+
+  /**
+   * 计算当前菜单值
+   */
+  const judgeCurrentMenu = async () => {
+    let allCategoryPath = `/${segments.join('/')}`;
+    switch (segments[0]) {
+      case 'archives':
+        const postDetail = await PostServer.indexPostDetail(segments[1]);
+        allCategoryPath = `/list/category/${getCurrentPathOfMenu({
+          id: postDetail.categoryId,
+          familyProp: 'titleEn',
+          menu: flatMenuData,
+        }).join('/')}`;
+        setCurrentCategory([allCategoryPath.split('/').slice(0, 4).join('/'), allCategoryPath]);
+        break;
+      case 'list':
+        setCurrentCategory([allCategoryPath.split('/').slice(0, 4).join('/'), allCategoryPath]);
+        break;
+      case 'pages':
+        setCurrentCategory([allCategoryPath]);
+        break;
+      default:
+    }
+  };
 
   const renderItem = (data: MenuItem[]) => {
     return (
@@ -40,9 +72,9 @@ const Menu = (props: MenuProps) => {
               className={classNames(
                 'lg:relative leading-10 lg:z-20 px-4 lg:px-6 lg:flex lg:items-center',
                 {
-                  'lg:bg-pink-500 text-pink-500 lg:text-white': m.isActive,
+                  'lg:bg-pink-500 text-pink-500 lg:text-white': m.link === currentCategory[0],
                   'lg:bg-white dark:lg:bg-gray-800 dark:text-gray-500 group-hover:lg:text-pink-500 group-hover:lg:bg-gray-100 dark:group-hover:lg:bg-gray-900':
-                    !m.isActive,
+                    m.link !== currentCategory[0],
                 },
               )}
             >
@@ -57,8 +89,8 @@ const Menu = (props: MenuProps) => {
                       className={classNames(
                         'block leading-10 lg:text-center hover:lg:text-pink-500 px-8 lg:px-0',
                         {
-                          'text-pink-500': n.isActive,
-                          'dark:text-gray-500': !n.isActive,
+                          'text-pink-500': n.link === currentCategory[1],
+                          'dark:text-gray-500': n.link !== currentCategory[1],
                         },
                       )}
                     >

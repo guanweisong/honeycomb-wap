@@ -7,44 +7,13 @@ import { MenuType } from '@/src/types/menu/MenuType';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 import { SettingEntity } from '@/src/types/setting/setting.entity';
+import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 
-export interface HeaderProps {
-  currentMenu?: string;
-}
-
-export default async function Header(props: HeaderProps) {
-  const { currentMenu } = props;
+export default async function Header() {
   const promise = [];
   promise.push(SettingServer.indexSetting());
   promise.push(MenuServer.indexMenu());
   const [setting, menu] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
-
-  /**
-   * 根据id寻找家族属性集合
-   */
-  const getCurrentPath = (id: string | undefined, familyProp: string) => {
-    const path = [] as string[];
-    if (id) {
-      const find = (data: MenuEntity[]) => {
-        if (data.length === 1) {
-          path.push(data[0][familyProp]);
-        } else {
-          data.forEach((item) => {
-            if (item.id === id) {
-              path.push(item[familyProp]);
-              if (item.parent !== '0') {
-                find(data.filter((m) => m.id === item.parent));
-              }
-            }
-          });
-        }
-      };
-      find(menu);
-    }
-    return path.reverse();
-  };
-
-  const currentPath = getCurrentPath(currentMenu, 'id');
 
   /**
    * 格式化菜单树
@@ -72,7 +41,6 @@ export default async function Header(props: HeaderProps) {
     const result: MenuItem[] = [];
     const getItem = (data: MenuEntity) => {
       const item = {
-        isActive: currentPath.includes(data.id) || (currentPath.length === 0 && data.isHome),
         label: data.title,
       } as MenuItem;
       if (data.isHome) {
@@ -83,7 +51,11 @@ export default async function Header(props: HeaderProps) {
           item.link = `/pages/${data.id}`;
           break;
         case MenuType.CATEGORY:
-          item.link = `/list/category/${getCurrentPath(data.id, 'titleEn').join('/')}`;
+          item.link = `/list/category/${getCurrentPathOfMenu({
+            id: data.id,
+            familyProp: 'titleEn',
+            menu,
+          }).join('/')}`;
           break;
       }
       if (data.children?.length) {
@@ -99,8 +71,6 @@ export default async function Header(props: HeaderProps) {
 
   const menuDataFormat = getMenuData();
 
-  console.log('currentPath', currentPath);
-
   return (
     <div className="relative mb-2 lg:mb-4 h-12 lg:h-20 z-50 border-b dark:border-gray-900">
       <div className="container relative box-border h-full flex justify-between items-center">
@@ -114,7 +84,7 @@ export default async function Header(props: HeaderProps) {
           </Link>
         </div>
         <div className="h-full flex items-center">
-          <Menu data={menuDataFormat} />
+          <Menu data={menuDataFormat} flatMenuData={menu} />
         </div>
       </div>
     </div>
