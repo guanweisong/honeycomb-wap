@@ -25,6 +25,15 @@ export default class PostServer {
     });
   });
 
+  // 获取文章分类ID
+  static indexPostCategoryId = cache((id: string): Promise<{ categoryId: string }> => {
+    console.log('post=>service=>indexPostDetail');
+    return request({
+      url: `/post/${id}/categoryId`,
+      method: 'get',
+    });
+  });
+
   // 获取随机文章列表
   static indexRandomPostByCategoryId = cache(
     (params: PostRandomListQuery): Promise<PostEntity[]> => {

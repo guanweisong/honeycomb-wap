@@ -39,7 +39,7 @@ const Menu = (props: MenuProps) => {
     let allCategoryPath = `/${segments.join('/')}`;
     switch (segments[0]) {
       case 'archives':
-        const postDetail = await PostServer.indexPostDetail(segments[1]);
+        const postDetail = await PostServer.indexPostCategoryId(segments[1]);
         allCategoryPath = `/list/category/${getCurrentPathOfMenu({
           id: postDetail.categoryId,
           familyProp: 'titleEn',
