@@ -15,7 +15,7 @@ const MarkDown = (props: MarkDownProps) => {
       children={children}
       components={{
         img(props) {
-          const currentMedia = imagesInContent.find((item) => `//${item.url}` === props.src);
+          const currentMedia = imagesInContent.find((item) => item.url === props.src);
           return (
             <Image
               src={`https:${props.src!}`}
