@@ -52,7 +52,7 @@ export default function PostList(props: PostListProps) {
           {[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(item.type) && (
             <Link href={`/archives/${item.id}`}>
               <Image
-                src={`https://${item.cover?.url}`}
+                src={item.cover?.url ?? ''}
                 width={item.cover?.width}
                 height={item.cover?.height}
                 alt={item.title ?? ''}
