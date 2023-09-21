@@ -7,6 +7,7 @@ import { MenuType } from '@/src/types/menu/MenuType';
 import { PageEntity } from '@/src/types/page/page.entity';
 import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
+import Markdown from '@/src/components/Markdown';
 
 export default async function Pages({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -31,10 +32,9 @@ export default async function Pages({ params }: { params: { id: string } }) {
         views={pageDetail.views}
         border={'bottom'}
       />
-      <div
-        className="markdown-body py-3 lg:py-5"
-        dangerouslySetInnerHTML={{ __html: pageDetail.content ?? '' }}
-      />
+      <div className="markdown-body py-3 lg:py-5">
+        <Markdown children={pageDetail.content} imagesInContent={pageDetail.imagesInContent} />
+      </div>
       <Comment id={id} type={MenuType.CATEGORY} />
     </>
   );

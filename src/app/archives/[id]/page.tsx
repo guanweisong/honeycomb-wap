@@ -13,6 +13,7 @@ import { MenuType } from '@/src/types/menu/MenuType';
 import { PostEntity } from '@/src/types/post/post.entity';
 import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
+import Markdown from '@/src/components/Markdown';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -58,10 +59,9 @@ export default async function Archives({ params }: { params: { id: string } }) {
       {postDetail.type === PostType.QUOTE ? (
         <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quoteContent}"`}</div>
       ) : (
-        <div
-          className="markdown-body py-3 lg:py-5"
-          dangerouslySetInnerHTML={{ __html: postDetail.content ?? '' }}
-        />
+        <div className="markdown-body py-3 lg:py-5">
+          <Markdown children={postDetail.content} imagesInContent={postDetail.imagesInContent} />
+        </div>
       )}
       <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-900">
         {postDetail.type === PostType.PHOTOGRAPH && (

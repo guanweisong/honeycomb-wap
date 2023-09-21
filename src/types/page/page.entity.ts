@@ -1,5 +1,6 @@
 import { PageStatus } from '@/src/types/page/PageStatus';
 import { EnableType } from '@/src/types/EnableType';
+import { MediaEntity } from '@/src/types/media/media.entity';
 
 export interface PageEntity {
   id: string;
@@ -15,4 +16,5 @@ export interface PageEntity {
   commentStatus: EnableType;
   views: number;
   commentCount: number;
+  imagesInContent: MediaEntity[];
 }

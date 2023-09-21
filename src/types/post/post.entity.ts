@@ -2,6 +2,7 @@ import { TagEntity } from '../tag/tag.entity';
 import { PostStatus } from '@/src/types/post/PostStatus';
 import { PostType } from '@/src/types/post/PostType';
 import { EnableType } from '@/src/types/EnableType';
+import { MediaEntity } from '@/src/types/media/media.entity';
 
 export interface PostEntity {
   id: string;
@@ -40,4 +41,5 @@ export interface PostEntity {
   quoteAuthor?: string;
   quoteContent?: string;
   commentCount: number;
+  imagesInContent: MediaEntity[];
 }

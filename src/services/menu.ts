@@ -12,7 +12,7 @@ export default class MenuServer {
       url: '/menu',
       method: 'get',
     }).then((result) => {
-      if (result.list) {
+      if (result?.list) {
         return result.list.map((item) => ({
           ...item,
           parent: item.parent ?? '0',
