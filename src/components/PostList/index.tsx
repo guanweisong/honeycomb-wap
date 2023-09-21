@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { PostEntity } from '@/src/types/post/post.entity';
 import useQueryPostList from '@/src/hooks/swr/post/use.query.post.list';
 import { PostListQuery } from '@/src/types/post/post.list.query';
@@ -49,15 +50,14 @@ export default function PostList(props: PostListProps) {
       <Link href={`/archives/${item.id}`} key={item.id} legacyBehavior>
         <div className="mt-4 first:mt-0">
           {[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(item.type) && (
-            <div>
-              <Link href={`/archives/${item.id}`}>
-                <img
-                  className="w-full"
-                  src={`//${item.cover?.url}?imageMogr2/thumbnail/1280x`}
-                  loading={'lazy'}
-                />
-              </Link>
-            </div>
+            <Link href={`/archives/${item.id}`}>
+              <Image
+                src={`https://${item.cover?.url}`}
+                width={item.cover?.width}
+                height={item.cover?.height}
+                alt={item.title ?? ''}
+              />
+            </Link>
           )}
           <Link
             href={`/archives/${item.id}`}

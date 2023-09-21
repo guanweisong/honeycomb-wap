@@ -17,9 +17,8 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  experimental: {
-    scrollRestoration: true,
-    appDir: true,
+  images: {
+    domains: ['honeycomb-1257715480.cos.ap-shanghai.myqcloud.com'],
   },
   webpack: (config, options) => {
     config.resolve.alias['@'] = path.join(__dirname, './');

@@ -26,6 +26,8 @@ export interface PostEntity {
   cover?: {
     id: string;
     url: string;
+    width?: number;
+    height?: number;
   };
   movieTime?: string;
   movieNameEn?: string;
