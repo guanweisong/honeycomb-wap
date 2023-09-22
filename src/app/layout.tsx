@@ -18,10 +18,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div className="min-h-full">
-          {/** @ts-ignore **/}
           <Header />
           <div className={'container px-2'}>{children}</div>
-          {/** @ts-ignore **/}
           <Footer />
           <BackToTop />
         </div>
