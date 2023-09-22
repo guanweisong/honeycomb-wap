@@ -1,4 +1,5 @@
 import React from 'react';
+import Script from 'next/script';
 import '@/src/assets/markdown.scss';
 import 'antd-mobile/es/global';
 import './app.scss';
@@ -14,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="viewport" content="width=device-width" />
         <link rel="shortcut icon" href="/static/images/favicon.ico" />
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js" />
+        <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="lazyOnload" />
       </head>
       <body>
         <div className="min-h-full">
