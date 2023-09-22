@@ -8,6 +8,7 @@
     "analyze": "cross-env ANALYZE=1 next build"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.0.2",
     "ahooks": "^3.7.4",
     "antd-mobile": "^5.27.0",
     "antd-mobile-icons": "^0.3.0",
