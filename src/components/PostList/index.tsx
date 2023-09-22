@@ -56,6 +56,7 @@ export default function PostList(props: PostListProps) {
                 width={item.cover?.width}
                 height={item.cover?.height}
                 alt={item.title ?? ''}
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 100vw, 33vw"
               />
             </Link>
           )}

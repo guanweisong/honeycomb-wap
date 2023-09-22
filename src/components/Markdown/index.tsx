@@ -22,6 +22,7 @@ const MarkDown = (props: MarkDownProps) => {
               alt={currentMedia?.name!}
               width={currentMedia?.width}
               height={currentMedia?.height}
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 100vw, 33vw"
             />
           );
         },
