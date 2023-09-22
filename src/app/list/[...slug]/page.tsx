@@ -115,8 +115,19 @@ export async function generateMetadata(props: GenerateMetadataProps) {
     return decodeURI(title);
   };
 
+  const title = getTitle();
+
+  const openGraph = {
+    title: title,
+    type: 'website',
+    images: ['/static/images/favicon.ico'],
+    description: setting.siteSubName,
+  };
+
   return {
-    title: getTitle(),
+    title,
+    description: setting.siteSubName,
+    openGraph,
   };
 }
 

@@ -123,8 +123,17 @@ export async function generateMetadata(props: GenerateMetadataProps) {
       : postDetail.title ?? postDetail.quoteContent;
   };
 
+  const title = decodeURI(getTitle() as string);
+
+  const openGraph = {
+    title: title,
+    type: 'article',
+    images: postDetail.imagesInContent.map((item) => item.url),
+  };
+
   return {
-    title: decodeURI(getTitle() as string),
+    title,
+    openGraph,
   };
 }
 

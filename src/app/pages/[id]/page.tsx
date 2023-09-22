@@ -49,8 +49,17 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   const { id } = props.params;
   const pageDetail = await PageServer.indexPageDetail(id);
 
+  const title = decodeURI(pageDetail.title as string);
+
+  const openGraph = {
+    title: title,
+    type: 'article',
+    images: pageDetail.imagesInContent.map((item) => item.url),
+  };
+
   return {
-    title: decodeURI(pageDetail.title as string),
+    title,
+    openGraph,
   };
 }
 
