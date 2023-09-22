@@ -4,6 +4,9 @@ const path = require('path');
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  experimental: {
+    typedRoutes: true,
+  },
   reactStrictMode: false,
   eslint: {
     // Warning: This allows production builds to successfully complete even if
