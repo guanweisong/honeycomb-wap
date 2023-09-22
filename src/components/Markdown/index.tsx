@@ -8,7 +8,7 @@ export interface MarkDownProps {
   imagesInContent?: MediaEntity[];
 }
 
-const MarkDown = (props: MarkDownProps) => {
+const Markdown = (props: MarkDownProps) => {
   const { children = '', imagesInContent = [] } = props;
   return (
     <ReactMarkdown
@@ -31,4 +31,4 @@ const MarkDown = (props: MarkDownProps) => {
   );
 };
 
-export default MarkDown;
+export default Markdown;
