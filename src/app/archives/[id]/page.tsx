@@ -14,6 +14,7 @@ import { PostEntity } from '@/src/types/post/post.entity';
 import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Markdown from '@/src/components/Markdown';
+import SettingServer from '@/src/services/setting';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -110,6 +111,7 @@ export interface GenerateMetadataProps {
 
 export async function generateMetadata(props: GenerateMetadataProps) {
   const { id } = props.params;
+  const setting = await SettingServer.indexSetting();
   const postDetail = await PostServer.indexPostDetail(id);
 
   /**
@@ -129,10 +131,12 @@ export async function generateMetadata(props: GenerateMetadataProps) {
     title: title,
     type: 'article',
     images: postDetail.imagesInContent.map((item) => item.url),
+    description: setting.siteName,
   };
 
   return {
     title,
+    description: setting.siteName,
     openGraph,
   };
 }

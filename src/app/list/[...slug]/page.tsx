@@ -60,7 +60,11 @@ export default async function List({ params }: { params: { slug: string } }) {
         title = `作者“${typeName}”下的所有文章`;
         break;
       default:
-        title = `${typeName || '首页'}_${setting.siteName}`;
+        if (typeName) {
+          title = `${typeName}_${setting.siteName}`;
+        } else {
+          title = setting.siteName;
+        }
     }
     return title;
   };
@@ -110,7 +114,11 @@ export async function generateMetadata(props: GenerateMetadataProps) {
         title = `作者“${typeName}”下的所有文章`;
         break;
       default:
-        title = `${typeName || '首页'}_${setting.siteName}`;
+        if (typeName) {
+          title = `${typeName}_${setting.siteName}`;
+        } else {
+          title = setting.siteName;
+        }
     }
     return decodeURI(title);
   };
@@ -120,7 +128,7 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   const openGraph = {
     title: title,
     type: 'website',
-    images: ['/static/images/favicon.ico'],
+    images: ['/static/images/logo.png'],
     description: setting.siteSubName,
   };
 

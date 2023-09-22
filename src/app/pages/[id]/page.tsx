@@ -8,6 +8,7 @@ import { PageEntity } from '@/src/types/page/page.entity';
 import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Markdown from '@/src/components/Markdown';
+import SettingServer from '@/src/services/setting';
 
 export default async function Pages({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -47,6 +48,7 @@ export interface GenerateMetadataProps {
 
 export async function generateMetadata(props: GenerateMetadataProps) {
   const { id } = props.params;
+  const setting = await SettingServer.indexSetting();
   const pageDetail = await PageServer.indexPageDetail(id);
 
   const title = decodeURI(pageDetail.title as string);
@@ -54,11 +56,13 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   const openGraph = {
     title: title,
     type: 'article',
+    description: setting.siteName,
     images: pageDetail.imagesInContent.map((item) => item.url),
   };
 
   return {
     title,
+    description: setting.siteName,
     openGraph,
   };
 }
