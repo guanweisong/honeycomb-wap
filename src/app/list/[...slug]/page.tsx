@@ -25,7 +25,6 @@ export default async function List({ params }: { params: { slug: string } }) {
   } as PostListQuery;
   // @ts-ignore
   let typeName = decodeURI(params?.slug?.pop());
-  let currentMenu;
   switch (type) {
     case 'category':
       // 获取分类ID
@@ -33,7 +32,6 @@ export default async function List({ params }: { params: { slug: string } }) {
       if (typeof categoryId !== 'undefined') {
         queryParams = { ...queryParams, categoryId: categoryId };
       }
-      currentMenu = categoryId;
       typeName = menu.find((item: MenuEntity) => item.titleEn === typeName)?.title || '';
       break;
     case 'tags':
