@@ -23,6 +23,15 @@ const nextConfig = {
   images: {
     domains: ['honeycomb-1257715480.cos.ap-shanghai.myqcloud.com'],
   },
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === 'production'
+        ? {
+            exclude: ['error'],
+          }
+        : false,
+  },
+  poweredByHeader: false,
   webpack: (config, options) => {
     config.resolve.alias['@'] = path.join(__dirname, './');
     return config;

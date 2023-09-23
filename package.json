@@ -28,7 +28,7 @@
     "@types/classnames": "^2.3.1",
     "@types/next": "^9.0.0",
     "@types/node": "^18.11.18",
-    "@types/react": "^18.2.14",
+    "@types/react": "^18.2.22",
     "@umijs/fabric": "^3.0.0",
     "cross-env": "^7.0.3",
     "postcss": "^8.4.20",
