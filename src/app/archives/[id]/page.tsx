@@ -61,6 +61,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
         <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quoteContent}"`}</div>
       ) : (
         <div className="markdown-body py-3 lg:py-5">
+          <div className="mb-2 p-2 bg-black/5 dark:bg-black/10">{postDetail.excerpt}</div>
           <Markdown children={postDetail.content} imagesInContent={postDetail.imagesInContent} />
         </div>
       )}
