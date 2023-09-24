@@ -1,8 +1,8 @@
 import { ClockCircleOutline, EyeOutline, MessageOutline, UserOutline } from 'antd-mobile-icons';
 import Link from 'next/link';
-import dayjs from 'dayjs';
 import React from 'react';
 import classNames from 'classnames';
+import { utcFormat } from '@/src/utils/utcFormat';
 
 export interface PostInfoProps {
   author?: string;
@@ -30,7 +30,7 @@ const PostInfo = (props: PostInfoProps) => {
   if (typeof date !== 'undefined') {
     data.push({
       icon: <ClockCircleOutline />,
-      content: dayjs(date).format('YYYY-MM-DD'),
+      content: utcFormat(date),
     });
   }
 

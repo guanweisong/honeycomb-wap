@@ -4,12 +4,12 @@ import React, { FormEvent, useRef, useState } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import CommentServer from '@/src/services/comment';
-import dayjs from 'dayjs';
 import Card from '../Card';
 import useQueryComment from '@/src/hooks/swr/comment/use.query.comment';
 import { MenuType, MenuTypeName } from '@/src/types/menu/MenuType';
 import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 import { CommentStatus } from '@/src/types/comment/CommentStatus';
+import { utcFormat } from '@/src/utils/utcFormat';
 
 export interface CommentProps {
   id: string;
@@ -97,7 +97,7 @@ const Comment = (props: CommentProps) => {
               </div>
             </div>
             <div className="absolute right-2 top-4">
-              <span className="text-gray-400">{dayjs(item.createdAt).format('YYYY-MM-DD')}</span>
+              <span className="text-gray-400">{utcFormat(item.createdAt)}</span>
               <span className="text-gray-400 mx-1">/</span>
               <a className="text-pink-500" onClick={() => handleReply(item)}>
                 Reply

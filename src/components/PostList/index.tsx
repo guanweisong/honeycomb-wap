@@ -8,10 +8,10 @@ import { useScroll } from 'ahooks';
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { PostType } from '@/src/types/post/PostType';
-import dayjs from 'dayjs';
 import PostInfo from '@/src/components/PostInfo';
 import Signature from '@/src/components/Signature';
 import { AutoCenter, DotLoading } from 'antd-mobile';
+import { utcFormat } from '@/src/utils/utcFormat';
 
 export interface PostListProps {
   initData: PostEntity[];
@@ -66,7 +66,7 @@ export default function PostList(props: PostListProps) {
           >
             {item.type === PostType.MOVIE && (
               <>
-                {item.title} {item.movieNameEn} ({dayjs(item.movieTime).format('YYYY')})
+                {item.title} {item.movieNameEn} ({utcFormat(item.movieTime!, 'YYYY')})
               </>
             )}
             {[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.type) && <>{item.title}</>}

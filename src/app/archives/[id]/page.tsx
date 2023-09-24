@@ -1,7 +1,6 @@
 import React from 'react';
 import PostServer from '@/src/services/post';
 import { PostType } from '@/src/types/post/PostType';
-import dayjs from 'dayjs';
 import PostInfo from '@/src/components/PostInfo';
 import { CalendarOutline, CameraOutline, ContentOutline } from 'antd-mobile-icons';
 import Tags from '@/src/components/Tags';
@@ -15,6 +14,7 @@ import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Markdown from '@/src/components/Markdown';
 import SettingServer from '@/src/services/setting';
+import { utcFormat } from '@/src/utils/utcFormat';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -39,7 +39,8 @@ export default async function Archives({ params }: { params: { id: string } }) {
    */
   const getTitle = () => {
     return postDetail.type === PostType.MOVIE
-      ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
+      ? `${postDetail.title} ${postDetail.movieNameEn} (${utcFormat(
+          postDetail.movieTime!,
           'YYYY',
         )})`
       : postDetail.title ?? postDetail.quoteContent;
@@ -71,14 +72,14 @@ export default async function Archives({ params }: { params: { id: string } }) {
         {postDetail.type === PostType.PHOTOGRAPH && (
           <li className="flex items-center">
             <CameraOutline />
-            {dayjs(postDetail.galleryTime).format('YYYY-MM-DD')}&nbsp; 拍摄于&nbsp;
+            {utcFormat(postDetail.galleryTime!)}&nbsp; 拍摄于&nbsp;
             {postDetail.galleryLocation}
           </li>
         )}
         {postDetail.type === PostType.MOVIE && (
           <li className="flex items-center">
             <CalendarOutline />
-            &nbsp; 上映于：{dayjs(postDetail.movieTime).format('YYYY-MM-DD')}
+            &nbsp; 上映于：{utcFormat(postDetail.movieTime!)}
           </li>
         )}
         {postDetail.type === PostType.QUOTE && (
@@ -122,7 +123,8 @@ export async function generateMetadata(props: GenerateMetadataProps) {
    */
   const getTitle = () => {
     return postDetail.type === PostType.MOVIE
-      ? `${postDetail.title} ${postDetail.movieNameEn} (${dayjs(postDetail.movieTime).format(
+      ? `${postDetail.title} ${postDetail.movieNameEn} (${utcFormat(
+          postDetail.movieTime!,
           'YYYY',
         )})`
       : postDetail.title ?? postDetail.quoteContent;
