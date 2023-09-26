@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="lazyOnload" />
       </head>
       <body>
-        <div className="min-h-full">
+        <div className="min-h-full pt-14 lg:pt-24">
           <Header />
           <div className={'container px-2'}>{children}</div>
           <Footer />
