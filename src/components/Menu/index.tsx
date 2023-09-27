@@ -1,16 +1,17 @@
 'use client';
 
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useSelectedLayoutSegments, useSelectedLayoutSegment } from 'next/navigation';
+import { useClickAway } from 'ahooks';
+import { usePathname, useSelectedLayoutSegments } from 'next/navigation';
 import PostServer from '@/src/services/post';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 
 export interface MenuItem {
   label: React.ReactNode;
-  link: string;
+  link: unknown;
   children?: MenuItem[];
 }
 
@@ -21,6 +22,8 @@ export interface MenuProps {
 
 const Menu = (props: MenuProps) => {
   const { data, flatMenuData } = props;
+  const ref1 = useRef<HTMLUListElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<string[]>([]);
 
@@ -31,6 +34,10 @@ const Menu = (props: MenuProps) => {
     setVisible(false);
     judgeCurrentMenu();
   }, [pathname]);
+
+  useClickAway(() => {
+    setVisible(false);
+  }, [ref1, ref2]);
 
   /**
    * 计算当前菜单值
@@ -64,6 +71,7 @@ const Menu = (props: MenuProps) => {
           'inset-x-0 top-full shadow-md bg-white/95 dark:bg-gray-900/95': visible,
           ['hidden']: !visible,
         })}
+        ref={ref1}
       >
         {data.map((m) => (
           <li className="lg:relative lg:flex group">
@@ -107,7 +115,11 @@ const Menu = (props: MenuProps) => {
   };
   return (
     <div className="flex h-full">
-      <div className="w-10 px-2 cursor-pointer pt-2 lg:hidden" onClick={() => setVisible(!visible)}>
+      <div
+        ref={ref2}
+        className="w-10 px-2 cursor-pointer pt-2 lg:hidden"
+        onClick={() => setVisible(!visible)}
+      >
         {Array.from(new Array(3)).map(() => (
           <div
             className={classNames('h-0.5 my-1.5 bg-gray-500 transition-all', {
