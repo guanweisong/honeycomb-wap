@@ -46,8 +46,40 @@ export default async function Archives({ params }: { params: { id: string } }) {
       : postDetail.title ?? postDetail.quoteContent;
   };
 
+  /**
+   * 计算 JSONLD
+   */
+  const jsonLd: any = {
+    '@context': 'https://schema.org',
+    name: getTitle(),
+  };
+  switch (postDetail.type) {
+    case PostType.ARTICLE:
+      jsonLd['@type'] = 'Article';
+      jsonLd.image = postDetail.cover?.url;
+      jsonLd.description = postDetail.excerpt;
+      break;
+    case PostType.MOVIE:
+      jsonLd['@type'] = 'Movie';
+      jsonLd.image = postDetail.cover?.url;
+      jsonLd.description = postDetail.excerpt;
+      break;
+    case PostType.PHOTOGRAPH:
+      jsonLd['@type'] = 'Photograph';
+      jsonLd.image = postDetail.cover?.url;
+      jsonLd.description = postDetail.excerpt;
+      break;
+    case PostType.QUOTE:
+      jsonLd['@type'] = 'Quotation';
+      break;
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
         {getTitle()}
       </h2>
