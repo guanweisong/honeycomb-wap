@@ -104,7 +104,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
         {postDetail.type === PostType.PHOTOGRAPH && (
           <li className="flex items-center">
             <CameraOutline />
-            {utcFormat(postDetail.galleryTime!)}&nbsp; 拍摄于&nbsp;
+            &nbsp;{utcFormat(postDetail.galleryTime!)}&nbsp; 拍摄于&nbsp;
             {postDetail.galleryLocation}
           </li>
         )}
