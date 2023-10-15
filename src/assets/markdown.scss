@@ -57,4 +57,15 @@
   code, tt {
     @apply py-2 px-4 bg-gray-200 dark:border-gray-600 rounded;
   }
+  p:first-child {
+    img:first-child {
+      margin-top: 0;
+    }
+  }
+  p:last-child {
+    margin-bottom: 0;
+    img:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
