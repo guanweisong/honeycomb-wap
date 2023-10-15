@@ -89,13 +89,13 @@ const Menu = (props: MenuProps) => {
               {m.label}
             </Link>
             {m.children && (
-              <ul className="lg:absolute lg:opacity-0 lg:bg-white dark:lg:bg-gray-900 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md group-hover:lg:opacity-100">
+              <ul className="lg:absolute ml-4 lg:ml-0 lg:opacity-0 lg:bg-white dark:lg:bg-gray-900 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md group-hover:lg:opacity-100">
                 {m.children.map((n) => (
-                  <li>
+                  <li className="inline-block lg:block">
                     <Link
                       href={n.link ?? ''}
                       className={classNames(
-                        'block leading-10 lg:text-center hover:lg:text-pink-500 px-8 lg:px-0',
+                        'block leading-10 lg:text-center hover:lg:text-pink-500 px-4 lg:px-0',
                         {
                           'text-pink-500': n.link === currentCategory[1],
                           'dark:text-gray-500': n.link !== currentCategory[1],
