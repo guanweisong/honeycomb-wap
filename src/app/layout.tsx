@@ -24,6 +24,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="lazyOnload" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-F7GLX9X5VT" />
+        <Script id="google-analytics">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-F7GLX9X5VT');
+          `}
+        </Script>
       </head>
       <body>
         <div className="min-h-full pt-14 lg:pt-24">
