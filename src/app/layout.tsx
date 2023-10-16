@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Analytics } from '@vercel/analytics/react';
 import '@/src/assets/markdown.scss';
 import 'antd-mobile/es/global';
 import './app.scss';
@@ -33,7 +32,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <BackToTop />
         </div>
-        <Analytics />
       </body>
     </html>
   );
