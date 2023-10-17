@@ -6,7 +6,7 @@
   --adm-color-primary: rgb(236, 72, 153);
 }
 
-body {
+body, input, textarea {
   @apply dark:bg-gray-800;
   @apply dark:text-gray-500;
   a {
