@@ -9,6 +9,7 @@ import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Markdown from '@/src/components/Markdown';
 import SettingServer from '@/src/services/setting';
+import PageTitle from '@/src/components/PageTitle';
 
 export default async function Pages({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -23,9 +24,7 @@ export default async function Pages({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
-        {pageDetail.title}
-      </h2>
+      <PageTitle>{pageDetail.title}</PageTitle>
       <PostInfo
         author={pageDetail.author.name}
         date={pageDetail.createdAt}

@@ -2,6 +2,7 @@ import LinkServer from '@/src/services/link';
 import { LinkStatus } from '@/src/types/link/LinkStatus';
 import NoData from '@/src/components/NoData';
 import Comment from '@/src/components/Comment';
+import PageTitle from '@/src/components/PageTitle';
 
 const Links = async () => {
   const result = await LinkServer.index({
@@ -10,7 +11,7 @@ const Links = async () => {
   });
   return (
     <div>
-      <div className="text-lg">海内存知己，天涯若比邻</div>
+      <PageTitle>海内存知己，天涯若比邻</PageTitle>
       {result.total > 0 ? (
         <div className="divide-y divide-dashed py-2 lg:py-4">
           {result.list.map((item) => (

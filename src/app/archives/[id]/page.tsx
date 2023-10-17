@@ -15,6 +15,7 @@ import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Markdown from '@/src/components/Markdown';
 import SettingServer from '@/src/services/setting';
 import { utcFormat } from '@/src/utils/utcFormat';
+import PageTitle from '@/src/components/PageTitle';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -80,9 +81,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h2 className="text-center text-base lg:text-xl pt-2 lg:pt-4 dark:text-gray-400">
-        {getTitle()}
-      </h2>
+      <PageTitle>{getTitle()}</PageTitle>
       <PostInfo
         author={postDetail.author.name}
         date={postDetail.createdAt}
