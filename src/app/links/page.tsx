@@ -1,6 +1,7 @@
 import LinkServer from '@/src/services/link';
 import { LinkStatus } from '@/src/types/link/LinkStatus';
 import NoData from '@/src/components/NoData';
+import Comment from '@/src/components/Comment';
 
 const Links = async () => {
   const result = await LinkServer.index({
@@ -28,6 +29,7 @@ const Links = async () => {
       ) : (
         <NoData title="暂无邻居" />
       )}
+      <Comment id="5349b4ddd2781d08c09890f3" />
     </div>
   );
 };

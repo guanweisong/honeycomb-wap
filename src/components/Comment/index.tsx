@@ -13,7 +13,7 @@ import { utcFormat } from '@/src/utils/utcFormat';
 
 export interface CommentProps {
   id: string;
-  type: MenuType;
+  type?: MenuType;
 }
 
 const Comment = (props: CommentProps) => {
@@ -21,7 +21,9 @@ const Comment = (props: CommentProps) => {
 
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
   const formRef = useRef(null);
-  useUpdateViews({ type: MenuTypeName[MenuType[type]], id });
+  if (type) {
+    useUpdateViews({ type: MenuTypeName[MenuType[type]], id });
+  }
   const { data: comment } = useQueryComment(id);
 
   /**
@@ -42,25 +44,25 @@ const Comment = (props: CommentProps) => {
     e.preventDefault();
     let data: any = {
       // @ts-ignore
-      comment_author: e.currentTarget.comment_author.value,
+      author: e.currentTarget.author.value,
       // @ts-ignore
-      comment_email: e.currentTarget.comment_email.value,
+      email: e.currentTarget.email.value,
       // @ts-ignore
-      comment_content: e.currentTarget.comment_content.value,
+      content: e.currentTarget.content.value,
     };
     // @ts-ignore
     let captcha = new TencentCaptcha('2090829333', async (res: any) => {
       if (res.ret === 0) {
         data = {
           ...data,
-          comment_post: id,
+          postId: id,
           captcha: {
             ticket: res.ticket,
             randstr: res.randstr,
           },
         };
         if (replyTo !== null) {
-          data = { ...data, comment_parent: replyTo.id };
+          data = { ...data, parentId: replyTo.id };
         }
         console.log('handleSubmit', data);
         // @ts-ignore
@@ -92,7 +94,7 @@ const Comment = (props: CommentProps) => {
             </div>
             <div className="overflow-hidden">
               <div className="text-pink-500">{item.author}</div>
-              <div className="mt-1 text-gray-500">
+              <div className="mt-1 text-gray-500 whitespace-pre">
                 {item.status !== CommentStatus.BAN ? item.content : '该条评论已屏蔽'}
               </div>
             </div>
@@ -138,7 +140,7 @@ const Comment = (props: CommentProps) => {
               className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
               type={'text'}
               placeholder={'请输入称呼'}
-              name={'comment_author'}
+              name={'author'}
               maxLength={20}
               required
             />
@@ -146,14 +148,14 @@ const Comment = (props: CommentProps) => {
               className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
               type={'text'}
               placeholder={'请输入邮箱'}
-              name={'comment_email'}
+              name={'email'}
               required
               maxLength={30}
             />
             <textarea
               className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2 bg-transparent dark:border-gray-900"
               placeholder={'请输入留言'}
-              name={'comment_content'}
+              name={'content'}
               required
               maxLength={200}
               rows={4}
