@@ -89,9 +89,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
         views={postDetail.views}
         border={'bottom'}
       />
-      {postDetail.type === PostType.QUOTE ? (
-        <div className="py-3 lg:py-5 italic markdown-body">{`"${postDetail.quoteContent}"`}</div>
-      ) : (
+      {postDetail.type !== PostType.QUOTE && (
         <div className="markdown-body py-3 lg:py-5">
           {postDetail.excerpt && (
             <div className="mb-2 p-2 bg-black/5 dark:bg-black/10">{postDetail.excerpt}</div>
