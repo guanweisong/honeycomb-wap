@@ -9,6 +9,7 @@
 body, input, textarea {
   @apply dark:bg-gray-800;
   @apply dark:text-gray-500;
+  @apply font-light;
   a {
     color: inherit;
   }
