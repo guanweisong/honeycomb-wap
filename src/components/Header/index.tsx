@@ -28,8 +28,16 @@ export default async function Header() {
         children: [],
         id: 'home',
       },
+      ...menuData,
+      {
+        title: '比邻',
+        titleEn: '',
+        children: [],
+        id: 'links',
+        url: '/links',
+      },
     ];
-    return [...result, ...menuData];
+    return result;
   };
 
   const menuData = formatCategorise();
@@ -45,6 +53,9 @@ export default async function Header() {
       } as MenuItem;
       if (data.isHome) {
         item.link = '/list/category';
+      }
+      if (data.url) {
+        item.link = data.url;
       }
       switch (data.type) {
         case MenuType.PAGE:

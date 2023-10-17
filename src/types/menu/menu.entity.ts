@@ -11,5 +11,6 @@ export interface MenuEntity {
   isHome?: string;
   type: MenuType;
   power: number;
+  url?: string;
   children: MenuEntity[];
 }

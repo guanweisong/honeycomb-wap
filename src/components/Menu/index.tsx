@@ -57,10 +57,8 @@ const Menu = (props: MenuProps) => {
       case 'list':
         setCurrentCategory([allCategoryPath.split('/').slice(0, 4).join('/'), allCategoryPath]);
         break;
-      case 'pages':
-        setCurrentCategory([allCategoryPath]);
-        break;
       default:
+        setCurrentCategory([allCategoryPath]);
     }
   };
 
