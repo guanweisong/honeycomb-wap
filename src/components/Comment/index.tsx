@@ -24,7 +24,7 @@ const Comment = (props: CommentProps) => {
   if (type) {
     useUpdateViews({ type: MenuTypeName[MenuType[type]], id });
   }
-  const { data: comment } = useQueryComment(id);
+  const { comment, mutate } = useQueryComment(id);
 
   /**
    * 评论回复事件
@@ -73,6 +73,7 @@ const Comment = (props: CommentProps) => {
             // @ts-ignore
             formRef.current.reset();
           }
+          mutate();
           handleReply(null);
         }
       }
@@ -94,7 +95,7 @@ const Comment = (props: CommentProps) => {
             </div>
             <div className="overflow-hidden">
               <div className="text-pink-500">{item.author}</div>
-              <div className="mt-1 text-gray-500 whitespace-pre">
+              <div className="mt-1 text-gray-500 whitespace-pre-wrap">
                 {item.status !== CommentStatus.BAN ? item.content : '该条评论已屏蔽'}
               </div>
             </div>
