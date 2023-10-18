@@ -3,6 +3,7 @@ import { LinkStatus } from '@/src/types/link/LinkStatus';
 import NoData from '@/src/components/NoData';
 import Comment from '@/src/components/Comment';
 import PageTitle from '@/src/components/PageTitle';
+import SettingServer from '@/src/services/setting';
 
 const Links = async () => {
   const result = await LinkServer.index({
@@ -34,5 +35,27 @@ const Links = async () => {
     </div>
   );
 };
+
+export async function generateMetadata() {
+  const setting = await SettingServer.indexSetting();
+  const title = '比邻';
+
+  const openGraph = {
+    title,
+    type: 'article',
+    description: setting.siteName,
+    images: ['/static/images/logo.png'],
+  };
+
+  return {
+    title,
+    description: setting.siteName,
+    openGraph,
+  };
+}
+
+export async function generateStaticParams() {
+  return [];
+}
 
 export default Links;
