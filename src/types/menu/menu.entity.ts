@@ -4,13 +4,13 @@ export interface MenuEntity {
   id: string;
   title?: string;
   titleEn?: string;
-  parent: string;
-  status: number;
-  createdAt: string;
-  updatedAt: string;
-  isHome?: string;
-  type: MenuType;
-  power: number;
+  parent?: string;
+  status?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  isHome?: boolean;
+  type?: MenuType;
+  power?: number;
   url?: string;
   children: MenuEntity[];
 }

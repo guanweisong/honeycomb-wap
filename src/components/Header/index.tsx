@@ -8,6 +8,7 @@ import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
 import { SettingEntity } from '@/src/types/setting/setting.entity';
 import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
+import Breadcrumb from '@/src/components/Breadcrumb';
 
 export default async function Header() {
   const promise = [];
@@ -16,34 +17,33 @@ export default async function Header() {
   const [setting, menu] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
 
   /**
-   * 格式化菜单树
+   * 补充菜单
    */
-  const formatCategorise = () => {
-    const menuData = listToTree(menu, { idKey: 'id', parentKey: 'parent' });
-    const result = [
-      {
-        title: '首页',
-        titleEn: '',
-        isHome: true,
-        children: [],
-        id: 'home',
-      },
-      ...menuData,
-      {
-        title: '比邻',
-        titleEn: '',
-        children: [],
-        id: 'links',
-        url: '/links',
-      },
-    ];
-    return result;
-  };
-
-  const menuData = formatCategorise();
+  const allMenu: MenuEntity[] = [
+    {
+      title: '首页',
+      titleEn: '',
+      isHome: true,
+      id: 'home',
+      children: [],
+    },
+    ...menu,
+    {
+      title: '比邻',
+      titleEn: '',
+      id: 'links',
+      url: '/links',
+      children: [],
+    },
+  ];
 
   /**
-   * 拼接菜单数据
+   * 把扁平树变换成树结构
+   */
+  const menuTree: MenuEntity[] = listToTree(allMenu, { idKey: 'id', parentKey: 'parent' });
+
+  /**
+   * 计算菜单的Link
    */
   const getMenuData = () => {
     const result: MenuItem[] = [];
@@ -74,7 +74,7 @@ export default async function Header() {
       }
       return item;
     };
-    menuData.forEach((item) => {
+    menuTree.forEach((item) => {
       result.push(getItem(item));
     });
     return result;
@@ -83,21 +83,24 @@ export default async function Header() {
   const menuDataFormat = getMenuData();
 
   return (
-    <div className="mb-2 fixed left-0 right-0 top-0 backdrop-blur bg-white/80 dark:bg-gray-900/80 lg:mb-4 h-12 lg:h-20 z-50 border-b dark:border-gray-900">
-      <div className="container relative box-border h-full flex justify-between items-center">
-        <div className="h-full flex items-center">
-          <Link
-            href={'/list/category'}
-            scroll={false}
-            className="text-pink-500 text-xl lg:text-2xl ml-2"
-          >
-            {setting.siteName}
-          </Link>
-        </div>
-        <div className="h-full flex items-center">
-          <Menu data={menuDataFormat} flatMenuData={menu} />
+    <>
+      <div className="mb-2 fixed left-0 right-0 top-0 backdrop-blur bg-white/80 dark:bg-gray-900/80 lg:mb-4 h-12 lg:h-20 z-50 border-b dark:border-gray-900">
+        <div className="container relative box-border h-full flex justify-between items-center">
+          <div className="h-full flex items-center">
+            <Link
+              href={'/list/category'}
+              scroll={false}
+              className="text-pink-500 text-xl lg:text-2xl ml-2"
+            >
+              {setting.siteName}
+            </Link>
+          </div>
+          <div className="h-full flex items-center">
+            <Menu data={menuDataFormat} flatMenuData={menu} />
+          </div>
         </div>
       </div>
-    </div>
+      <Breadcrumb menu={allMenu} />
+    </>
   );
 }

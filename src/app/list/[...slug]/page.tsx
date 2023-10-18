@@ -70,7 +70,7 @@ export default async function List({ params }: { params: { slug: string } }) {
   return (
     <>
       {['tags', 'authors'].includes(type!) && (
-        <div className="mb-2 ml-2 lg:mb-4 lg:ml-4 text-base dark:text-gray-400">{getTitle()}</div>
+        <div className="mb-2 lg:mb-4 lg:ml-4 dark:text-gray-400">{getTitle()}</div>
       )}
       {postList.length > 0 ? (
         <PostList initData={postList} pageSize={PAGE_SIZE} queryParams={queryParams} />
