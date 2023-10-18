@@ -11,7 +11,7 @@ import Footer from '@/src/components/Footer';
 export const revalidate = 60;
 
 const APP_NAME = '稻草人博客';
-const APP_DEFAULT_TITLE = '稻草热人博客';
+const APP_DEFAULT_TITLE = '稻草人博客';
 const APP_TITLE_TEMPLATE = '%s';
 const APP_DESCRIPTION = '稻草人的自留地';
 
