@@ -11,7 +11,7 @@ import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 
 export interface MenuItem {
   label: React.ReactNode;
-  link: unknown;
+  link: any;
   children?: MenuItem[];
 }
 
@@ -72,7 +72,7 @@ const Menu = (props: MenuProps) => {
         ref={ref1}
       >
         {data.map((m) => (
-          <li className="lg:relative lg:flex group">
+          <li className="lg:relative lg:flex group" key={`first-level-${m.link}`}>
             <Link
               href={m.link ?? ''}
               className={classNames(
@@ -89,7 +89,7 @@ const Menu = (props: MenuProps) => {
             {m.children && (
               <ul className="lg:absolute ml-4 lg:ml-0 lg:opacity-0 lg:bg-white dark:lg:bg-gray-900 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md group-hover:lg:opacity-100">
                 {m.children.map((n) => (
-                  <li className="inline-block lg:block">
+                  <li className="inline-block lg:block" key={`second-level-${n.link}`}>
                     <Link
                       href={n.link ?? ''}
                       className={classNames(
@@ -118,8 +118,9 @@ const Menu = (props: MenuProps) => {
         className="w-10 px-2 cursor-pointer pt-2 lg:hidden"
         onClick={() => setVisible(!visible)}
       >
-        {Array.from(new Array(3)).map(() => (
+        {Array.from(new Array(3)).map((item, index) => (
           <div
+            key={`menu-trigger-${index}`}
             className={classNames('h-0.5 my-1.5 bg-gray-500 transition-all', {
               'first:translate-y-2 first:rotate-45 even:opacity-0 last:-translate-y-2 last:-rotate-45':
                 visible,
