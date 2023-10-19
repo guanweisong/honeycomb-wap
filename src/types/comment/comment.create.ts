@@ -6,4 +6,5 @@ export interface CommentCreate {
   content: string;
   author: string;
   captcha: Captcha;
+  parentId?: string;
 }

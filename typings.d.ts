@@ -12,11 +12,4 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
 
-declare module 'jsx-control-statements' {
-  export const If: any
-  export const Choose: any
-  export const Otherwise: any
-  export const When: any
-}
-
-// declare let TencentCaptcha: Function;
+declare const TencentCaptcha: any;

@@ -9,8 +9,8 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 const nextConfig = {
   experimental: {
     typedRoutes: true,
+    serverActions: true,
   },
-  reactStrictMode: false,
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
