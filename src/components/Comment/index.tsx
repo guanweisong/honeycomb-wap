@@ -1,12 +1,10 @@
 import React from 'react';
 import CommentServer from '@/src/services/comment';
-import { MenuType } from '@/src/types/menu/MenuType';
 import CommentClient from '@/src/components/Comment/client';
 import { CommentCreate } from '@/src/types/comment/comment.create';
 
 export interface CommentProps {
   id: string;
-  type?: MenuType;
 }
 
 const Comment = (props: CommentProps) => {

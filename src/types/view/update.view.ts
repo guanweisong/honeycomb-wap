@@ -1,6 +1,9 @@
-import { MenuTypeName } from '@/src/types/menu/MenuType';
+export enum UpdateType {
+  Post = 'Post',
+  Page = 'page',
+}
 
 export interface UpdateView {
-  type: MenuTypeName;
+  type: UpdateType;
   id: string;
 }

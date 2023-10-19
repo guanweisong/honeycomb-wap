@@ -4,8 +4,6 @@ import React, { useRef, useState, use, useTransition } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Card from '../Card';
-import { MenuType, MenuTypeName } from '@/src/types/menu/MenuType';
-import useUpdateViews from '@/src/hooks/swr/views/use.update.post.views';
 import { CommentStatus } from '@/src/types/comment/CommentStatus';
 import { utcFormat } from '@/src/utils/utcFormat';
 import { CommentProps } from './index';
@@ -19,19 +17,12 @@ export interface CommentClientProps extends CommentProps {
 }
 
 const CommentClient = (props: CommentClientProps) => {
-  const { id, type, queryCommentPromise, createCommentFn } = props;
+  const { id, queryCommentPromise, createCommentFn } = props;
   const [isPending, startTransition] = useTransition();
   const comment = use(queryCommentPromise);
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const router = useRouter();
-
-  /**
-   * 更新文章或者页面的浏览量
-   */
-  if (type) {
-    useUpdateViews({ type: MenuTypeName[MenuType[type]], id });
-  }
 
   /**
    * 评论回复事件

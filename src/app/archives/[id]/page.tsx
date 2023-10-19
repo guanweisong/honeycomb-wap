@@ -8,7 +8,6 @@ import Card from '@/src/components/Card';
 import Link from 'next/link';
 import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
-import { MenuType } from '@/src/types/menu/MenuType';
 import { PostEntity } from '@/src/types/post/post.entity';
 import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
@@ -16,6 +15,8 @@ import Markdown from '@/src/components/Markdown';
 import SettingServer from '@/src/services/setting';
 import { utcFormat } from '@/src/utils/utcFormat';
 import PageTitle from '@/src/components/PageTitle';
+import ViewServer from '@/src/services/view';
+import { UpdateType } from '@/src/types/view/update.view';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -30,6 +31,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
     }),
   );
   promise.push(CommentServer.index(id));
+  promise.push(ViewServer.updateViews({ type: UpdateType.Post, id }));
   const [randomPostsList, commentsData] = (await Promise.all(promise)) as [
     PostEntity[],
     PaginationResponse<CommentEntity[]>,
@@ -132,7 +134,7 @@ export default async function Archives({ params }: { params: { id: string } }) {
           </ul>
         </Card>
       )}
-      <Comment id={id} type={MenuType.CATEGORY} />
+      <Comment id={id} />
     </>
   );
 }
