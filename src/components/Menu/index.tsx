@@ -65,8 +65,8 @@ const Menu = (props: MenuProps) => {
   const renderItem = (data: MenuItem[]) => {
     return (
       <ul
-        className={classNames('absolute lg:static lg:flex py-2 lg:py-0 text-base', {
-          'inset-x-0 top-full shadow-md bg-white/95 dark:bg-gray-900/95': visible,
+        className={classNames('absolute backdrop-blur lg:static lg:flex py-2 lg:py-0 text-base', {
+          'inset-x-0 top-full shadow-md bg-white/80 dark:bg-gray-900/80': visible,
           ['hidden']: !visible,
         })}
         ref={ref1}
@@ -118,6 +118,7 @@ const Menu = (props: MenuProps) => {
         className="w-10 px-2 cursor-pointer pt-2 lg:hidden"
         onClick={() => setVisible(!visible)}
       >
+        {/** @ts-ignore **/}
         {Array.from(new Array(3)).map((item, index) => (
           <div
             key={`menu-trigger-${index}`}
