@@ -10,6 +10,8 @@ import { CommentProps } from './index';
 import PaginationResponse from '@/src/types/pagination.response';
 import { useRouter } from 'next/navigation';
 import { CommentCreate } from '@/src/types/comment/comment.create';
+import { refreshPath } from '@/src/utils/refreshPath';
+import { usePathname } from 'next/navigation';
 
 export interface CommentClientProps extends CommentProps {
   queryCommentPromise: Promise<PaginationResponse<CommentEntity[]>>;
@@ -23,6 +25,7 @@ const CommentClient = (props: CommentClientProps) => {
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   /**
    * 评论回复事件
@@ -59,6 +62,7 @@ const CommentClient = (props: CommentClientProps) => {
         startTransition(async () => {
           const result = await createCommentFn(data);
           if (result.id) {
+            startTransition(() => refreshPath(pathname));
             startTransition(router.refresh);
             handleReply(null);
             formRef.current?.reset();
