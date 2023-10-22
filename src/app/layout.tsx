@@ -7,6 +7,7 @@ import './app.scss';
 import BackToTop from '@/src/components/BackToTop';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
+import ThemeProvider from '@/src/components/ThemeProvider';
 
 export const revalidate = 60;
 
@@ -17,7 +18,7 @@ const APP_DESCRIPTION = '稻草人的自留地';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
@@ -35,12 +36,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       </head>
       <body>
-        <div className="min-h-full pt-14 lg:pt-24">
-          <Header />
-          <div className={'container px-2'}>{children}</div>
-          <Footer />
-          <BackToTop />
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="min-h-full pt-14 lg:pt-24">
+            <Header />
+            <div className={'container px-2'}>{children}</div>
+            <Footer />
+            <BackToTop />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

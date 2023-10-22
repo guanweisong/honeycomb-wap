@@ -9,6 +9,7 @@ import MenuServer from '@/src/services/menu';
 import { SettingEntity } from '@/src/types/setting/setting.entity';
 import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 import Breadcrumb from '@/src/components/Breadcrumb';
+import { ThemeSwitcher } from '@/src/components/ThemeSwitcher';
 
 export default async function Header() {
   const promise = [];
@@ -94,6 +95,9 @@ export default async function Header() {
             >
               {setting.siteName}
             </Link>
+            <span className="ml-2">
+              <ThemeSwitcher />
+            </span>
           </div>
           <div className="h-full flex items-center">
             <Menu data={menuDataFormat} flatMenuData={menu} />
