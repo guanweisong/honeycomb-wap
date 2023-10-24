@@ -31,6 +31,20 @@ const Links = async () => {
       ) : (
         <NoData title="暂无邻居" />
       )}
+      <div className="p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div className="font-bold">申请友链步骤：</div>
+        <div className="ml-2">
+          <div>1、在贵站加上本站友链</div>
+          <div className="ml-4 bg-white dark:bg-gray-800 my-2 px-2 py-1">
+            <div>名称: 稻草人博客</div>
+            <div>链接: https://guanwisong.com</div>
+            <div>Logo: https://guanwisong.com/static/images/logo.192.png</div>
+            <div>描述: 稻草人的自留地</div>
+          </div>
+          <div>2、在此页面留言区留下贵站信息</div>
+          <div>3、本站核实信息后添加贵站友链</div>
+        </div>
+      </div>
       <Comment id="5349b4ddd2781d08c09890f3" />
     </div>
   );
