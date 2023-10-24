@@ -31,9 +31,9 @@ const Links = async () => {
       ) : (
         <NoData title="暂无邻居" />
       )}
-      <div className="p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <div className="font-bold">申请友链步骤：</div>
-        <div className="ml-2">
+      <div className="dark:text-gray-400">
+        <div className="mb-2">申请友链步骤：</div>
+        <div className="p-2 bg-gray-50 dark:bg-gray-700 ">
           <div>1、在贵站加上本站友链</div>
           <div className="bg-white dark:bg-gray-800 my-1 px-1 py-1">
             <div>名称: 稻草人博客</div>
