@@ -35,7 +35,7 @@ const Links = async () => {
         <div className="font-bold">申请友链步骤：</div>
         <div className="ml-2">
           <div>1、在贵站加上本站友链</div>
-          <div className="ml-4 bg-white dark:bg-gray-800 my-2 px-2 py-1">
+          <div className="bg-white dark:bg-gray-800 my-1 px-1 py-1">
             <div>名称: 稻草人博客</div>
             <div>链接: https://guanwisong.com</div>
             <div>Logo: https://guanwisong.com/static/images/logo.192.png</div>
