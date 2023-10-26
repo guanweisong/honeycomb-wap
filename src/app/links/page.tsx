@@ -13,7 +13,7 @@ const Links = async () => {
   return (
     <div>
       <PageTitle>海内存知己，天涯若比邻</PageTitle>
-      {result.total > 0 ? (
+      {result?.total > 0 ? (
         <div className="divide-y divide-dashed py-2 lg:py-4">
           {result.list.map((item) => (
             <a href={item.url} target="_blank" className="flex items-center py-2">
@@ -35,7 +35,7 @@ const Links = async () => {
         <div className="mb-1">申请友链步骤：</div>
         <div className="p-2 bg-gray-50 dark:bg-gray-700 ">
           <div>1、在贵站加上本站友链</div>
-          <div className="bg-white dark:bg-gray-800 my-1 px-1 py-1">
+          <div className="text-xs border border-dashed border-gray-300 dark:border-gray-900 my-1 px-1 py-1">
             <div>名称: 稻草人博客</div>
             <div>链接: https://guanweisong.com</div>
             <div>Logo: https://guanweisong.com/static/images/logo.192.png</div>
