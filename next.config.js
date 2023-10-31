@@ -9,7 +9,6 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 const nextConfig = {
   experimental: {
     typedRoutes: true,
-    serverActions: true,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
