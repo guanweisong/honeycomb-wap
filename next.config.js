@@ -24,6 +24,7 @@ const nextConfig = {
   },
   images: {
     domains: ['honeycomb-1257715480.cos.ap-shanghai.myqcloud.com'],
+    formats: ['image/avif', 'image/webp'],
   },
   compiler: {
     removeConsole:
