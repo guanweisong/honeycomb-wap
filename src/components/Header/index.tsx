@@ -10,6 +10,7 @@ import { SettingEntity } from '@/src/types/setting/setting.entity';
 import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 import Breadcrumb from '@/src/components/Breadcrumb';
 import { ThemeSwitcher } from '@/src/components/ThemeSwitcher';
+import LanguageSwitcher from '@/src/components/LanguageSwitcher';
 
 export default async function Header() {
   const promise = [];
@@ -97,6 +98,9 @@ export default async function Header() {
             </Link>
             <span className="ml-2">
               <ThemeSwitcher />
+            </span>
+            <span className="ml-4">
+              <LanguageSwitcher />
             </span>
           </div>
           <div className="h-full flex items-center">

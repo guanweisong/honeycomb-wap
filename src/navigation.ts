@@ -1,8 +1,9 @@
 import { createLocalizedPathnamesNavigation, Pathnames } from 'next-intl/navigation';
+import {Language} from "@/src/types/Language";
 
-export const locales = ['en', 'zh'] as const;
+export const locales = [Language.En, Language.Zh] as const;
 
-export const defaultLocale = 'en';
+export const defaultLocale = Language.En;
 
 export const localePrefix = 'always'; // Default
 
