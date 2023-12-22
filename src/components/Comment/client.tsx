@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, use, useTransition } from 'react';
+import React, { useRef, useState, use, useTransition, useEffect } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Card from '../Card';

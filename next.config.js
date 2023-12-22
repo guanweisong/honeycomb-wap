@@ -1,4 +1,5 @@
 const path = require('path');
+const withNextIntl = require('next-intl/plugin')();
 const withPWA = require('@ducanh2912/next-pwa').default({
   dest: 'public',
 });
@@ -7,19 +8,10 @@ const withPWA = require('@ducanh2912/next-pwa').default({
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  experimental: {
-    typedRoutes: true,
-  },
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
   images: {
@@ -41,4 +33,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = withNextIntl(withPWA(nextConfig));
