@@ -12,7 +12,7 @@
     "ahooks": "^3.7.4",
     "antd-mobile": "^5.27.0",
     "antd-mobile-icons": "^0.3.0",
-    "axios": "^1.2.2",
+    "axios": "^1.6.0",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
     "list-to-tree-lite": "^0.1.0",
