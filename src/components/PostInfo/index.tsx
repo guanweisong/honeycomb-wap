@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import classNames from 'classnames';
 import { utcFormat } from '@/src/utils/utcFormat';
+import { useTranslations } from 'next-intl';
 
 export interface PostInfoProps {
   author?: string;
@@ -15,6 +16,7 @@ export interface PostInfoProps {
 const PostInfo = (props: PostInfoProps) => {
   const { author, date, views, comments, border } = props;
   const data = [];
+  const t = useTranslations('PostInfo');
 
   if (typeof author !== 'undefined') {
     data.push({
@@ -37,14 +39,14 @@ const PostInfo = (props: PostInfoProps) => {
   if (typeof comments !== 'undefined') {
     data.push({
       icon: <MessageOutline />,
-      content: `${comments}条留言`,
+      content: t('messages', { count: comments }),
     });
   }
 
   if (typeof views !== 'undefined') {
     data.push({
       icon: <EyeOutline />,
-      content: `${views}次浏览`,
+      content: t('views', { count: views }),
     });
   }
 
@@ -63,7 +65,7 @@ const PostInfo = (props: PostInfoProps) => {
       )}
     >
       {data.map((item) => (
-        <li className="flex items-center mx-1">
+        <li className="flex items-center mx-1" key={item.content.toString()}>
           {item.icon}&nbsp;{item.content}
         </li>
       ))}

@@ -4,15 +4,18 @@ import NoData from '@/src/components/NoData';
 import Comment from '@/src/components/Comment';
 import PageTitle from '@/src/components/PageTitle';
 import SettingServer from '@/src/services/setting';
+import { getTranslations } from 'next-intl/server';
 
 const Links = async () => {
+  const t = await getTranslations('Link');
+  const c = await getTranslations('Common');
   const result = await LinkServer.index({
     limit: 9999,
     status: [LinkStatus.ENABLE],
   });
   return (
     <div>
-      <PageTitle>海内存知己，天涯若比邻</PageTitle>
+      <PageTitle>{t('slogan')}</PageTitle>
       {result?.total > 0 ? (
         <div className="divide-y divide-dashed py-2 lg:py-4">
           {result.list.map((item) => (
@@ -29,20 +32,24 @@ const Links = async () => {
           ))}
         </div>
       ) : (
-        <NoData title="暂无邻居" />
+        <NoData title={t('emptyTip')} />
       )}
       <div className="dark:text-gray-400">
-        <div className="mb-1">申请友链步骤：</div>
+        <div className="mb-1">{t('applyStep.title')}</div>
         <div className="p-2 bg-gray-50 dark:bg-gray-700 ">
-          <div>1、在贵站加上本站友链</div>
+          <div>{t('applyStep.stepOne')}</div>
           <div className="text-xs border border-dashed border-gray-300 dark:border-gray-900 my-1 px-1 py-1">
-            <div>名称: 稻草人博客</div>
-            <div>链接: https://guanweisong.com</div>
+            <div>
+              {t('applyStep.nameLabel')}: {c('site.title')}
+            </div>
+            <div>{t('applyStep.linkLabel')}: https://guanweisong.com</div>
             <div>Logo: https://guanweisong.com/static/images/logo.192.png</div>
-            <div>描述: 稻草人的自留地</div>
+            <div>
+              {t('applyStep.descLabel')}: {c('site.subTitle')}
+            </div>
           </div>
-          <div>2、在此页面留言区留下贵站信息</div>
-          <div>3、本站核实信息后添加贵站友链</div>
+          <div>{t('applyStep.stepTwo')}</div>
+          <div>{t('applyStep.stepThree')}</div>
         </div>
       </div>
       <Comment id="5349b4ddd2781d08c09890f3" />
@@ -51,8 +58,9 @@ const Links = async () => {
 };
 
 export async function generateMetadata() {
+  const t = await getTranslations('Link');
   const setting = await SettingServer.indexSetting();
-  const title = '比邻';
+  const title = t('title');
 
   const openGraph = {
     title,

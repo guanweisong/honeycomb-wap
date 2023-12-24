@@ -2,8 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { TagEntity } from '@/src/types/tag/tag.entity';
 import { PostEntity } from '@/src/types/post/post.entity';
+import { useTranslations } from 'next-intl';
 
 const Tag = (props: PostEntity) => {
+  const t = useTranslations('Tag');
+
   const getTags = (item: TagEntity[] | undefined, label: string) => {
     if (item && item.length > 0) {
       return (
@@ -26,10 +29,10 @@ const Tag = (props: PostEntity) => {
 
   return (
     <div className="list-none text-gray-400">
-      {getTags(props.movieDirectors, '导演')}
-      {getTags(props.movieActors, '主演')}
-      {getTags(props.movieStyles, '风格')}
-      {getTags(props.galleryStyles, '风格')}
+      {getTags(props.movieDirectors, t('directors'))}
+      {getTags(props.movieActors, t('actors'))}
+      {getTags(props.movieStyles, t('styles'))}
+      {getTags(props.galleryStyles, t('styles'))}
     </div>
   );
 };

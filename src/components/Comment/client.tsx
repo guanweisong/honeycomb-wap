@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, use, useTransition, useEffect } from 'react';
+import React, { useRef, useState, use, useTransition } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Card from '../Card';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { CommentCreate } from '@/src/types/comment/comment.create';
 import { refreshPath } from '@/src/utils/refreshPath';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export interface CommentClientProps extends CommentProps {
   queryCommentPromise: Promise<PaginationResponse<CommentEntity[]>>;
@@ -26,6 +27,7 @@ const CommentClient = (props: CommentClientProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('Comment');
 
   /**
    * 评论回复事件
@@ -88,14 +90,14 @@ const CommentClient = (props: CommentClientProps) => {
             <div className="overflow-hidden">
               <div className="text-pink-500">{item.author}</div>
               <div className="mt-1 text-gray-500 whitespace-pre-wrap">
-                {item.status !== CommentStatus.BAN ? item.content : '该条评论已屏蔽'}
+                {item.status !== CommentStatus.BAN ? item.content : t('banMessage')}
               </div>
             </div>
             <div className="absolute right-2 top-4">
               <span className="text-gray-400">{utcFormat(item.createdAt)}</span>
               <span className="text-gray-400 mx-1">/</span>
               <a className="text-pink-500" onClick={() => handleReply(item)}>
-                Reply
+                {t('form.reply')}
               </a>
             </div>
           </div>
@@ -110,11 +112,11 @@ const CommentClient = (props: CommentClientProps) => {
   return (
     <div>
       {comment && comment.total !== 0 && (
-        <Card title={`${comment.total} 条留言`}>
+        <Card title={t('summary', { count: comment.total })}>
           <ul>{renderCommentList(comment.list)}</ul>
         </Card>
       )}
-      <Card title={'发表留言'}>
+      <Card title={t('title')}>
         <>
           {!!replyTo && (
             <div className="leading-10">
@@ -124,7 +126,7 @@ const CommentClient = (props: CommentClientProps) => {
                 className="text-gray-400 transition-all hover:text-gray-500"
                 onClick={() => handleReply(null)}
               >
-                [取消]
+                [{t('form.cancel')}]
               </a>
             </div>
           )}
@@ -132,7 +134,7 @@ const CommentClient = (props: CommentClientProps) => {
             <input
               className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
               type={'text'}
-              placeholder={'请输入称呼'}
+              placeholder={t('form.name')}
               name={'author'}
               maxLength={20}
               required
@@ -140,21 +142,21 @@ const CommentClient = (props: CommentClientProps) => {
             <input
               className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
               type={'text'}
-              placeholder={'请输入邮箱'}
+              placeholder={t('form.email')}
               name={'email'}
               required
               maxLength={30}
             />
             <textarea
               className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2 bg-transparent dark:border-gray-900"
-              placeholder={'请输入留言'}
+              placeholder={t('form.content')}
               name={'content'}
               required
               maxLength={200}
               rows={4}
             />
             <Button loading={isPending} type={'submit'} color={'primary'} size={'small'}>
-              提交
+              {t('form.submit')}
             </Button>
           </form>
         </>

@@ -17,10 +17,12 @@ import { utcFormat } from '@/src/utils/utcFormat';
 import PageTitle from '@/src/components/PageTitle';
 import ViewServer from '@/src/services/view';
 import { UpdateType } from '@/src/types/view/update.view';
+import { getTranslations } from 'next-intl/server';
 
 export default async function Archives({ params }: { params: { id: string } }) {
   const { id } = params;
   const postDetail = await PostServer.indexPostDetail(id);
+  const t = await getTranslations('Archive');
 
   const promise = [];
   promise.push(
@@ -103,26 +105,26 @@ export default async function Archives({ params }: { params: { id: string } }) {
         {postDetail.type === PostType.PHOTOGRAPH && (
           <li className="flex items-center">
             <CameraOutline />
-            &nbsp;{utcFormat(postDetail.galleryTime!)}&nbsp; 拍摄于&nbsp;
+            &nbsp;{utcFormat(postDetail.galleryTime!)}&nbsp; {t('shotIn')}&nbsp;
             {postDetail.galleryLocation}
           </li>
         )}
         {postDetail.type === PostType.MOVIE && (
           <li className="flex items-center">
             <CalendarOutline />
-            &nbsp; 上映于：{utcFormat(postDetail.movieTime!)}
+            &nbsp; {t('released')}: {utcFormat(postDetail.movieTime!)}
           </li>
         )}
         {postDetail.type === PostType.QUOTE && (
           <li className="flex items-center">
             <ContentOutline />
-            &nbsp; 引用自：{postDetail.quoteAuthor}
+            &nbsp; {t('quoteFrom')}: {postDetail.quoteAuthor}
           </li>
         )}
       </ul>
       <Tags {...postDetail} />
       {randomPostsList.length > 0 && (
-        <Card title={'猜你喜欢'}>
+        <Card title={t('guessWhatYouLike')}>
           <ul className="leading-5 list-outside ml-4 mt-2 list-disc">
             {randomPostsList.map((item: any) => (
               <li key={item.id} className="my-2">

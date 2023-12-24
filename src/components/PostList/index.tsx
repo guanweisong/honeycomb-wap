@@ -12,6 +12,7 @@ import PostInfo from '@/src/components/PostInfo';
 import Signature from '@/src/components/Signature';
 import { AutoCenter, DotLoading } from 'antd-mobile';
 import { utcFormat } from '@/src/utils/utcFormat';
+import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl';
 
 export interface PostListProps {
   initData: PostEntity[];
@@ -23,6 +24,8 @@ export default function PostList(props: PostListProps) {
   const { initData, queryParams, pageSize } = props;
   const scroll = useScroll(typeof document !== 'undefined' ? document : null);
   const { data, size, setSize } = useQueryPostList(queryParams, initData);
+  const messages = useMessages();
+  const locale = useLocale();
 
   const postList = data.flat();
   // @ts-ignore
@@ -76,13 +79,15 @@ export default function PostList(props: PostListProps) {
               </>
             )}
           </Link>
-          <PostInfo
-            author={item.author.name}
-            date={item.createdAt}
-            comments={item.commentCount}
-            views={item.views}
-            border={'top'}
-          />
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            <PostInfo
+              author={item.author.name}
+              date={item.createdAt}
+              comments={item.commentCount}
+              views={item.views}
+              border={'top'}
+            />
+          </NextIntlClientProvider>
         </div>
       </Link>
     );

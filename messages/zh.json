@@ -1,3 +1,55 @@
 {
-  
+  "Common": {
+    "site": {
+      "title": "稻草人博客",
+      "subTitle": "稻草人的自留地"
+    }
+  },
+  "Archive": {
+    "released": "上映于",
+    "quoteFrom": "引用自",
+    "shotIn": "拍摄于",
+    "guessWhatYouLike": "猜你喜欢"
+  },
+  "PostInfo": {
+    "views": "{count}次浏览",
+    "messages": "{count}条留言"
+  },
+  "PostList": {
+    "emptyTip": "该分类暂时没有文章哦！",
+    "postUnderTag": "标签{tag}下的所有文章",
+    "postUnderAuthor": "作者{author}下的所有文章"
+  },
+  "Tag": {
+    "directors": "导演",
+    "actors": "演员",
+    "styles": "风格"
+  },
+  "Link": {
+    "title": "比邻",
+    "slogan": "海内存知己，天涯若比邻",
+    "emptyTip": "暂无邻居",
+    "applyStep": {
+      "title": "申请友链步骤:",
+      "stepOne": "1. 在贵站加上本站友链",
+      "stepTwo": "2. 在此页面留言区留下贵站信息",
+      "stepThree": "3. 本站核实信息后添加贵站友链",
+      "nameLabel": "名称",
+      "linkLabel": "链接",
+      "descLabel": "描述"
+    }
+  },
+  "Comment": {
+    "title": "发表留言",
+    "summary": "{count}条留言",
+    "form": {
+      "name": "请输入称呼",
+      "email": "请输入邮箱",
+      "content": "请输入留言",
+      "submit": "提交",
+      "cancel": "取消",
+      "reply": "回复",
+      "banMessage": "该条评论已屏蔽"
+    }
+  }
 }

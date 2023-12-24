@@ -8,10 +8,14 @@ import SettingServer from '@/src/services/setting';
 import PostList from '@/src/components/PostList';
 import NoData from '@/src/components/NoData';
 import { SettingEntity } from '@/src/types/setting/setting.entity';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations } from 'next-intl/server';
 
 const PAGE_SIZE = 10;
 
 export default async function List({ params }: { params: { slug: string } }) {
+  const messages = await getMessages();
+  const t = await getTranslations('PostList');
   const promise = [];
   promise.push(SettingServer.indexSetting());
   promise.push(MenuServer.indexMenu());
@@ -52,10 +56,10 @@ export default async function List({ params }: { params: { slug: string } }) {
     let title = '';
     switch (type) {
       case 'tags':
-        title = `标签“${typeName}”下的所有文章`;
+        title = t('postUnderTag', { tag: typeName });
         break;
       case 'authors':
-        title = `作者“${typeName}”下的所有文章`;
+        title = t('postUnderAuthor', { author: typeName });
         break;
       default:
         if (typeName) {
@@ -73,9 +77,11 @@ export default async function List({ params }: { params: { slug: string } }) {
         <div className="mb-2 lg:mb-4 dark:text-gray-400">{getTitle()}</div>
       )}
       {postList.length > 0 ? (
-        <PostList initData={postList} pageSize={PAGE_SIZE} queryParams={queryParams} />
+        <NextIntlClientProvider messages={messages}>
+          <PostList initData={postList} pageSize={PAGE_SIZE} queryParams={queryParams} />
+        </NextIntlClientProvider>
       ) : (
-        <NoData title={'该分类暂时没有文章哦！'} />
+        <NoData title={t('emptyTip')} />
       )}
     </>
   );
@@ -89,6 +95,7 @@ export interface GenerateMetadataProps {
 export async function generateMetadata(props: GenerateMetadataProps) {
   const setting = await SettingServer.indexSetting();
   const menu = await MenuServer.indexMenu();
+  const t = await getTranslations('PostList');
 
   // 获取列表类型
   const type = typeof props.params?.slug !== 'undefined' ? props.params?.slug[0] : undefined;
@@ -106,10 +113,10 @@ export async function generateMetadata(props: GenerateMetadataProps) {
     let title = '';
     switch (type) {
       case 'tags':
-        title = `标签“${typeName}”下的所有文章`;
+        title = t('postUnderTag', { tag: typeName });
         break;
       case 'authors':
-        title = `作者“${typeName}”下的所有文章`;
+        title = t('postUnderAuthor', { author: typeName });
         break;
       default:
         if (typeName) {
