@@ -17,10 +17,11 @@ import { utcFormat } from '@/src/utils/utcFormat';
 import PageTitle from '@/src/components/PageTitle';
 import ViewServer from '@/src/services/view';
 import { UpdateType } from '@/src/types/view/update.view';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
-export default async function Archives({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Archives({ params }: { params: { id: string; locale: string } }) {
+  const { id, locale } = params;
+  unstable_setRequestLocale(locale);
   const postDetail = await PostServer.indexPostDetail(id);
   const t = await getTranslations('Archive');
 

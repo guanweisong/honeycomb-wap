@@ -9,11 +9,12 @@ import PostList from '@/src/components/PostList';
 import NoData from '@/src/components/NoData';
 import { SettingEntity } from '@/src/types/setting/setting.entity';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 const PAGE_SIZE = 10;
 
-export default async function List({ params }: { params: { slug: string } }) {
+export default async function List({ params }: { params: { slug: string; locale: string } }) {
+  unstable_setRequestLocale(params.locale);
   const messages = await getMessages();
   const t = await getTranslations('PostList');
   const promise = [];

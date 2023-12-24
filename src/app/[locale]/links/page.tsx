@@ -4,9 +4,10 @@ import NoData from '@/src/components/NoData';
 import Comment from '@/src/components/Comment';
 import PageTitle from '@/src/components/PageTitle';
 import SettingServer from '@/src/services/setting';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
-const Links = async () => {
+const Links = async ({ params: { locale } }: { params: { locale: string } }) => {
+  unstable_setRequestLocale(locale);
   const t = await getTranslations('Link');
   const c = await getTranslations('Common');
   const result = await LinkServer.index({

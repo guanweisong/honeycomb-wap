@@ -11,10 +11,11 @@ import SettingServer from '@/src/services/setting';
 import PageTitle from '@/src/components/PageTitle';
 import ViewServer from '@/src/services/view';
 import { UpdateType } from '@/src/types/view/update.view';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
-export default async function Pages({ params }: { params: { id: string } }) {
-  const { id } = params;
-
+export default async function Pages({ params }: { params: { id: string; locale: string } }) {
+  const { id, locale } = params;
+  unstable_setRequestLocale(locale);
   const promise = [];
   promise.push(PageServer.indexPageDetail(id));
   promise.push(CommentServer.index(id));

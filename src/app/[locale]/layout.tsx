@@ -7,6 +7,7 @@ import BackToTop from '@/src/components/BackToTop';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import ThemeProvider from '@/src/components/ThemeProvider';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 export const revalidate = 60;
 
@@ -22,6 +23,8 @@ export default function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
+
   return (
     <html suppressHydrationWarning lang={locale}>
       <head>
