@@ -6,7 +6,7 @@ import useQueryPostList from '@/src/hooks/swr/post/use.query.post.list';
 import { PostListQuery } from '@/src/types/post/post.list.query';
 import { useScroll } from 'ahooks';
 import React, { useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 import { PostType } from '@/src/types/post/PostType';
 import PostInfo from '@/src/components/PostInfo';
 import Signature from '@/src/components/Signature';

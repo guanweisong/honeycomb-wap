@@ -3,7 +3,7 @@
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 
 export interface BreadCrumbProps {
   menu: MenuEntity[];

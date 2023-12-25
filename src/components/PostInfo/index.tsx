@@ -1,5 +1,5 @@
 import { ClockCircleOutline, EyeOutline, MessageOutline, UserOutline } from 'antd-mobile-icons';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 import React from 'react';
 import classNames from 'classnames';
 import { utcFormat } from '@/src/utils/utcFormat';
@@ -22,7 +22,11 @@ const PostInfo = (props: PostInfoProps) => {
     data.push({
       icon: <UserOutline />,
       content: (
-        <Link href={`/list/authors/${author}`} className="link-light">
+        <Link
+          // @ts-ignore
+          href={`/list/authors/${author}`}
+          className="link-light"
+        >
           {author}
         </Link>
       ),

@@ -2,7 +2,7 @@
 import listToTree from 'list-to-tree-lite';
 import { MenuEntity } from '@/src/types/menu/menu.entity';
 import Menu, { MenuItem } from '@/src/components/Menu';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 import { MenuType } from '@/src/types/menu/MenuType';
 import SettingServer from '@/src/services/setting';
 import MenuServer from '@/src/services/menu';
@@ -90,6 +90,7 @@ export default async function Header() {
         <div className="container relative box-border h-full flex justify-between items-center">
           <div className="h-full flex items-center">
             <Link
+              // @ts-ignore
               href={'/list/category'}
               scroll={false}
               className="text-pink-500 text-xl lg:text-2xl ml-2"

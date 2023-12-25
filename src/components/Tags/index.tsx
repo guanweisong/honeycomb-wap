@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 import { TagEntity } from '@/src/types/tag/tag.entity';
 import { PostEntity } from '@/src/types/post/post.entity';
 import { useTranslations } from 'next-intl';

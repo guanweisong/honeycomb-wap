@@ -5,7 +5,7 @@ import PostInfo from '@/src/components/PostInfo';
 import { CalendarOutline, CameraOutline, ContentOutline } from 'antd-mobile-icons';
 import Tags from '@/src/components/Tags';
 import Card from '@/src/components/Card';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 import Comment from '@/src/components/Comment';
 import CommentServer from '@/src/services/comment';
 import { PostEntity } from '@/src/types/post/post.entity';

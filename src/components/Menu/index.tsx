@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/src/navigation';
 import { useClickAway } from 'ahooks';
 import { usePathname, useSelectedLayoutSegments } from 'next/navigation';
 import PostServer from '@/src/services/post';
