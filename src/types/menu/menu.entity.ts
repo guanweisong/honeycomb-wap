@@ -1,9 +1,10 @@
 import { MenuType } from '@/src/types/menu/MenuType';
+import { MultiLang } from '@/src/types/Language';
 
 export interface MenuEntity {
   id: string;
-  title?: string;
-  titleEn?: string;
+  title?: MultiLang;
+  path: string;
   parent?: string;
   status?: number;
   createdAt?: string;

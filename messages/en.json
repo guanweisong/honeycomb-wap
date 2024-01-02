@@ -18,7 +18,8 @@
   "PostList": {
     "emptyTip": "The category currently has no articles！",
     "postUnderTag": "Articles under the tag {tag}",
-    "postUnderAuthor": "Articles under the author {author}"
+    "postUnderAuthor": "Articles under the author {author}",
+    "listEnd": "Reach the end"
   },
   "Tag": {
     "directors": "Directors",

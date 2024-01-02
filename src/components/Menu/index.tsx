@@ -49,7 +49,7 @@ const Menu = (props: MenuProps) => {
         const postDetail = await PostServer.indexPostCategoryId(segments[1]);
         allCategoryPath = `/list/category/${getCurrentPathOfMenu({
           id: postDetail.categoryId,
-          familyProp: 'titleEn',
+          familyProp: 'path',
           menu: flatMenuData,
         }).join('/')}`;
         setCurrentCategory([allCategoryPath.split('/').slice(0, 4).join('/'), allCategoryPath]);

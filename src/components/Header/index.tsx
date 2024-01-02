@@ -11,28 +11,28 @@ import getCurrentPathOfMenu from '@/src/utils/getCurrentPathOfMenu';
 import Breadcrumb from '@/src/components/Breadcrumb';
 import { ThemeSwitcher } from '@/src/components/ThemeSwitcher';
 import LanguageSwitcher from '@/src/components/LanguageSwitcher';
+import { useLocale } from 'next-intl';
 
 export default async function Header() {
   const promise = [];
   promise.push(SettingServer.indexSetting());
   promise.push(MenuServer.indexMenu());
-  const [setting, menu] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
+  const [setting, menu = []] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
+  const locale = useLocale();
 
   /**
    * 补充菜单
    */
   const allMenu: MenuEntity[] = [
     {
-      title: '首页',
-      titleEn: '',
+      title: { zh: '首页', en: 'Home' },
       isHome: true,
       id: 'home',
       children: [],
     },
     ...menu,
     {
-      title: '比邻',
-      titleEn: '',
+      title: { zh: '比邻', en: 'Links' },
       id: 'links',
       url: '/links',
       children: [],
@@ -51,7 +51,7 @@ export default async function Header() {
     const result: MenuItem[] = [];
     const getItem = (data: MenuEntity) => {
       const item = {
-        label: data.title,
+        label: data.title?.[locale],
       } as MenuItem;
       if (data.isHome) {
         item.link = '/list/category';
@@ -66,7 +66,7 @@ export default async function Header() {
         case MenuType.CATEGORY:
           item.link = `/list/category/${getCurrentPathOfMenu({
             id: data.id,
-            familyProp: 'titleEn',
+            familyProp: 'path',
             menu,
           }).join('/')}`;
           break;
@@ -95,7 +95,7 @@ export default async function Header() {
               scroll={false}
               className="text-pink-500 text-xl lg:text-2xl ml-2"
             >
-              {setting.siteName}
+              {setting.siteName[locale]}
             </Link>
             <span className="ml-2">
               <ThemeSwitcher />

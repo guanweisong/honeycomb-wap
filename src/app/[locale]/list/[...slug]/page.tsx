@@ -9,7 +9,12 @@ import PostList from '@/src/components/PostList';
 import NoData from '@/src/components/NoData';
 import { SettingEntity } from '@/src/types/setting/setting.entity';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import {
+  getLocale,
+  getMessages,
+  getTranslations,
+  unstable_setRequestLocale,
+} from 'next-intl/server';
 
 const PAGE_SIZE = 10;
 
@@ -33,11 +38,12 @@ export default async function List({ params }: { params: { slug: string; locale:
   switch (type) {
     case 'category':
       // 获取分类ID
-      const categoryId = menu.find((item: MenuEntity) => item.titleEn === typeName)?.id;
+      const categoryId = menu.find((item: MenuEntity) => item.path === typeName)?.id;
       if (typeof categoryId !== 'undefined') {
         queryParams = { ...queryParams, categoryId: categoryId };
       }
-      typeName = menu.find((item: MenuEntity) => item.titleEn === typeName)?.title || '';
+      typeName =
+        menu.find((item: MenuEntity) => item.path === typeName)?.title?.[params.locale] || '';
       break;
     case 'tags':
       queryParams = { ...queryParams, tagName: typeName };
@@ -64,9 +70,9 @@ export default async function List({ params }: { params: { slug: string; locale:
         break;
       default:
         if (typeName) {
-          title = `${typeName}_${setting.siteName}`;
+          title = `${typeName}_${setting.siteName?.[params.locale]}`;
         } else {
-          title = setting.siteName;
+          title = setting.siteName?.[params.locale];
         }
     }
     return title;
@@ -96,6 +102,7 @@ export interface GenerateMetadataProps {
 export async function generateMetadata(props: GenerateMetadataProps) {
   const setting = await SettingServer.indexSetting();
   const menu = await MenuServer.indexMenu();
+  const local = await getLocale();
   const t = await getTranslations('PostList');
 
   // 获取列表类型
@@ -103,7 +110,7 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   let typeName = props.params?.slug?.pop();
   switch (type) {
     case 'category':
-      typeName = menu.find((item: MenuEntity) => item.titleEn === typeName)?.title || '';
+      typeName = menu.find((item: MenuEntity) => item.path === typeName)?.title?.[local] || '';
       break;
   }
 
@@ -121,9 +128,9 @@ export async function generateMetadata(props: GenerateMetadataProps) {
         break;
       default:
         if (typeName) {
-          title = `${typeName}_${setting.siteName}`;
+          title = `${typeName}_${setting.siteName?.[local]}`;
         } else {
-          title = setting.siteName;
+          title = setting.siteName[local];
         }
     }
     return decodeURI(title);
@@ -135,12 +142,12 @@ export async function generateMetadata(props: GenerateMetadataProps) {
     title: title,
     type: 'website',
     images: ['/static/images/logo.png'],
-    description: setting.siteSubName,
+    description: setting.siteSubName[local],
   };
 
   return {
     title,
-    description: setting.siteSubName,
+    description: setting.siteSubName[local],
     openGraph,
   };
 }

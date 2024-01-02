@@ -17,7 +17,7 @@ import { utcFormat } from '@/src/utils/utcFormat';
 import PageTitle from '@/src/components/PageTitle';
 import ViewServer from '@/src/services/view';
 import { UpdateType } from '@/src/types/view/update.view';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getLocale, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 export default async function Archives({ params }: { params: { id: string; locale: string } }) {
   const { id, locale } = params;
@@ -45,11 +45,8 @@ export default async function Archives({ params }: { params: { id: string; local
    */
   const getTitle = () => {
     return postDetail.type === PostType.MOVIE
-      ? `${postDetail.title} ${postDetail.movieNameEn} (${utcFormat(
-          postDetail.movieTime!,
-          'YYYY',
-        )})`
-      : postDetail.title ?? postDetail.quoteContent;
+      ? `${postDetail.title?.[locale]} (${utcFormat(postDetail.movieTime!, 'YYYY')})`
+      : postDetail.title?.[locale] ?? postDetail.quoteContent?.[locale];
   };
 
   /**
@@ -63,17 +60,17 @@ export default async function Archives({ params }: { params: { id: string; local
     case PostType.ARTICLE:
       jsonLd['@type'] = 'Article';
       jsonLd.image = postDetail.cover?.url;
-      jsonLd.description = postDetail.excerpt;
+      jsonLd.description = postDetail.excerpt?.[locale];
       break;
     case PostType.MOVIE:
       jsonLd['@type'] = 'Movie';
       jsonLd.image = postDetail.cover?.url;
-      jsonLd.description = postDetail.excerpt;
+      jsonLd.description = postDetail.excerpt?.[locale];
       break;
     case PostType.PHOTOGRAPH:
       jsonLd['@type'] = 'Photograph';
       jsonLd.image = postDetail.cover?.url;
-      jsonLd.description = postDetail.excerpt;
+      jsonLd.description = postDetail.excerpt?.[locale];
       break;
     case PostType.QUOTE:
       jsonLd['@type'] = 'Quotation';
@@ -97,9 +94,14 @@ export default async function Archives({ params }: { params: { id: string; local
       {postDetail.type !== PostType.QUOTE && (
         <div className="markdown-body py-3 lg:py-5">
           {postDetail.excerpt && (
-            <div className="mb-2 p-2 bg-black/5 dark:bg-black/10 text-sm">{postDetail.excerpt}</div>
+            <div className="mb-2 p-2 bg-black/5 dark:bg-black/10 text-sm">
+              {postDetail.excerpt?.[locale]}
+            </div>
           )}
-          <Markdown children={postDetail.content} imagesInContent={postDetail.imagesInContent} />
+          <Markdown
+            children={postDetail.content?.[locale]}
+            imagesInContent={postDetail.imagesInContent}
+          />
         </div>
       )}
       <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-900">
@@ -107,7 +109,7 @@ export default async function Archives({ params }: { params: { id: string; local
           <li className="flex items-center">
             <CameraOutline />
             &nbsp;{utcFormat(postDetail.galleryTime!)}&nbsp; {t('shotIn')}&nbsp;
-            {postDetail.galleryLocation}
+            {postDetail.galleryLocation?.[locale]}
           </li>
         )}
         {postDetail.type === PostType.MOVIE && (
@@ -119,7 +121,7 @@ export default async function Archives({ params }: { params: { id: string; local
         {postDetail.type === PostType.QUOTE && (
           <li className="flex items-center">
             <ContentOutline />
-            &nbsp; {t('quoteFrom')}: {postDetail.quoteAuthor}
+            &nbsp; {t('quoteFrom')}: {postDetail.quoteAuthor?.[locale]}
           </li>
         )}
       </ul>
@@ -130,7 +132,7 @@ export default async function Archives({ params }: { params: { id: string; local
             {randomPostsList.map((item: any) => (
               <li key={item.id} className="my-2">
                 <Link href={`/archives/${item.id}`} className="block link-light">
-                  {item.title || item.quoteContent}
+                  {item.title?.[locale] || item.quoteContent?.[locale]}
                 </Link>
               </li>
             ))}
@@ -151,17 +153,15 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   const { id } = props.params;
   const setting = await SettingServer.indexSetting();
   const postDetail = await PostServer.indexPostDetail(id);
+  const locale = await getLocale();
 
   /**
    * 格式化文章标题
    */
   const getTitle = () => {
     return postDetail.type === PostType.MOVIE
-      ? `${postDetail.title} ${postDetail.movieNameEn} (${utcFormat(
-          postDetail.movieTime!,
-          'YYYY',
-        )})`
-      : postDetail.title ?? postDetail.quoteContent;
+      ? `${postDetail.title?.[locale]} (${utcFormat(postDetail.movieTime!, 'YYYY')})`
+      : postDetail.title?.[locale] ?? postDetail.quoteContent?.[locale];
   };
 
   const title = decodeURI(getTitle() as string);
@@ -170,12 +170,12 @@ export async function generateMetadata(props: GenerateMetadataProps) {
     title: title,
     type: 'article',
     images: postDetail.imagesInContent.map((item) => item.url),
-    description: setting.siteName,
+    description: setting.siteName?.[locale],
   };
 
   return {
     title,
-    description: setting.siteName,
+    description: setting.siteName?.[locale],
     openGraph,
   };
 }

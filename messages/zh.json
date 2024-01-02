@@ -18,7 +18,8 @@
   "PostList": {
     "emptyTip": "该分类暂时没有文章哦！",
     "postUnderTag": "标签{tag}下的所有文章",
-    "postUnderAuthor": "作者{author}下的所有文章"
+    "postUnderAuthor": "作者{author}下的所有文章",
+    "listEnd": "到底了"
   },
   "Tag": {
     "directors": "导演",

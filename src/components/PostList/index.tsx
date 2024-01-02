@@ -12,7 +12,7 @@ import PostInfo from '@/src/components/PostInfo';
 import Signature from '@/src/components/Signature';
 import { AutoCenter, DotLoading } from 'antd-mobile';
 import { utcFormat } from '@/src/utils/utcFormat';
-import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl';
+import { NextIntlClientProvider, useLocale, useMessages, useTranslations } from 'next-intl';
 
 export interface PostListProps {
   initData: PostEntity[];
@@ -26,6 +26,7 @@ export default function PostList(props: PostListProps) {
   const { data, size, setSize } = useQueryPostList(queryParams, initData);
   const messages = useMessages();
   const locale = useLocale();
+  const t = useTranslations('PostList');
 
   const postList = data.flat();
   // @ts-ignore
@@ -69,13 +70,13 @@ export default function PostList(props: PostListProps) {
           >
             {item.type === PostType.MOVIE && (
               <>
-                {item.title} {item.movieNameEn} ({utcFormat(item.movieTime!, 'YYYY')})
+                {item.title?.[locale]} ({utcFormat(item.movieTime!, 'YYYY')})
               </>
             )}
             {[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.type) && <>{item.title}</>}
             {item.type === PostType.QUOTE && (
               <>
-                “{item.quoteContent}” —— {item.quoteAuthor}
+                “{item.quoteContent?.[locale]}” —— {item.quoteAuthor?.[locale]}
               </>
             )}
           </Link>
@@ -96,7 +97,7 @@ export default function PostList(props: PostListProps) {
   return (
     <>
       <div>{postList.map((item) => renderCard(item))}</div>
-      {isEnd && <Signature text={'到底了'} />}
+      {isEnd && <Signature text={t('listEnd')} />}
       {isLoadingMore && (
         <AutoCenter>
           <DotLoading />

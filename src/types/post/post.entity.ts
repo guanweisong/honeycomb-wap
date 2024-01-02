@@ -3,12 +3,13 @@ import { PostStatus } from '@/src/types/post/PostStatus';
 import { PostType } from '@/src/types/post/PostType';
 import { EnableType } from '@/src/types/EnableType';
 import { MediaEntity } from '@/src/types/media/media.entity';
+import { MultiLang } from '@/src/types/Language';
 
 export interface PostEntity {
   id: string;
-  title?: string;
-  content?: string;
-  excerpt?: string;
+  title?: MultiLang;
+  content?: MultiLang;
+  excerpt?: MultiLang;
   categoryId: string;
   category: {
     id: string;
@@ -31,15 +32,14 @@ export interface PostEntity {
     height?: number;
   };
   movieTime?: string;
-  movieNameEn?: string;
   movieDirectors?: TagEntity[];
   movieActors?: TagEntity[];
   movieStyles?: TagEntity[];
-  galleryLocation?: string;
+  galleryLocation?: MultiLang;
   galleryTime?: string;
   galleryStyles?: TagEntity[];
-  quoteAuthor?: string;
-  quoteContent?: string;
+  quoteAuthor?: MultiLang;
+  quoteContent?: MultiLang;
   commentCount: number;
   imagesInContent: MediaEntity[];
 }

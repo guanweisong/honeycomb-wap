@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from '@/src/navigation';
 import { TagEntity } from '@/src/types/tag/tag.entity';
 import { PostEntity } from '@/src/types/post/post.entity';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const Tag = (props: PostEntity) => {
   const t = useTranslations('Tag');
+  const locale = useLocale();
 
   const getTags = (item: TagEntity[] | undefined, label: string) => {
     if (item && item.length > 0) {
@@ -16,8 +17,12 @@ const Tag = (props: PostEntity) => {
             return (
               <span key={n.id}>
                 {index !== 0 && '、'}
-                <Link href={`/list/tags/${encodeURI(n.name)}`} className="link-light">
-                  {n.name}
+                <Link
+                  // @ts-ignore
+                  href={`/list/tags/${encodeURI(n.name[locale])}`}
+                  className="link-light"
+                >
+                  {n.name[locale]}
                 </Link>
               </span>
             );
