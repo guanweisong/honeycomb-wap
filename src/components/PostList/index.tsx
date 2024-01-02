@@ -59,7 +59,7 @@ export default function PostList(props: PostListProps) {
                 src={item.cover?.url ?? ''}
                 width={item.cover?.width}
                 height={item.cover?.height}
-                alt={item.title ?? ''}
+                alt={item.title?.[locale] ?? ''}
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 100vw, 33vw"
               />
             </Link>
@@ -73,7 +73,9 @@ export default function PostList(props: PostListProps) {
                 {item.title?.[locale]} ({utcFormat(item.movieTime!, 'YYYY')})
               </>
             )}
-            {[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.type) && <>{item.title}</>}
+            {[PostType.ARTICLE, PostType.PHOTOGRAPH].includes(item.type) && (
+              <>{item.title?.[locale]}</>
+            )}
             {item.type === PostType.QUOTE && (
               <>
                 “{item.quoteContent?.[locale]}” —— {item.quoteAuthor?.[locale]}
