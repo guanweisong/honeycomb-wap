@@ -1,10 +1,4 @@
 {
-  "Common": {
-    "site": {
-      "title": "Scarecrow's blog",
-      "subTitle": "The scarecrow's plot"
-    }
-  },
   "Archive": {
     "released": "Released in",
     "quoteFrom": "Quote from",

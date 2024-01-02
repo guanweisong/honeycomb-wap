@@ -1,10 +1,4 @@
 {
-  "Common": {
-    "site": {
-      "title": "稻草人博客",
-      "subTitle": "稻草人的自留地"
-    }
-  },
   "Archive": {
     "released": "上映于",
     "quoteFrom": "引用自",
