@@ -11,6 +11,7 @@ import zhIconLight from './img/zh.light.svg';
 import enIconLight from './img/en.light.svg';
 import { Theme } from '@/src/types/Theme';
 import { Language } from '@/src/types/Language';
+import { Button } from 'antd-mobile';
 
 const LanguageSwitcher = () => {
   const locale = useLocale();
@@ -41,9 +42,9 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <span onClick={handleChange}>
+    <Button onClick={handleChange} fill={'none'}>
       <Image src={localeIcon[locale]} alt="switch language" className="w-5 cursor-pointer" />
-    </span>
+    </Button>
   );
 };
 
