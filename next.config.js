@@ -15,7 +15,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['honeycomb-1257715480.cos.ap-shanghai.myqcloud.com', 'static.guanweisong.com'],
+    domains: ['static.guanweisong.com'],
     formats: ['image/avif', 'image/webp'],
   },
   compiler: {
