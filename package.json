@@ -8,7 +8,6 @@
     "analyze": "cross-env ANALYZE=1 next build"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^9.7.1",
     "ahooks": "^3.7.4",
     "antd-mobile": "^5.27.0",
     "antd-mobile-icons": "^0.3.0",

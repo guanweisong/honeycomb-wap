@@ -1,9 +1,5 @@
 const path = require('path');
 const withNextIntl = require('next-intl/plugin')();
-const withPWA = require('@ducanh2912/next-pwa').default({
-  dest: 'public',
-});
-
 /**
  * @type {import('next').NextConfig}
  */
@@ -39,4 +35,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(withPWA(nextConfig));
+module.exports = withNextIntl(nextConfig);
