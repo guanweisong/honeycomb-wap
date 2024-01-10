@@ -15,7 +15,13 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['static.guanweisong.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static.guanweisong.com',
+        port: '',
+      },
+    ],
     formats: ['image/avif', 'image/webp'],
   },
   compiler: {
