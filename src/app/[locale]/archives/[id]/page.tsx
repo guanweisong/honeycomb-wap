@@ -93,7 +93,7 @@ export default async function Archives({ params }: { params: { id: string; local
       />
       {postDetail.type !== PostType.QUOTE && (
         <div className="markdown-body py-3 lg:py-5">
-          {postDetail.excerpt && (
+          {postDetail.excerpt?.[locale] && (
             <div className="mb-2 p-2 bg-black/5 dark:bg-black/10 text-sm">
               {postDetail.excerpt?.[locale]}
             </div>
