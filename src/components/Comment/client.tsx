@@ -51,6 +51,10 @@ const CommentClient = (props: CommentClientProps) => {
       content: e.currentTarget.content.value,
       postId: id,
     } as CommentCreate;
+    const site = e.currentTarget.site.value;
+    if (site) {
+      data.site = site;
+    }
     const captcha = new TencentCaptcha('2090829333', async (res: any) => {
       if (res.ret === 0) {
         data.captcha = {
@@ -88,7 +92,15 @@ const CommentClient = (props: CommentClientProps) => {
               <img src={item.avatar} className="w-full" />
             </div>
             <div className="overflow-hidden">
-              <div className="text-pink-500">{item.author}</div>
+              <div>
+                {item.site ? (
+                  <a className="text-pink-500" href={item.site}>
+                    {item.author}
+                  </a>
+                ) : (
+                  item.author
+                )}
+              </div>
               <div className="mt-1 text-gray-500 whitespace-pre-wrap">
                 {item.status !== CommentStatus.BAN ? item.content : t('banMessage')}
               </div>
@@ -141,7 +153,14 @@ const CommentClient = (props: CommentClientProps) => {
             />
             <input
               className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
-              type={'text'}
+              type={'url'}
+              placeholder={t('form.site')}
+              name={'site'}
+              maxLength={30}
+            />
+            <input
+              className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+              type={'email'}
               placeholder={t('form.email')}
               name={'email'}
               required

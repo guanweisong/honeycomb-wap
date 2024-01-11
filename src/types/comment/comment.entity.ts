@@ -6,6 +6,7 @@ export interface CommentEntity {
   author: string;
   email: string;
   ip: string;
+  site?: string;
   createdAt: string;
   updatedAt: string;
   content: string;

@@ -39,9 +39,10 @@
     "summary": "{count, plural, =0 {# message} other {# messages}}",
     "banMessage": "This comment has been blocked",
     "form": {
-      "name": "Please enter name",
-      "email": "Please enter email",
-      "content": "Please enter a message",
+      "name": "Please enter name（require）",
+      "email": "Please enter email（require）",
+      "site": "Please enter site url",
+      "content": "Please enter a message（require）",
       "submit": "Submit",
       "cancel": "Cancel",
       "reply": "Reply"
