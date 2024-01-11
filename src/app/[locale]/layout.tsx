@@ -1,5 +1,6 @@
 import React from 'react';
 import Script from 'next/script';
+import type { Viewport } from 'next';
 import '@/src/assets/markdown.scss';
 import 'antd-mobile/es/global';
 import BackToTop from '@/src/components/BackToTop';
@@ -22,9 +23,6 @@ export default function LocaleLayout({
   return (
     <html suppressHydrationWarning lang={locale}>
       <head>
-        <meta name="viewport" content="width=device-width" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="lazyOnload" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-F7GLX9X5VT" />
@@ -50,3 +48,14 @@ export default function LocaleLayout({
     </html>
   );
 }
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: '#111827' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
