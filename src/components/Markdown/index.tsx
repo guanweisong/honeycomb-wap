@@ -18,6 +18,7 @@ const Markdown = (props: MarkDownProps) => {
           const currentMedia = imagesInContent.find((item) => item.url === props.src);
           return (
             <Image
+              priority={true}
               src={props.src!}
               alt={currentMedia?.name!}
               width={currentMedia?.width}
