@@ -19,6 +19,7 @@ const nextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 600,
   },
   compiler: {
     removeConsole:
