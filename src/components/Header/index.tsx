@@ -28,12 +28,14 @@ export default async function Header() {
       title: { zh: '首页', en: 'Home' },
       isHome: true,
       id: 'home',
+      path: '/',
       children: [],
     },
     ...menu,
     {
       title: { zh: '比邻', en: 'Links' },
       id: 'links',
+      path: 'links',
       url: '/links',
       children: [],
     },
@@ -100,7 +102,7 @@ export default async function Header() {
             <span className="ml-2">
               <ThemeSwitcher />
             </span>
-            <span className="ml-4">
+            <span className="ml-2">
               <LanguageSwitcher />
             </span>
           </div>
