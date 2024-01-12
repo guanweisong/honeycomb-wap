@@ -13,14 +13,14 @@ import { CommentCreate } from '@/src/types/comment/comment.create';
 import { refreshPath } from '@/src/utils/refreshPath';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import CommentServer from '@/src/services/comment';
 
 export interface CommentClientProps extends CommentProps {
   queryCommentPromise: Promise<PaginationResponse<CommentEntity[]>>;
-  createCommentFn: (data: CommentCreate) => Promise<CommentEntity>;
 }
 
 const CommentClient = (props: CommentClientProps) => {
-  const { id, queryCommentPromise, createCommentFn } = props;
+  const { id, queryCommentPromise } = props;
   const [isPending, startTransition] = useTransition();
   const comment = use(queryCommentPromise);
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
@@ -66,7 +66,7 @@ const CommentClient = (props: CommentClientProps) => {
         }
         console.log('handleSubmit', data);
         startTransition(async () => {
-          const result = await createCommentFn(data);
+          const result = await CommentServer.create(data);
           if (result.id) {
             startTransition(() => refreshPath(pathname));
             startTransition(router.refresh);

@@ -40,7 +40,7 @@
     "banMessage": "This comment has been blocked",
     "form": {
       "name": "Please enter name（require）",
-      "email": "Please enter email（require）",
+      "email": "Please enter email（require）(not public)",
       "site": "Please enter site url",
       "content": "Please enter a message（require）",
       "submit": "Submit",
