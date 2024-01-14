@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, use, useTransition } from 'react';
+import React, { useRef, useState, use, useTransition, useEffect } from 'react';
 import { Button } from 'antd-mobile';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
 import Card from '../Card';
@@ -20,6 +20,12 @@ export interface CommentClientProps extends CommentProps {
   queryCommentPromise: Promise<PaginationResponse<CommentEntity[]>>;
 }
 
+export interface User {
+  author: string;
+  site: string;
+  email: string;
+}
+
 const CommentClient = (props: CommentClientProps) => {
   const { id, type, queryCommentPromise } = props;
   const [isPending, startTransition] = useTransition();
@@ -29,6 +35,14 @@ const CommentClient = (props: CommentClientProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations('Comment');
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
 
   /**
    * 评论回复事件
@@ -46,11 +60,19 @@ const CommentClient = (props: CommentClientProps) => {
    */
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const data = {
-      author: e.currentTarget.author.value,
-      email: e.currentTarget.email.value,
-      content: e.currentTarget.content.value,
-    } as CommentCreate;
+    let userData = user;
+    if (!userData) {
+      userData = {
+        author: e.currentTarget.author.value,
+        email: e.currentTarget.email.value,
+      } as User;
+      const site = e.currentTarget.site.value;
+      if (site) {
+        userData.site = site;
+      }
+    }
+    const data = { ...userData } as CommentCreate;
+    data.content = e.currentTarget.content.value;
     switch (type) {
       case MenuType.CATEGORY:
         data.postId = id;
@@ -62,10 +84,7 @@ const CommentClient = (props: CommentClientProps) => {
         data.customId = id;
         break;
     }
-    const site = e.currentTarget.site.value;
-    if (site) {
-      data.site = site;
-    }
+
     const captcha = new TencentCaptcha('2090829333', async (res: any) => {
       if (res.ret === 0) {
         data.captcha = {
@@ -83,6 +102,8 @@ const CommentClient = (props: CommentClientProps) => {
             startTransition(router.refresh);
             handleReply(null);
             formRef.current?.reset();
+            localStorage.setItem('user', JSON.stringify(userData));
+            setUser(userData);
           }
         });
       }
@@ -154,29 +175,50 @@ const CommentClient = (props: CommentClientProps) => {
             </div>
           )}
           <form onSubmit={handleSubmit} ref={formRef}>
-            <input
-              className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
-              type={'text'}
-              placeholder={t('form.name')}
-              name={'author'}
-              maxLength={20}
-              required
-            />
-            <input
-              className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
-              type={'url'}
-              placeholder={t('form.site')}
-              name={'site'}
-              maxLength={30}
-            />
-            <input
-              className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
-              type={'email'}
-              placeholder={t('form.email')}
-              name={'email'}
-              required
-              maxLength={30}
-            />
+            {user ? (
+              <div className="my-2 flex justify-between">
+                <span>欢迎回来: {user.author}</span>
+                <span className="ml-2">
+                  不是你？
+                  <a
+                    className="text-pink-500"
+                    onClick={() => {
+                      setUser(undefined);
+                      localStorage.removeItem('user');
+                    }}
+                  >
+                    [点击退出]
+                  </a>
+                </span>
+              </div>
+            ) : (
+              <>
+                <input
+                  className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+                  type={'text'}
+                  placeholder={t('form.name')}
+                  name={'author'}
+                  maxLength={20}
+                  required
+                />
+                <input
+                  className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+                  type={'url'}
+                  placeholder={t('form.site')}
+                  name={'site'}
+                  maxLength={30}
+                />
+                <input
+                  className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+                  type={'email'}
+                  placeholder={t('form.email')}
+                  name={'email'}
+                  required
+                  maxLength={30}
+                />
+              </>
+            )}
+
             <textarea
               className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2 bg-transparent dark:border-gray-900"
               placeholder={t('form.content')}
