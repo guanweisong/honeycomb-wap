@@ -14,13 +14,14 @@ import { refreshPath } from '@/src/utils/refreshPath';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import CommentServer from '@/src/services/comment';
+import { MenuType } from '@/src/types/menu/MenuType';
 
 export interface CommentClientProps extends CommentProps {
   queryCommentPromise: Promise<PaginationResponse<CommentEntity[]>>;
 }
 
 const CommentClient = (props: CommentClientProps) => {
-  const { id, queryCommentPromise } = props;
+  const { id, type, queryCommentPromise } = props;
   const [isPending, startTransition] = useTransition();
   const comment = use(queryCommentPromise);
   const [replyTo, setReplyTo] = useState<CommentEntity | null>(null);
@@ -49,8 +50,18 @@ const CommentClient = (props: CommentClientProps) => {
       author: e.currentTarget.author.value,
       email: e.currentTarget.email.value,
       content: e.currentTarget.content.value,
-      postId: id,
     } as CommentCreate;
+    switch (type) {
+      case MenuType.CATEGORY:
+        data.postId = id;
+        break;
+      case MenuType.PAGE:
+        data.pageId = id;
+        break;
+      case MenuType.CUSTOM:
+        data.customId = id;
+        break;
+    }
     const site = e.currentTarget.site.value;
     if (site) {
       data.site = site;
@@ -67,7 +78,7 @@ const CommentClient = (props: CommentClientProps) => {
         console.log('handleSubmit', data);
         startTransition(async () => {
           const result = await CommentServer.create(data);
-          if (result.id) {
+          if (result?.id) {
             startTransition(() => refreshPath(pathname));
             startTransition(router.refresh);
             handleReply(null);

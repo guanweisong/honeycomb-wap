@@ -1,7 +1,9 @@
 import { Captcha } from '@/src/types/Captcha';
 
 export interface CommentCreate {
-  postId: string;
+  postId?: string;
+  pageId?: string;
+  customId?: string;
   email: string;
   content: string;
   site?: string;

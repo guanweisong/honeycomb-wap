@@ -8,4 +8,7 @@ export interface SettingEntity {
   siteSignature: MultiLang;
   siteRecordNo: string;
   siteRecordUrl: string;
+  customObjectId: {
+    link: string;
+  };
 }

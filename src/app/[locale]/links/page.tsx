@@ -5,6 +5,7 @@ import Comment from '@/src/components/Comment';
 import PageTitle from '@/src/components/PageTitle';
 import SettingServer from '@/src/services/setting';
 import { getLocale, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { MenuType } from '@/src/types/menu/MenuType';
 
 const Links = async ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
@@ -53,7 +54,7 @@ const Links = async ({ params: { locale } }: { params: { locale: string } }) => 
           <div>{t('applyStep.stepThree')}</div>
         </div>
       </div>
-      <Comment id="5349b4ddd2781d08c09890f3" />
+      <Comment id={setting.customObjectId.link} type={MenuType.CUSTOM} />
     </div>
   );
 };

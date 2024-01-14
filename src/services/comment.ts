@@ -2,13 +2,15 @@ import request from '@/src/utils/request';
 import { CommentCreate } from '@/src/types/comment/comment.create';
 import PaginationResponse from '@/src/types/pagination.response';
 import { CommentEntity } from '@/src/types/comment/comment.entity';
+import { MenuType } from '@/src/types/menu/MenuType';
 
 export default class CommentServer {
   // 根据文章id获取评论列表
-  static index(id: string): Promise<PaginationResponse<CommentEntity[]>> {
+  static index(id: string, type: MenuType): Promise<PaginationResponse<CommentEntity[]>> {
     console.log('comment=>service=>index');
     return request({
       url: `/comment/${id}`,
+      params: { type },
       method: 'get',
     });
   }

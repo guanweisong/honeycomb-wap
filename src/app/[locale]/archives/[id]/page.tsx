@@ -18,6 +18,7 @@ import PageTitle from '@/src/components/PageTitle';
 import ViewServer from '@/src/services/view';
 import { UpdateType } from '@/src/types/view/update.view';
 import { getLocale, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { MenuType } from '@/src/types/menu/MenuType';
 
 export default async function Archives({ params }: { params: { id: string; locale: string } }) {
   const { id, locale } = params;
@@ -139,7 +140,7 @@ export default async function Archives({ params }: { params: { id: string; local
           </ul>
         </Card>
       )}
-      <Comment id={id} />
+      <Comment id={id} type={MenuType.CATEGORY} />
     </>
   );
 }
