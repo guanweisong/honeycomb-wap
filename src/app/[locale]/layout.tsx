@@ -36,7 +36,7 @@ export default function LocaleLayout({
         </Script>
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class">
           <div className="min-h-full pt-14 lg:pt-24">
             <Header />
             <div className={'container px-2'}>{children}</div>

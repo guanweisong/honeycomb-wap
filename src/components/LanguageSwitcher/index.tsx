@@ -17,7 +17,7 @@ const LanguageSwitcher = () => {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   const otherLocale = locale === Language.En ? Language.Zh : Language.En;
@@ -37,8 +37,8 @@ const LanguageSwitcher = () => {
   };
 
   const localeIcon = {
-    en: theme === Theme.Dark ? enIconLight : enIcon,
-    zh: theme === Theme.Dark ? zhIconLight : zhIcon,
+    en: resolvedTheme === Theme.Dark ? enIconLight : enIcon,
+    zh: resolvedTheme === Theme.Dark ? zhIconLight : zhIcon,
   };
 
   return (

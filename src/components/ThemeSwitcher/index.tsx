@@ -6,7 +6,7 @@ import { Theme } from '@/src/types/Theme';
 
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -23,7 +23,7 @@ export const ThemeSwitcher = () => {
   return (
     <DarkModeSwitch
       size={20}
-      checked={theme === Theme.Dark}
+      checked={resolvedTheme === Theme.Dark}
       onChange={toggleDarkMode}
       sunColor="#333"
       moonColor="#ccc"
