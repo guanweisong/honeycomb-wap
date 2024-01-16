@@ -7,7 +7,7 @@ export default async function Footer() {
   const locale = useLocale();
 
   return (
-    <div className="text-center py-2 px-2 text-xs text-gray-500 lg:py-4">
+    <div className="text-center py-4 px-2 text-xs text-gray-500">
       <div>{setting.siteSignature[locale]}</div>
       <div>
         ©{dayjs().format('YYYY')}&nbsp;{setting.siteCopyright[locale]}
