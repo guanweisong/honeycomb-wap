@@ -4,6 +4,7 @@ import { MenuEntity } from '@/src/types/menu/menu.entity';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import React from 'react';
 import { Link } from '@/src/navigation';
+import { useLocale } from 'next-intl';
 
 export interface BreadCrumbProps {
   menu: MenuEntity[];
@@ -11,7 +12,7 @@ export interface BreadCrumbProps {
 
 export interface BreadData {
   label: React.ReactNode;
-  link?: any;
+  link?: string;
 }
 
 const Breadcrumb = (props: BreadCrumbProps) => {
@@ -19,12 +20,13 @@ const Breadcrumb = (props: BreadCrumbProps) => {
   const segments = useSelectedLayoutSegments();
   const segmentType = segments[0];
   const segmentTypePath = segments[1]?.split('/') ?? [];
+  const locale = useLocale();
 
   const HomeItem = menu.find((item) => item.id === 'home');
 
   const breadData: BreadData[] = [
     {
-      label: HomeItem?.title,
+      label: HomeItem?.title?.[locale],
       link: '/list/category',
     },
   ];
@@ -32,18 +34,18 @@ const Breadcrumb = (props: BreadCrumbProps) => {
   switch (segmentType) {
     case 'list':
       if (segmentTypePath[1]) {
-        const firstLevelItem = menu.find((item) => item.titleEn === segmentTypePath[1]);
+        const firstLevelItem = menu.find((item) => item.path === segmentTypePath[1]);
         if (firstLevelItem) {
           breadData.push({
-            label: firstLevelItem.title,
+            label: firstLevelItem.title?.[locale],
           });
         }
       }
       if (segmentTypePath[2]) {
-        const secondLevelItem = menu.find((item) => item.titleEn === segmentTypePath[2]);
+        const secondLevelItem = menu.find((item) => item.path === segmentTypePath[2]);
         if (secondLevelItem) {
           breadData.push({
-            label: secondLevelItem.title,
+            label: secondLevelItem.title?.[locale],
           });
         }
       }
