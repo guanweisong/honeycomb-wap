@@ -6,9 +6,19 @@
   --adm-color-primary: rgb(236, 72, 153);
 }
 
+.light {
+  --auto-front-gray: 0 0 0;
+  --auto-back-gray: 255 255 255;
+}
+
+.dark {
+  --auto-front-gray: 255 255 255;
+  --auto-back-gray: 17 24 39;
+}
+
 body, input, textarea {
   @apply dark:bg-gray-800;
-  @apply dark:text-gray-500;
+  @apply dark:text-gray-400;
   @apply font-light;
   a {
     color: inherit;
@@ -29,10 +39,10 @@ a {
   }
   &.link-light {
     &:link{
-      @apply text-gray-500;
+      @apply text-gray-400;
     }
     &:visited {
-      @apply text-gray-500;
+      @apply text-gray-400;
     }
     &:hover {
       @apply text-gray-500 underline;

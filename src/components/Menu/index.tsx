@@ -66,7 +66,7 @@ const Menu = (props: MenuProps) => {
     return (
       <ul
         className={classNames('absolute backdrop-blur lg:static lg:flex py-2 lg:py-0 text-base', {
-          'inset-x-0 top-full shadow-md bg-white/80 dark:bg-gray-900/80': visible,
+          'inset-x-0 top-full shadow-md bg-auto-back-gray/80': visible,
           ['hidden']: !visible,
         })}
         ref={ref1}
@@ -79,7 +79,7 @@ const Menu = (props: MenuProps) => {
                 'lg:relative leading-10 lg:z-20 px-4 lg:px-6 lg:flex lg:items-center',
                 {
                   'lg:bg-pink-500 text-pink-500 lg:text-white': m.link === currentCategory[0],
-                  'dark:text-gray-500 group-hover:lg:text-pink-500 group-hover:lg:bg-gray-100 dark:group-hover:lg:bg-gray-900':
+                  'group-hover:lg:text-pink-500 group-hover:lg:bg-auto-back-gray/90':
                     m.link !== currentCategory[0],
                 },
               )}
@@ -87,7 +87,7 @@ const Menu = (props: MenuProps) => {
               {m.label}
             </Link>
             {m.children && (
-              <ul className="lg:absolute ml-4 lg:ml-0 lg:opacity-0 lg:bg-white dark:lg:bg-gray-900 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md group-hover:lg:opacity-100">
+              <ul className="lg:absolute ml-4 lg:ml-0 lg:opacity-0 lg:bg-auto-back-gray/90 lg:border-t-2 lg:border-pink-700 lg:z-10 lg:top-full lg:left-0 lg:right-0 lg:transition-all lg:-translate-y-full group-hover:lg:translate-y-0 group-hover:lg:shadow-md group-hover:lg:opacity-100">
                 {m.children.map((n) => (
                   <li className="inline-block lg:block" key={`second-level-${n.link}`}>
                     <Link
@@ -96,7 +96,6 @@ const Menu = (props: MenuProps) => {
                         'block leading-10 lg:text-center hover:lg:text-pink-500 px-4 lg:px-0',
                         {
                           'text-pink-500': n.link === currentCategory[1],
-                          'dark:text-gray-500': n.link !== currentCategory[1],
                         },
                       )}
                     >

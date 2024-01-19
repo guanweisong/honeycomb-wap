@@ -19,7 +19,7 @@ const BackToTop = () => {
 
   return show ? (
     <a
-      className="dark:text-gray-400 fixed text-3xl translate-x-96 transition-all bottom-10 right-1/3 bg-white dark:bg-gray-600 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:shadow-xl"
+      className="fixed text-3xl translate-x-96 transition-all bottom-10 right-1/3 bg-auto-back-gray w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:shadow-xl"
       onClick={goTop}
     >
       <UpOutline />

@@ -6,6 +6,7 @@ import PageTitle from '@/src/components/PageTitle';
 import SettingServer from '@/src/services/setting';
 import { getLocale, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { MenuType } from '@/src/types/menu/MenuType';
+import classNames from 'classnames';
 
 const Links = async ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
@@ -19,16 +20,22 @@ const Links = async ({ params: { locale } }: { params: { locale: string } }) => 
     <div>
       <PageTitle>{t('slogan')}</PageTitle>
       {result?.total > 0 ? (
-        <div className="divide-y divide-dashed py-2 lg:py-4">
-          {result.list.map((item) => (
-            <a href={item.url} target="_blank" className="flex items-center py-2">
+        <div className="py-2 lg:py-4">
+          {result.list.map((item, index) => (
+            <a
+              href={item.url}
+              target="_blank"
+              className={classNames('flex items-center py-2', {
+                'border-t-0.5 border-dashed border-auto-front-gray/30': index > 0,
+              })}
+            >
               <span
                 className="inline-block w-10 h-10 bg-no-repeat bg-center bg-contain mr-2"
                 style={{ backgroundImage: `url(${item.logo})` }}
               />
               <div>
                 <div className="text-base">{item.name}</div>
-                <div className="text-gray-400">{item.description}</div>
+                <div className="text-auto-front-gray/50">{item.description}</div>
               </div>
             </a>
           ))}
@@ -36,11 +43,11 @@ const Links = async ({ params: { locale } }: { params: { locale: string } }) => 
       ) : (
         <NoData title={t('emptyTip')} />
       )}
-      <div className="dark:text-gray-400">
+      <div>
         <div className="mb-1">{t('applyStep.title')}</div>
-        <div className="p-2 bg-gray-50 dark:bg-gray-700 ">
+        <div>
           <div>{t('applyStep.stepOne')}</div>
-          <div className="text-xs border border-dashed border-gray-300 dark:border-gray-900 my-1 px-1 py-1">
+          <div className="text-xs border-0.5 border-dashed border-auto-front-gray/50 my-1 px-1 py-1">
             <div>
               {t('applyStep.nameLabel')}: {setting.siteName?.[locale]}
             </div>

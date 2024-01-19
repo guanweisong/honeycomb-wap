@@ -88,11 +88,10 @@ export default async function Header() {
 
   return (
     <>
-      <div className="mb-2 fixed left-0 right-0 top-0 before:content-[''] before:absolute before:inset-0 before:backdrop-blur before:bg-white/80 before:dark:bg-gray-900/80 lg:mb-4 h-12 lg:h-20 z-50 border-b dark:border-gray-900">
+      <div className="mb-2 fixed left-0 right-0 top-0 before:content-[''] before:absolute before:inset-0 before:backdrop-blur before:bg-auto-back-gray/80 lg:mb-4 h-12 lg:h-20 z-50">
         <div className="container relative box-border h-full flex justify-between items-center">
           <div className="h-full flex items-center">
             <Link
-              // @ts-ignore
               href={'/list/category'}
               scroll={false}
               className="text-pink-500 text-xl lg:text-2xl ml-2"

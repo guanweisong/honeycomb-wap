@@ -11,7 +11,15 @@ module.exports = {
         xl: '1280px',
       },
     },
-    extend: {},
+    extend: {
+      borderWidth: {
+        0.5: 0.5,
+      },
+      colors: {
+        'auto-front-gray': 'rgba(var(--auto-front-gray))',
+        'auto-back-gray': 'rgba(var(--auto-back-gray))',
+      },
+    },
   },
   plugins: [],
   darkMode: 'class',

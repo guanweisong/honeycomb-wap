@@ -80,9 +80,7 @@ export default async function List({ params }: { params: { slug: string; locale:
 
   return (
     <>
-      {['tags', 'authors'].includes(type!) && (
-        <div className="mb-2 lg:mb-4 dark:text-gray-400">{getTitle()}</div>
-      )}
+      {['tags', 'authors'].includes(type!) && <div className="mb-2 lg:mb-4">{getTitle()}</div>}
       {postList.length > 0 ? (
         <NextIntlClientProvider messages={messages}>
           <PostList initData={postList} pageSize={PAGE_SIZE} queryParams={queryParams} />

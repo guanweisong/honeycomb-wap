@@ -33,7 +33,7 @@ const Tag = (props: PostEntity) => {
   };
 
   return (
-    <div className="list-none text-gray-400">
+    <div className="list-none">
       {getTags(props.movieDirectors, t('directors'))}
       {getTags(props.movieActors, t('actors'))}
       {getTags(props.movieStyles, t('styles'))}

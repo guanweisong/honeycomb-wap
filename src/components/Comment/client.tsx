@@ -119,7 +119,7 @@ const CommentClient = (props: CommentClientProps) => {
     return data?.map((item) => {
       return (
         <li className="relative" key={item.id}>
-          <div className="overflow-hidden py-4 border-b border-dashed dark:border-gray-900">
+          <div className="overflow-hidden py-4 border-b-0.5 border-dashed border-auto-front-gray/50">
             <div className="float-left w-12 h-12 mr-5">
               <img src={item.avatar} className="w-full" />
             </div>
@@ -133,13 +133,13 @@ const CommentClient = (props: CommentClientProps) => {
                   item.author
                 )}
               </div>
-              <div className="mt-1 text-gray-500 whitespace-pre-wrap">
+              <div className="mt-1 whitespace-pre-wrap">
                 {item.status !== CommentStatus.BAN ? item.content : t('banMessage')}
               </div>
             </div>
-            <div className="absolute right-2 top-4">
-              <span className="text-gray-400">{utcFormat(item.createdAt)}</span>
-              <span className="text-gray-400 mx-1">/</span>
+            <div className="absolute right-2 top-4 text-auto-front-gray/50">
+              <span>{utcFormat(item.createdAt)}</span>
+              <span className="mx-1">/</span>
               <a className="text-pink-500" onClick={() => handleReply(item)}>
                 {t('form.reply')}
               </a>
@@ -167,7 +167,7 @@ const CommentClient = (props: CommentClientProps) => {
               <span className="text-pink-500">Reply to:</span>
               <span className="mx-2">{replyTo?.author}</span>
               <a
-                className="text-gray-400 transition-all hover:text-gray-500"
+                className="transition-all text-auto-front-gray/50"
                 onClick={() => handleReply(null)}
               >
                 [{t('form.cancel')}]
@@ -177,9 +177,11 @@ const CommentClient = (props: CommentClientProps) => {
           <form onSubmit={handleSubmit} ref={formRef}>
             {user ? (
               <div className="my-2 flex justify-between">
-                <span>欢迎回来: {user.author}</span>
+                <span>
+                  {t('welcomeBack')}: {user.author}
+                </span>
                 <span className="ml-2">
-                  不是你？
+                  {t('notYou')}
                   <a
                     className="text-pink-500"
                     onClick={() => {
@@ -187,14 +189,14 @@ const CommentClient = (props: CommentClientProps) => {
                       localStorage.removeItem('user');
                     }}
                   >
-                    [点击退出]
+                    [{t('quit')}]
                   </a>
                 </span>
               </div>
             ) : (
               <>
                 <input
-                  className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+                  className="block border-b-0.5 border-auto-front-gray/40 w-full leading-10 outline-0 focus:border-pink-400 bg-transparent"
                   type={'text'}
                   placeholder={t('form.name')}
                   name={'author'}
@@ -202,14 +204,14 @@ const CommentClient = (props: CommentClientProps) => {
                   required
                 />
                 <input
-                  className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+                  className="block border-b-0.5 border-auto-front-gray/40 w-full leading-10 outline-0 focus:border-pink-400 bg-transparent"
                   type={'url'}
                   placeholder={t('form.site')}
                   name={'site'}
                   maxLength={30}
                 />
                 <input
-                  className="block border-b w-full leading-10 outline-0 focus:border-pink-400 bg-transparent dark:border-gray-900"
+                  className="block border-b-0.5 border-auto-front-gray/40 w-full leading-10 outline-0 focus:border-pink-400 bg-transparent"
                   type={'email'}
                   placeholder={t('form.email')}
                   name={'email'}
@@ -220,7 +222,7 @@ const CommentClient = (props: CommentClientProps) => {
             )}
 
             <textarea
-              className="block border-b w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2 bg-transparent dark:border-gray-900"
+              className="block border-b-0.5  border-auto-front-gray/40 w-full leading-6 pt-2 outline-0 focus:border-pink-400 mb-2 bg-transparent"
               placeholder={t('form.content')}
               name={'content'}
               required

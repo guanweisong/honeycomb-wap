@@ -38,6 +38,9 @@
     "title": "Leave a message",
     "summary": "{count, plural, =0 {# message} other {# messages}}",
     "banMessage": "This comment has been blocked",
+    "welcomeBack": "Welcome back",
+    "notYou": "Not You？",
+    "quit": "Click to Quit",
     "form": {
       "name": "Please enter name（require）",
       "email": "Please enter email（require）(not public)",

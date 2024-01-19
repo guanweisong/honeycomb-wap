@@ -19,7 +19,7 @@ export default async function Pages({ params }: { params: { id: string; locale: 
   unstable_setRequestLocale(locale);
   const promise = [];
   promise.push(PageServer.indexPageDetail(id));
-  promise.push(CommentServer.index(id));
+  promise.push(CommentServer.index(id, MenuType.PAGE));
   promise.push(ViewServer.updateViews({ type: UpdateType.Page, id }));
   const [pageDetail, commentsData] = (await Promise.all(promise)) as [
     PageEntity,

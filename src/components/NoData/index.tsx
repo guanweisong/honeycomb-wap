@@ -7,7 +7,7 @@ export interface NoData {
 const NoData = (props: NoData) => {
   const { title } = props;
 
-  return <div className="py-20 text-gray-400 text-center">{title}</div>;
+  return <div className="py-20 text-center">{title}</div>;
 };
 
 export default NoData;

@@ -34,7 +34,7 @@ export default async function Archives({ params }: { params: { id: string; local
       number: 10,
     }),
   );
-  promise.push(CommentServer.index(id));
+  promise.push(CommentServer.index(id, MenuType.CATEGORY));
   promise.push(ViewServer.updateViews({ type: UpdateType.Post, id }));
   const [randomPostsList, commentsData] = (await Promise.all(promise)) as [
     PostEntity[],
@@ -95,7 +95,7 @@ export default async function Archives({ params }: { params: { id: string; local
       {postDetail.type !== PostType.QUOTE && (
         <div className="markdown-body py-3 lg:py-5">
           {postDetail.excerpt?.[locale] && (
-            <div className="mb-2 p-2 bg-black/5 dark:bg-black/10 text-sm">
+            <div className="mb-2 p-2 bg-auto-front-gray/5 text-sm">
               {postDetail.excerpt?.[locale]}
             </div>
           )}
@@ -105,7 +105,7 @@ export default async function Archives({ params }: { params: { id: string; local
           />
         </div>
       )}
-      <ul className="border-t border-dashed py-2 text-gray-500 dark:border-gray-900">
+      <ul className="border-t-0.5 border-dashed border-auto-front-gray/30 py-2">
         {postDetail.type === PostType.PHOTOGRAPH && (
           <li className="flex items-center">
             <CameraOutline />

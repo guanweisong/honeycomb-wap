@@ -61,10 +61,10 @@ const PostInfo = (props: PostInfoProps) => {
   return (
     <ul
       className={classNames(
-        'flex justify-center text-sm py-2 border-dashed text-gray-500 dark:border-gray-900',
+        'flex justify-center text-sm py-2 border-dashed border-auto-front-gray/30',
         {
-          'border-b': border === 'bottom',
-          'border-t': border === 'top',
+          'border-b-0.5': border === 'bottom',
+          'border-t-0.5': border === 'top',
         },
       )}
     >

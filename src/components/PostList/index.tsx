@@ -67,7 +67,7 @@ export default function PostList(props: PostListProps) {
           )}
           <Link
             href={`/archives/${item.id}`}
-            className="p-2 lg:p-4 text-center block text-base lg:text-lg dark:text-gray-400"
+            className="p-2 lg:p-4 text-center block text-base lg:text-lg"
           >
             {item.type === PostType.MOVIE && (
               <>

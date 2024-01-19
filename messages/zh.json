@@ -37,6 +37,10 @@
   "Comment": {
     "title": "发表留言",
     "summary": "{count}条留言",
+    "banMessage": "该条评论已屏蔽",
+    "welcomeBack": "欢迎回来",
+    "notYou": "不是你？",
+    "quit": "点击退出",
     "form": {
       "name": "请输入称呼（必填）",
       "email": "请输入邮箱（必填）(不公开)",
@@ -44,8 +48,7 @@
       "content": "请输入留言（必填）",
       "submit": "提交",
       "cancel": "取消",
-      "reply": "回复",
-      "banMessage": "该条评论已屏蔽"
+      "reply": "回复"
     }
   }
 }
