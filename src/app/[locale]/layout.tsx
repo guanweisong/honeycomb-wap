@@ -24,7 +24,6 @@ export default function LocaleLayout({
     <html suppressHydrationWarning lang={locale}>
       <head>
         <link rel="shortcut icon" href="/favicon.ico" />
-        <meta name="theme-color" content="var(--theme-color)" />
         <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="lazyOnload" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-F7GLX9X5VT" />
         <Script id="google-analytics">
@@ -51,6 +50,10 @@ export default function LocaleLayout({
 }
 
 export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: '#111827' },
+  ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
