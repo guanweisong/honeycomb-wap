@@ -8,6 +8,7 @@ import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import ThemeProvider from '@/src/components/ThemeProvider';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { MultiLang } from '@/src/types/Language';
 
 export const revalidate = 60;
 
@@ -16,7 +17,7 @@ export default function LocaleLayout({
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: keyof MultiLang };
 }) {
   unstable_setRequestLocale(locale);
 

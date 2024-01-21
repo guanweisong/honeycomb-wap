@@ -12,13 +12,14 @@ import Breadcrumb from '@/src/components/Breadcrumb';
 import { ThemeSwitcher } from '@/src/components/ThemeSwitcher';
 import LanguageSwitcher from '@/src/components/LanguageSwitcher';
 import { useLocale } from 'next-intl';
+import { MultiLang } from '@/src/types/Language';
 
 export default async function Header() {
   const promise = [];
   promise.push(SettingServer.indexSetting());
   promise.push(MenuServer.indexMenu());
   const [setting, menu = []] = (await Promise.all(promise)) as [SettingEntity, MenuEntity[]];
-  const locale = useLocale();
+  const locale = useLocale() as keyof MultiLang;
 
   /**
    * 补充菜单

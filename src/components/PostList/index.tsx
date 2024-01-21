@@ -13,6 +13,7 @@ import Signature from '@/src/components/Signature';
 import { AutoCenter, DotLoading } from 'antd-mobile';
 import { utcFormat } from '@/src/utils/utcFormat';
 import { NextIntlClientProvider, useLocale, useMessages, useTranslations } from 'next-intl';
+import { MultiLang } from '@/src/types/Language';
 
 export interface PostListProps {
   initData: PostEntity[];
@@ -25,7 +26,7 @@ export default function PostList(props: PostListProps) {
   const scroll = useScroll(typeof document !== 'undefined' ? document : null);
   const { data, size, setSize } = useQueryPostList(queryParams, initData);
   const messages = useMessages();
-  const locale = useLocale();
+  const locale = useLocale() as keyof MultiLang;
   const t = useTranslations('PostList');
 
   const postList = data.flat();

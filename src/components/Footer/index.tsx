@@ -1,10 +1,11 @@
 import dayjs from 'dayjs';
 import SettingServer from '@/src/services/setting';
 import { useLocale } from 'next-intl';
+import { MultiLang } from '@/src/types/Language';
 
 export default async function Footer() {
   const setting = await SettingServer.indexSetting();
-  const locale = useLocale();
+  const locale = useLocale() as keyof MultiLang;
 
   return (
     <div className="text-center py-4 px-2 text-xs text-auto-front-gray/40">

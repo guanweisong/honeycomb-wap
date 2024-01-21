@@ -10,11 +10,11 @@ import enIcon from './img/en.svg';
 import zhIconLight from './img/zh.light.svg';
 import enIconLight from './img/en.light.svg';
 import { Theme } from '@/src/types/Theme';
-import { Language } from '@/src/types/Language';
+import { Language, MultiLang } from '@/src/types/Language';
 import { Button } from 'antd-mobile';
 
 const LanguageSwitcher = () => {
-  const locale = useLocale();
+  const locale = useLocale() as keyof MultiLang;
   const pathname = usePathname();
   const router = useRouter();
   const { resolvedTheme } = useTheme();

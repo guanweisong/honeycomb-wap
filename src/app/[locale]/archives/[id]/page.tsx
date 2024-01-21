@@ -19,8 +19,13 @@ import ViewServer from '@/src/services/view';
 import { UpdateType } from '@/src/types/view/update.view';
 import { getLocale, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { MenuType } from '@/src/types/menu/MenuType';
+import { MultiLang } from '@/src/types/Language';
 
-export default async function Archives({ params }: { params: { id: string; locale: string } }) {
+export default async function Archives({
+  params,
+}: {
+  params: { id: string; locale: keyof MultiLang };
+}) {
   const { id, locale } = params;
   unstable_setRequestLocale(locale);
   const postDetail = await PostServer.indexPostDetail(id);
@@ -154,7 +159,7 @@ export async function generateMetadata(props: GenerateMetadataProps) {
   const { id } = props.params;
   const setting = await SettingServer.indexSetting();
   const postDetail = await PostServer.indexPostDetail(id);
-  const locale = await getLocale();
+  const locale = (await getLocale()) as keyof MultiLang;
 
   /**
    * 格式化文章标题

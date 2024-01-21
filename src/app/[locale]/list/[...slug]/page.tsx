@@ -15,10 +15,15 @@ import {
   getTranslations,
   unstable_setRequestLocale,
 } from 'next-intl/server';
+import { MultiLang } from '@/src/types/Language';
 
 const PAGE_SIZE = 10;
 
-export default async function List({ params }: { params: { slug: string; locale: string } }) {
+export default async function List({
+  params,
+}: {
+  params: { slug: string; locale: keyof MultiLang };
+}) {
   unstable_setRequestLocale(params.locale);
   const messages = await getMessages();
   const t = await getTranslations('PostList');
@@ -100,7 +105,7 @@ export interface GenerateMetadataProps {
 export async function generateMetadata(props: GenerateMetadataProps) {
   const setting = await SettingServer.indexSetting();
   const menu = await MenuServer.indexMenu();
-  const local = await getLocale();
+  const local = (await getLocale()) as keyof MultiLang;
   const t = await getTranslations('PostList');
 
   // 获取列表类型

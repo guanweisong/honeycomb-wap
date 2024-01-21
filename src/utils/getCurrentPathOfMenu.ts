@@ -16,10 +16,12 @@ const getCurrentPathOfMenu = (props: GetCurrentPathProps) => {
   if (id) {
     const find = (data: MenuEntity[]) => {
       if (data.length === 1) {
+        // @ts-ignore
         path.push(data[0][familyProp]);
       } else {
         data.forEach((item) => {
           if (item.id === id) {
+            // @ts-ignore
             path.push(item[familyProp]);
             if (item.parent !== '0') {
               find(data.filter((m) => m.id === item.parent));

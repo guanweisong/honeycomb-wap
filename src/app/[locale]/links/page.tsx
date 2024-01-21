@@ -7,8 +7,9 @@ import SettingServer from '@/src/services/setting';
 import { getLocale, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { MenuType } from '@/src/types/menu/MenuType';
 import classNames from 'classnames';
+import { MultiLang } from '@/src/types/Language';
 
-const Links = async ({ params: { locale } }: { params: { locale: string } }) => {
+const Links = async ({ params: { locale } }: { params: { locale: keyof MultiLang } }) => {
   unstable_setRequestLocale(locale);
   const t = await getTranslations('Link');
   const result = await LinkServer.index({
@@ -69,7 +70,7 @@ const Links = async ({ params: { locale } }: { params: { locale: string } }) => 
 export async function generateMetadata() {
   const t = await getTranslations('Link');
   const setting = await SettingServer.indexSetting();
-  const locale = await getLocale();
+  const locale = (await getLocale()) as keyof MultiLang;
   const title = t('title');
 
   const openGraph = {

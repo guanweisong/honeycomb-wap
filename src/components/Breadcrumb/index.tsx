@@ -5,6 +5,7 @@ import { useSelectedLayoutSegments } from 'next/navigation';
 import React from 'react';
 import { Link } from '@/src/navigation';
 import { useLocale } from 'next-intl';
+import { MultiLang } from '@/src/types/Language';
 
 export interface BreadCrumbProps {
   menu: MenuEntity[];
@@ -20,7 +21,7 @@ const Breadcrumb = (props: BreadCrumbProps) => {
   const segments = useSelectedLayoutSegments();
   const segmentType = segments[0];
   const segmentTypePath = segments[1]?.split('/') ?? [];
-  const locale = useLocale();
+  const locale = useLocale() as keyof MultiLang;
 
   const HomeItem = menu.find((item) => item.id === 'home');
 

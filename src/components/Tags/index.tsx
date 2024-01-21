@@ -3,10 +3,11 @@ import { Link } from '@/src/navigation';
 import { TagEntity } from '@/src/types/tag/tag.entity';
 import { PostEntity } from '@/src/types/post/post.entity';
 import { useLocale, useTranslations } from 'next-intl';
+import { MultiLang } from '@/src/types/Language';
 
 const Tag = (props: PostEntity) => {
   const t = useTranslations('Tag');
-  const locale = useLocale();
+  const locale = useLocale() as keyof MultiLang;
 
   const getTags = (item: TagEntity[] | undefined, label: string) => {
     if (item && item.length > 0) {
