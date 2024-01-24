@@ -1,5 +1,9 @@
 const path = require('path');
 const withNextIntl = require('next-intl/plugin')();
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -19,12 +23,12 @@ const nextConfig = {
     minimumCacheTTL: 600,
   },
   compiler: {
-    removeConsole:
-      process.env.NODE_ENV === 'production'
-        ? {
-            exclude: ['error'],
-          }
-        : false,
+    // removeConsole:
+    //   process.env.NODE_ENV === 'production'
+    //     ? {
+    //         exclude: ['error'],
+    //       }
+    //     : false,
   },
   poweredByHeader: false,
   webpack: (config, options) => {
@@ -33,4 +37,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(nextConfig);
+module.exports = withBundleAnalyzer(withNextIntl(nextConfig));
