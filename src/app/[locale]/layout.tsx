@@ -1,5 +1,6 @@
 import React from 'react';
 import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Viewport } from 'next';
 import '@/src/assets/markdown.scss';
 import 'antd-mobile/es/global';
@@ -26,15 +27,6 @@ export default function LocaleLayout({
       <head>
         <link rel="shortcut icon" href="/favicon.ico" />
         <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="lazyOnload" />
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-F7GLX9X5VT" />
-        <Script id="google-analytics">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-F7GLX9X5VT');
-          `}
-        </Script>
       </head>
       <body>
         <ThemeProvider attribute="class">
@@ -46,6 +38,7 @@ export default function LocaleLayout({
           </div>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-F7GLX9X5VT" />
     </html>
   );
 }
