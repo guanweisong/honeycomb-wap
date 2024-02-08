@@ -2,7 +2,7 @@
   "name": "honeycomb-wap",
   "version": "1.0.0",
   "scripts": {
-    "dev": "PORT=3100 next dev",
+    "dev": "PORT=3100 next dev --turbo",
     "build": "next build",
     "start": "cross-env NODE_ENV=production PORT=3100 next start",
     "analyze": "cross-env ANALYZE=true next build"
