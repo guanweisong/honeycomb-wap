@@ -95,14 +95,11 @@ export default async function Archives({
         date={postDetail.createdAt}
         comments={commentsData?.total}
         views={postDetail.views}
-        border={'bottom'}
       />
       {postDetail.type !== PostType.QUOTE && (
-        <div className="markdown-body py-3 lg:py-5">
+        <div className="markdown-body py-3 lg:py-5 text-sm">
           {postDetail.excerpt?.[locale] && (
-            <div className="mb-2 p-2 bg-auto-front-gray/5 text-sm">
-              {postDetail.excerpt?.[locale]}
-            </div>
+            <div className="mb-2 p-2 bg-auto-front-gray/5">{postDetail.excerpt?.[locale]}</div>
           )}
           <Markdown
             children={postDetail.content?.[locale]}
@@ -110,27 +107,29 @@ export default async function Archives({
           />
         </div>
       )}
-      <ul className="border-t-0.5 border-dashed border-auto-front-gray/30 py-2">
-        {postDetail.type === PostType.PHOTOGRAPH && (
-          <li className="flex items-center">
-            <CameraOutline />
-            &nbsp;{utcFormat(postDetail.galleryTime!)}&nbsp; {t('shotIn')}&nbsp;
-            {postDetail.galleryLocation?.[locale]}
-          </li>
-        )}
-        {postDetail.type === PostType.MOVIE && (
-          <li className="flex items-center">
-            <CalendarOutline />
-            &nbsp; {t('released')}: {utcFormat(postDetail.movieTime!)}
-          </li>
-        )}
-        {postDetail.type === PostType.QUOTE && (
-          <li className="flex items-center">
-            <ContentOutline />
-            &nbsp; {t('quoteFrom')}: {postDetail.quoteAuthor?.[locale]}
-          </li>
-        )}
-      </ul>
+      {[PostType.PHOTOGRAPH, PostType.MOVIE, PostType.QUOTE].includes(postDetail.type) && (
+        <ul className="border-t-0.5 border-dashed border-auto-front-gray/30 py-2">
+          {postDetail.type === PostType.PHOTOGRAPH && (
+            <li className="flex items-center">
+              <CameraOutline />
+              &nbsp;{utcFormat(postDetail.galleryTime!)}&nbsp; {t('shotIn')}&nbsp;
+              {postDetail.galleryLocation?.[locale]}
+            </li>
+          )}
+          {postDetail.type === PostType.MOVIE && (
+            <li className="flex items-center">
+              <CalendarOutline />
+              &nbsp; {t('released')}: {utcFormat(postDetail.movieTime!)}
+            </li>
+          )}
+          {postDetail.type === PostType.QUOTE && (
+            <li className="flex items-center">
+              <ContentOutline />
+              &nbsp; {t('quoteFrom')}: {postDetail.quoteAuthor?.[locale]}
+            </li>
+          )}
+        </ul>
+      )}
       <Tags {...postDetail} />
       {randomPostsList.length > 0 && (
         <Card title={t('guessWhatYouLike')}>

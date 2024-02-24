@@ -39,7 +39,6 @@ export default async function Pages({
         date={pageDetail.createdAt}
         comments={commentsData?.total}
         views={pageDetail.views}
-        border={'bottom'}
       />
       <div className="markdown-body py-3 lg:py-5">
         <Markdown
