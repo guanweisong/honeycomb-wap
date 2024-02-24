@@ -1,5 +1,5 @@
 .markdown-body {
-  @apply break-words dark:text-gray-400;
+  @apply break-words dark:text-gray-400 text-base leading-relaxed;
   p, blockquote, ul, ol, dl, table, pre, code {
     @apply mb-4;
   }

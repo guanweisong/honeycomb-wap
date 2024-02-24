@@ -97,7 +97,7 @@ export default async function Archives({
         views={postDetail.views}
       />
       {postDetail.type !== PostType.QUOTE && (
-        <div className="markdown-body py-3 lg:py-5 text-sm">
+        <div className="markdown-body py-3 lg:py-5 text-base">
           {postDetail.excerpt?.[locale] && (
             <div className="mb-2 p-2 bg-auto-front-gray/5">{postDetail.excerpt?.[locale]}</div>
           )}
