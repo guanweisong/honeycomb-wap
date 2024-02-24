@@ -93,11 +93,7 @@ export default async function Header() {
         <div className="container relative box-border h-full flex justify-between items-center">
           <div className="h-full flex items-center">
             <span className="lg:ml-2 absolute inset-x-24 lg:static text-center">
-              <Link
-                href={'/list/category'}
-                scroll={false}
-                className="text-pink-500 text-xl lg:text-2xl"
-              >
+              <Link href={'/list/category'} scroll={false} className="text-pink-500 text-xl">
                 {setting.siteName[locale]}
               </Link>
             </span>

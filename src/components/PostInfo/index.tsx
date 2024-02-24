@@ -5,16 +5,21 @@ import classNames from 'classnames';
 import { utcFormat } from '@/src/utils/utcFormat';
 import { useTranslations } from 'next-intl';
 
+export enum Align {
+  Left = 'left',
+  Center = 'center',
+}
+
 export interface PostInfoProps {
   author?: string;
   date?: string;
   comments?: number;
   views?: number;
-  border?: 'top' | 'bottom';
+  align?: Align;
 }
 
 const PostInfo = (props: PostInfoProps) => {
-  const { author, date, views, comments, border } = props;
+  const { author, date, views, comments, align = Align.Center } = props;
   const data = [];
   const t = useTranslations('PostInfo');
 
@@ -60,13 +65,10 @@ const PostInfo = (props: PostInfoProps) => {
 
   return (
     <ul
-      className={classNames(
-        'flex justify-center text-sm py-2 border-dashed border-auto-front-gray/30',
-        {
-          'border-b-0.5': border === 'bottom',
-          'border-t-0.5': border === 'top',
-        },
-      )}
+      className={classNames('flex text-sm py-2 border-dashed border-auto-front-gray/30', {
+        'justify-center': align === Align.Center,
+        'justify-start': align === Align.Left,
+      })}
     >
       {data.map((item) => (
         <li className="flex items-center mx-1" key={item.content.toString()}>

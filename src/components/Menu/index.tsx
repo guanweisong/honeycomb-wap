@@ -75,14 +75,11 @@ const Menu = (props: MenuProps) => {
           <li className="lg:relative lg:flex group" key={`first-level-${m.link}`}>
             <Link
               href={m.link ?? ''}
-              className={classNames(
-                'lg:relative leading-10 lg:z-20 px-4 lg:px-6 lg:flex lg:items-center',
-                {
-                  'lg:bg-pink-500 text-pink-500 lg:text-white': m.link === currentCategory[0],
-                  'group-hover:lg:text-pink-500 group-hover:lg:bg-auto-back-gray/90':
-                    m.link !== currentCategory[0],
-                },
-              )}
+              className={classNames('lg:relative leading-10 lg:z-20 px-4 lg:flex lg:items-center', {
+                'text-pink-500': m.link === currentCategory[0],
+                'group-hover:lg:text-pink-500 group-hover:lg:bg-auto-back-gray/90':
+                  m.link !== currentCategory[0],
+              })}
             >
               {m.label}
             </Link>
