@@ -93,7 +93,7 @@ export default function PostList(props: PostListProps) {
               )}
             </Link>
             {item.excerpt?.[locale] && (
-              <div className="text-sm lg:my-2">{item.excerpt?.[locale]}</div>
+              <div className="lg:my-2 text-sm">{item.excerpt?.[locale]}</div>
             )}
             <NextIntlClientProvider messages={messages} locale={locale}>
               <PostInfo

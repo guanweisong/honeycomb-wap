@@ -10,7 +10,7 @@
   "dependencies": {
     "@next/third-parties": "^14.1.0",
     "ahooks": "^3.7.4",
-    "antd-mobile": "^5.27.0",
+    "antd-mobile": "^5.34.0",
     "antd-mobile-icons": "^0.3.0",
     "axios": "^1.2.2",
     "classnames": "^2.3.2",

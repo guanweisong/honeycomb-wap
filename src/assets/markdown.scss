@@ -1,5 +1,5 @@
 .markdown-body {
-  @apply break-words dark:text-gray-400 text-base leading-relaxed;
+  @apply break-words dark:text-gray-400 leading-relaxed;
   p, blockquote, ul, ol, dl, table, pre, code {
     @apply mb-4;
   }
@@ -59,13 +59,13 @@
   }
   p:first-child {
     img:first-child {
-      margin-top: 0;
+      @apply mt-0;
     }
   }
   p:last-child {
-    margin-bottom: 0;
+    @apply mb-0;
     img:last-child {
-      margin-bottom: 0;
+      @apply mb-0;
     }
   }
 }

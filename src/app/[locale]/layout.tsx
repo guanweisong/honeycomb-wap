@@ -3,7 +3,7 @@ import Script from 'next/script';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Viewport } from 'next';
 import '@/src/assets/markdown.scss';
-import 'antd-mobile/es/global';
+import '../app.scss';
 import BackToTop from '@/src/components/BackToTop';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
@@ -30,7 +30,7 @@ export default function LocaleLayout({
       </head>
       <body>
         <ThemeProvider attribute="class">
-          <div className="min-h-full pt-14 lg:pt-24">
+          <div className="min-h-full pt-14 lg:pt-24 text-base">
             <Header />
             <div className={'container px-2'}>{children}</div>
             <Footer />

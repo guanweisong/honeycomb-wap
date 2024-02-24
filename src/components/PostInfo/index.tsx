@@ -1,4 +1,3 @@
-import { ClockCircleOutline, EyeOutline, MessageOutline, UserOutline } from 'antd-mobile-icons';
 import { Link } from '@/src/navigation';
 import React from 'react';
 import classNames from 'classnames';
@@ -24,39 +23,27 @@ const PostInfo = (props: PostInfoProps) => {
   const t = useTranslations('PostInfo');
 
   if (typeof author !== 'undefined') {
-    data.push({
-      icon: <UserOutline />,
-      content: (
-        <Link
-          // @ts-ignore
-          href={`/list/authors/${author}`}
-          className="link-light"
-        >
-          {author}
-        </Link>
-      ),
-    });
+    data.push(
+      <Link
+        // @ts-ignore
+        href={`/list/authors/${author}`}
+        className="link-light"
+      >
+        {author}
+      </Link>,
+    );
   }
 
   if (typeof date !== 'undefined') {
-    data.push({
-      icon: <ClockCircleOutline />,
-      content: utcFormat(date),
-    });
+    data.push(utcFormat(date));
   }
 
   if (typeof comments !== 'undefined') {
-    data.push({
-      icon: <MessageOutline />,
-      content: t('messages', { count: comments }),
-    });
+    data.push(t('messages', { count: comments }));
   }
 
   if (typeof views !== 'undefined') {
-    data.push({
-      icon: <EyeOutline />,
-      content: t('views', { count: views }),
-    });
+    data.push(t('views', { count: views }));
   }
 
   if (!data.length) {
@@ -64,18 +51,19 @@ const PostInfo = (props: PostInfoProps) => {
   }
 
   return (
-    <ul
-      className={classNames('flex text-sm py-2 border-dashed border-auto-front-gray/30', {
+    <div
+      className={classNames('flex text-sm my-2 border-dashed border-auto-front-gray/30', {
         'justify-center': align === Align.Center,
         'justify-start': align === Align.Left,
       })}
     >
-      {data.map((item) => (
-        <li className="flex items-center mx-1" key={item.content.toString()}>
-          {item.icon}&nbsp;{item.content}
-        </li>
+      {data.map((item, index) => (
+        <span key={item.toString()}>
+          {index > 0 && <span className="mx-1 text-gray-300">/</span>}
+          <span>{item}</span>
+        </span>
       ))}
-    </ul>
+    </div>
   );
 };
 

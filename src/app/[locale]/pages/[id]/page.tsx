@@ -40,7 +40,7 @@ export default async function Pages({
         comments={commentsData?.total}
         views={pageDetail.views}
       />
-      <div className="markdown-body py-3 lg:py-5">
+      <div className="markdown-body my-3 lg:my-5">
         <Markdown
           children={pageDetail.content?.[locale]}
           imagesInContent={pageDetail.imagesInContent}

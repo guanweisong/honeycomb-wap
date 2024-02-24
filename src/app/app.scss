@@ -17,11 +17,9 @@
 }
 
 body, input, textarea {
-  @apply dark:bg-gray-800;
-  @apply dark:text-gray-400;
-  @apply font-light;
+  @apply dark:bg-gray-800 dark:text-gray-400 text-base font-light;
   a {
-    color: inherit;
+    @apply text-inherit;
   }
 }
 
