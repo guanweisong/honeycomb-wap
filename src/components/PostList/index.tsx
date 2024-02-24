@@ -57,7 +57,7 @@ export default function PostList(props: PostListProps) {
         <div className="mt-4 first:mt-0">
           {[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(item.type) &&
             item.cover?.url && (
-              <Link href={`/archives/${item.id}`} className="relative">
+              <Link href={`/archives/${item.id}`} className="relative block">
                 <Image
                   priority={true}
                   src={item.cover?.url ?? ''}
