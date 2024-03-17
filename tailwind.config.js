@@ -5,10 +5,8 @@ module.exports = {
     container: {
       center: true,
       screens: {
-        sm: '640px',
-        md: '800px',
-        lg: '800px',
-        xl: '800px',
+        lg: '700px',
+        xl: '1000px',
       },
     },
     extend: {
@@ -16,8 +14,8 @@ module.exports = {
         0.5: 0.5,
       },
       colors: {
-        'auto-front-gray': 'rgba(var(--auto-front-gray))',
-        'auto-back-gray': 'rgba(var(--auto-back-gray))',
+        'auto-front-gray': 'rgba(var(--auto-front-gray) / <alpha-value>)',
+        'auto-back-gray': 'rgba(var(--auto-back-gray) / <alpha-value>)',
       },
     },
   },

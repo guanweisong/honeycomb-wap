@@ -17,13 +17,16 @@
 }
 
 body, input, textarea {
-  @apply dark:bg-gray-800 dark:text-gray-400 text-base font-light;
+  @apply bg-gray-100 dark:bg-gray-800 dark:text-gray-400 text-base font-light;
   a {
     @apply text-inherit;
   }
 }
 
 a {
+  &:hover {
+    @apply underline;
+  }
   &.link-primary {
     &:link{
       @apply text-pink-500;

@@ -54,21 +54,24 @@ export default function PostList(props: PostListProps) {
   const renderCard = (item: PostEntity) => {
     return (
       <Link href={`/archives/${item.id}`} key={item.id} legacyBehavior>
-        <div className="mt-4 first:mt-0">
+        <div className="mt-6 first:mt-2 lg:flex bg-auto-back-gray/60">
           {[PostType.ARTICLE, PostType.MOVIE, PostType.PHOTOGRAPH].includes(item.type) &&
             item.cover?.url && (
-              <Link href={`/archives/${item.id}`} className="relative block">
+              <Link
+                href={`/archives/${item.id}`}
+                className="relative block lg:w-[300px] w-full lg:h-[150px] h-[200px]"
+              >
                 <Image
                   priority={true}
                   src={item.cover?.url ?? ''}
-                  width={item.cover?.width}
-                  height={item.cover?.height}
                   alt={item.title?.[locale] ?? ''}
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 100vw, 33vw"
+                  sizes="33vw"
+                  fill={true}
+                  className="object-cover flex-shrink-0"
                 />
                 <span
                   className={classNames(
-                    'absolute left-2 top-2 text-white rounded py-0.5 lg:py-1 px-1 lg:px-2',
+                    'absolute left-2 top-2 text-white text-sm rounded py-0.5 px-1',
                     [PostTypeBgColor[item.type]],
                   )}
                 >
@@ -76,7 +79,7 @@ export default function PostList(props: PostListProps) {
                 </span>
               </Link>
             )}
-          <div className="p-2 lg:p-4">
+          <div className="p-2 lg:px-4 flex-1">
             <Link href={`/archives/${item.id}`} className="block text-lg">
               {item.type === PostType.MOVIE && (
                 <>
@@ -93,7 +96,7 @@ export default function PostList(props: PostListProps) {
               )}
             </Link>
             {item.excerpt?.[locale] && (
-              <div className="lg:my-2 text-sm">{item.excerpt?.[locale]}</div>
+              <div className="lg:my-2 text-sm lg:line-clamp-3">{item.excerpt?.[locale]}</div>
             )}
             <NextIntlClientProvider messages={messages} locale={locale}>
               <PostInfo
@@ -115,7 +118,7 @@ export default function PostList(props: PostListProps) {
       <div>{postList.map((item) => renderCard(item))}</div>
       {isEnd && <Signature text={t('listEnd')} />}
       {isLoadingMore && (
-        <AutoCenter>
+        <AutoCenter className="mt-4">
           <DotLoading />
         </AutoCenter>
       )}
