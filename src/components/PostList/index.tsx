@@ -59,7 +59,7 @@ export default function PostList(props: PostListProps) {
             item.cover?.url && (
               <Link
                 href={`/archives/${item.id}`}
-                className="relative block lg:w-[300px] w-full lg:h-[150px] h-[200px]"
+                className="relative block lg:w-[250px] w-full lg:h-[150px] h-[200px]"
               >
                 <Image
                   priority={true}

@@ -24,9 +24,6 @@ body, input, textarea {
 }
 
 a {
-  &:hover {
-    @apply underline;
-  }
   &.link-primary {
     &:link{
       @apply text-pink-500;
